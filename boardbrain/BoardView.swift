@@ -7,60 +7,131 @@
 
 import SwiftUI
 
+struct Coordinate {
+    let rank: Int
+    let file: String
+    let index: Int
+}
+
 struct BoardView: View {
-    let rows: Int = 8
-        let columns: Int = 8
-        @State private var showRanksFiles = true // State to toggle ranks and files
-        
-        // Generate the grid layout with no spacing
-        var gridLayout: [GridItem] {
-            Array(repeating: .init(.flexible(), spacing: 0), count: columns)
-        }
-        
-        var body: some View {
-            VStack {
-                Toggle("Show Ranks & Files", isOn: $showRanksFiles)
-                    .padding()
-                
-                // Grid to hold ranks and files labels if toggled on
-                if showRanksFiles {
-                    HStack(spacing: 0) {
-                        Text(" ")
-                            .frame(width: 20) // Placeholder for rank labels
-                        
-                        ForEach(["a", "b", "c", "d", "e", "f", "g", "h"], id: \.self) { file in
-                            Text(file.uppercased())
-                                .frame(maxWidth: .infinity)
-                        }
-                    }
-                }
-                
-                HStack(spacing: 0) {
-                    if showRanksFiles {
-                        VStack(spacing: 0) {
-                            ForEach((1...rows).reversed(), id: \.self) { rank in
-                                Text("\(rank)")
-                                    .frame(height: 20) // Adjust to match square size
-                                    .rotationEffect(.degrees(-90))
-                            }
-                        }
-                    }
-                    
-                    ScrollView {
-                        LazyVGrid(columns: gridLayout, spacing: 0) {
-                            ForEach(0..<(rows * columns), id: \.self) { index in
-                                Rectangle()
-                                    .foregroundColor((index / columns) % 2 == index % 2 ? Color(hex: "#F0D9B5") : Color(hex: "#B58863"))
-                                    .aspectRatio(1, contentMode: .fit)
-                            }
-                        }
-                    }
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .background(Color.gray)
-                }
-            }
-        }
+    @State private var showPiecesPosition = true
+    @State private var showRanksandFiles = true
+    @State private var showCoordinates = false
     
+    private let rows = 8
+    private let columns = 8
+    private let startingPositions: [String: String] = [
+           "a1": "rook-w", "b1": "knight-w", "c1": "bishop-w", "d1": "queen-w",
+           "e1": "king-w", "f1": "bishop-w", "g1": "knight-w", "h1": "rook-w",
+           "a2": "pawn-w", "b2": "pawn-w", "c2": "pawn-w", "d2": "pawn-w",
+           "e2": "pawn-w", "f2": "pawn-w", "g2": "pawn-w", "h2": "pawn-w",
+           "a7": "pawn-b", "b7": "pawn-b", "c7": "pawn-b", "d7": "pawn-b",
+           "e7": "pawn-b", "f7": "pawn-b", "g7": "pawn-b", "h7": "pawn-b",
+           "a8": "rook-b", "b8": "knight-b", "c8": "bishop-b", "d8": "queen-b",
+           "e8": "king-b", "f8": "bishop-b", "g8": "knight-b", "h8": "rook-b"
+       ]
+    
+    // Generate the grid layout with no spacing
+    private var gridLayout: [GridItem] {
+        Array(repeating: .init(.flexible(), spacing: 0), count: columns)
+    }
+    
+    private func getCoordinate(forIndex index: Int) -> Coordinate {
+        let files = ["a", "b", "c", "d", "e", "f", "g", "h"]
+        let rank = 8 - index / columns
+        let file = files[index % columns]
+        
+        let coordinate = Coordinate(rank: rank, file: file, index: index)
+        return coordinate
+    }
+    
+    private func pieceAt(index: Int) -> String? {
+        let files = ["a", "b", "c", "d", "e", "f", "g", "h"]
+        let rank = 8 - index / columns
+        let file = files[index % columns]
+        let position = "\(file)\(rank)"
+        
+        return startingPositions[position] ?? ""
+    }
+    
+    var body: some View {
+        ScrollView {
+            
+            Text("BoardBrain")
+                .font(.largeTitle)
+                .padding()
+            
+            Toggle("Show Pieces", isOn: $showPiecesPosition)
+                .padding(.horizontal)
+                .onChange(of: showPiecesPosition) { newValue in
+                    if newValue {
+                        showCoordinates = !newValue
+                    }
+                }
+            
+            Toggle("Show Ranks & Files", isOn: $showRanksandFiles)
+                .padding(.horizontal)
+            
+            Toggle("Show Coordinates", isOn: $showCoordinates)
+                .padding(.horizontal)
+                .padding(.bottom)
+                .onChange(of: showCoordinates) { newValue in
+                    if newValue {
+                        showPiecesPosition = !newValue
+                    }
+                }
+            
+            LazyVGrid(columns: gridLayout, spacing: 0) {
+                ForEach(0..<(rows * columns), id: \.self) { index in
+                    ZStack {
+                        Rectangle()
+                            .foregroundColor((index / columns) % 2 == index % 2 ? Color(hex: "#F0D9B5") : Color(hex: "#B58863"))
+                        
+                        let coordinate = getCoordinate(forIndex: index)
+
+                        if showCoordinates {
+                            Text("\(coordinate.file)\(coordinate.rank)")
+                                .font(.headline)
+                                .foregroundColor((index / columns) % 2 == index % 2 ? .black : .white)
+                                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+                                .padding([.bottom, .trailing], 3)
+                        }
+                        
+                        if showPiecesPosition {
+                            if let imageName = pieceAt(index: index), !imageName.isEmpty {
+                                Image(imageName)
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .padding(5) // Adjust padding to your liking
+                            }
+                        }
+                        
+                        if showRanksandFiles {
+                            if index % columns == 0 {
+                                Text("\(coordinate.rank)")
+                                    .font(.caption2)
+                                    .foregroundColor((index / columns) % 2 == index % 2 ? .black : .white)
+                                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+                                    .padding([.top, .leading], 1)
+                            }
+                            // print 'a'
+                            if index > 55 {
+                                Text("\(coordinate.file)")
+                                    .font(.caption2)
+                                    .foregroundColor((index / columns) % 2 == index % 2 ? .black : .white)
+                                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
+                                    .padding([.bottom, .trailing], 1)
+                            }
+                        }
+                    }
+                    .aspectRatio(1, contentMode: .fit)
+                }
+            }.padding(1)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Color.white.opacity(0.95))
+        
+    }
 }
 
 #Preview {

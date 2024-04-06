@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7052F14F2BC15ED700FFDA2F /* BoardViewText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7052F14E2BC15ED700FFDA2F /* BoardViewText.swift */; };
 		70614BAA2BC123460053DDAE /* ColorExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70614BA92BC123460053DDAE /* ColorExt.swift */; };
 		70C731322BC11AB6000FB2F9 /* boardbrainApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C731312BC11AB6000FB2F9 /* boardbrainApp.swift */; };
 		70C731342BC11AB6000FB2F9 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C731332BC11AB6000FB2F9 /* ContentView.swift */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7052F14E2BC15ED700FFDA2F /* BoardViewText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoardViewText.swift; sourceTree = "<group>"; };
 		70614BA92BC123460053DDAE /* ColorExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExt.swift; sourceTree = "<group>"; };
 		70C7312E2BC11AB6000FB2F9 /* boardbrain.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = boardbrain.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		70C731312BC11AB6000FB2F9 /* boardbrainApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = boardbrainApp.swift; sourceTree = "<group>"; };
@@ -65,6 +67,7 @@
 		70C731302BC11AB6000FB2F9 /* boardbrain */ = {
 			isa = PBXGroup;
 			children = (
+				7052F14E2BC15ED700FFDA2F /* BoardViewText.swift */,
 				70614BA62BC1230E0053DDAE /* Extension */,
 				70C731312BC11AB6000FB2F9 /* boardbrainApp.swift */,
 				70C731332BC11AB6000FB2F9 /* ContentView.swift */,
@@ -156,6 +159,7 @@
 			files = (
 				70C731342BC11AB6000FB2F9 /* ContentView.swift in Sources */,
 				70614BAA2BC123460053DDAE /* ColorExt.swift in Sources */,
+				7052F14F2BC15ED700FFDA2F /* BoardViewText.swift in Sources */,
 				70C731422BC11D5D000FB2F9 /* BoardView.swift in Sources */,
 				70C731362BC11AB6000FB2F9 /* Item.swift in Sources */,
 				70C731322BC11AB6000FB2F9 /* boardbrainApp.swift in Sources */,
@@ -300,6 +304,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -329,6 +334,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
