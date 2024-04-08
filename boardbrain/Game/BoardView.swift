@@ -32,13 +32,13 @@ struct BoardView: View {
         Array(repeating: .init(.flexible(), spacing: 0), count: columns)
     }
     
-    private func getCoordinate(forIndex index: Int) -> Coordinate {
+    private func getCoordinate(forIndex index: Int) -> Square {
         let files = ["a", "b", "c", "d", "e", "f", "g", "h"]
         let rank = 8 - index / columns
         let file = files[index % columns]
         
-        let coordinate = Coordinate(rank: rank, file: file, index: index)
-        return coordinate
+        let square = Square(rank: rank, file: file, index: index)
+        return square
     }
     
     private func pieceAt(index: Int) -> String? {
@@ -76,6 +76,9 @@ struct BoardView: View {
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .padding(5) // Adjust padding to your liking
+                                .onTapGesture {
+                                    squareClicked?(index)
+                                }
                         }
                     }
                     

@@ -7,8 +7,12 @@
 
 import Foundation
 
-struct Coordinate {
+struct Square {
     let rank: Int
     let file: String
     let index: Int
+    
+    func getCoordinate() -> String {
+        return "\(file)\(rank)"
+    }
 }

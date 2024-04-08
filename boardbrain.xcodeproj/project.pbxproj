@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		70614BAA2BC123460053DDAE /* ColorExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70614BA92BC123460053DDAE /* ColorExt.swift */; };
 		70ACA3722BC280CC0052713E /* BoardViewWithControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70ACA3712BC280CC0052713E /* BoardViewWithControls.swift */; };
-		70ACA3742BC280F00052713E /* Coordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70ACA3732BC280F00052713E /* Coordinate.swift */; };
+		70ACA3742BC280F00052713E /* Square.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70ACA3732BC280F00052713E /* Square.swift */; };
 		70ACA3762BC28B5E0052713E /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70ACA3752BC28B5E0052713E /* GameView.swift */; };
 		70C731322BC11AB6000FB2F9 /* boardbrainApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C731312BC11AB6000FB2F9 /* boardbrainApp.swift */; };
 		70C731382BC11AB9000FB2F9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 70C731372BC11AB9000FB2F9 /* Assets.xcassets */; };
@@ -20,7 +20,7 @@
 /* Begin PBXFileReference section */
 		70614BA92BC123460053DDAE /* ColorExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExt.swift; sourceTree = "<group>"; };
 		70ACA3712BC280CC0052713E /* BoardViewWithControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardViewWithControls.swift; sourceTree = "<group>"; };
-		70ACA3732BC280F00052713E /* Coordinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinate.swift; sourceTree = "<group>"; };
+		70ACA3732BC280F00052713E /* Square.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Square.swift; sourceTree = "<group>"; };
 		70ACA3752BC28B5E0052713E /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
 		70C7312E2BC11AB6000FB2F9 /* boardbrain.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = boardbrain.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		70C731312BC11AB6000FB2F9 /* boardbrainApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = boardbrainApp.swift; sourceTree = "<group>"; };
@@ -44,7 +44,7 @@
 			isa = PBXGroup;
 			children = (
 				70614BA92BC123460053DDAE /* ColorExt.swift */,
-				70ACA3732BC280F00052713E /* Coordinate.swift */,
+				70ACA3732BC280F00052713E /* Square.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -166,7 +166,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				70614BAA2BC123460053DDAE /* ColorExt.swift in Sources */,
-				70ACA3742BC280F00052713E /* Coordinate.swift in Sources */,
+				70ACA3742BC280F00052713E /* Square.swift in Sources */,
 				70ACA3762BC28B5E0052713E /* GameView.swift in Sources */,
 				70C731422BC11D5D000FB2F9 /* BoardView.swift in Sources */,
 				70ACA3722BC280CC0052713E /* BoardViewWithControls.swift in Sources */,
