@@ -15,6 +15,7 @@
 		70C731382BC11AB9000FB2F9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 70C731372BC11AB9000FB2F9 /* Assets.xcassets */; };
 		70C7313B2BC11AB9000FB2F9 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 70C7313A2BC11AB9000FB2F9 /* Preview Assets.xcassets */; };
 		70C731422BC11D5D000FB2F9 /* BoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C731412BC11D5D000FB2F9 /* BoardView.swift */; };
+		70FD21722BC6BA5E00F6D513 /* Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70FD21712BC6BA5E00F6D513 /* Styles.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +28,7 @@
 		70C731372BC11AB9000FB2F9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		70C7313A2BC11AB9000FB2F9 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		70C731412BC11D5D000FB2F9 /* BoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardView.swift; sourceTree = "<group>"; };
+		70FD21712BC6BA5E00F6D513 /* Styles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Styles.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,6 +47,7 @@
 			children = (
 				70614BA92BC123460053DDAE /* ColorExt.swift */,
 				70ACA3732BC280F00052713E /* Square.swift */,
+				70FD21712BC6BA5E00F6D513 /* Styles.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -166,6 +169,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				70614BAA2BC123460053DDAE /* ColorExt.swift in Sources */,
+				70FD21722BC6BA5E00F6D513 /* Styles.swift in Sources */,
 				70ACA3742BC280F00052713E /* Square.swift in Sources */,
 				70ACA3762BC28B5E0052713E /* GameView.swift in Sources */,
 				70C731422BC11D5D000FB2F9 /* BoardView.swift in Sources */,

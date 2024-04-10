@@ -33,7 +33,7 @@ struct boardbrainApp: App {
     var body: some Scene {
         WindowGroup {
             GameView()
-                .colorScheme(ColorScheme.light)
+                .colorScheme(ColorScheme.dark)
         }
     }
 }

@@ -11,6 +11,7 @@ struct BoardViewWithControls: View {
     @State private var showPiecesPosition = true
     @State private var showRanksandFiles = true
     @State private var showCoordinates = false
+    @State private var whiteSide = true
     
     var body: some View {
         ScrollView {
@@ -39,7 +40,7 @@ struct BoardViewWithControls: View {
                     }
                 })
             
-            BoardView(showPiecesPosition: $showPiecesPosition, showRanksandFiles: $showRanksandFiles, showCoordinates: $showCoordinates, squareClicked: nil)
+            BoardView(showPiecesPosition: $showPiecesPosition, showRanksandFiles: $showRanksandFiles, showCoordinates: $showCoordinates, whiteSide: $whiteSide, targetIndex: .constant(-1), gameStarted: .constant(false), squareClicked: nil)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.white.opacity(0.95))
