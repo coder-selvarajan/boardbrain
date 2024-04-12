@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7019350A2BC9858900ECDA51 /* PopupView in Frameworks */ = {isa = PBXBuildFile; productRef = 701935092BC9858900ECDA51 /* PopupView */; };
 		70614BAA2BC123460053DDAE /* ColorExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70614BA92BC123460053DDAE /* ColorExt.swift */; };
 		70ACA3722BC280CC0052713E /* BoardViewWithControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70ACA3712BC280CC0052713E /* BoardViewWithControls.swift */; };
 		70ACA3742BC280F00052713E /* Square.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70ACA3732BC280F00052713E /* Square.swift */; };
@@ -36,6 +37,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7019350A2BC9858900ECDA51 /* PopupView in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -114,6 +116,9 @@
 			dependencies = (
 			);
 			name = boardbrain;
+			packageProductDependencies = (
+				701935092BC9858900ECDA51 /* PopupView */,
+			);
 			productName = boardbrain;
 			productReference = 70C7312E2BC11AB6000FB2F9 /* boardbrain.app */;
 			productType = "com.apple.product-type.application";
@@ -142,6 +147,9 @@
 				Base,
 			);
 			mainGroup = 70C731252BC11AB6000FB2F9;
+			packageReferences = (
+				701935082BC9858900ECDA51 /* XCRemoteSwiftPackageReference "PopupView" */,
+			);
 			productRefGroup = 70C7312F2BC11AB6000FB2F9 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -382,6 +390,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		701935082BC9858900ECDA51 /* XCRemoteSwiftPackageReference "PopupView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/exyte/PopupView.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.9.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		701935092BC9858900ECDA51 /* PopupView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 701935082BC9858900ECDA51 /* XCRemoteSwiftPackageReference "PopupView" */;
+			productName = PopupView;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 70C731262BC11AB6000FB2F9 /* Project object */;
 }

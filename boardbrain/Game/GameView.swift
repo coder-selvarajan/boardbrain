@@ -6,8 +6,9 @@
 //
 
 import SwiftUI
+import PopupView
 
-struct PopupView: View {
+struct PopupOverView: View {
     // Binding variables to pass state between views
     @Binding var showPiecesPosition: Bool
     @Binding var showRanksandFiles: Bool
@@ -94,7 +95,7 @@ struct GameView: View {
     private let columns = 8
     
     @State var currentCoordinate: String = ""
-    @State var points: Int = 0
+    @State var score: Int = 0
     @State var gameStarted: Bool = false
     @State var gameEnded: Bool = false
     @State var currentPlay: Int = 0
@@ -102,8 +103,7 @@ struct GameView: View {
     
     @State private var showingOptionsPopup = false
     
-    let totalPlay = 20
-    
+    //    let totalPlay = 100
     let timerInterval = 0.1
     let totalTime = 30.0
     
@@ -142,79 +142,18 @@ struct GameView: View {
                 
                 gameEnded = true
                 gameStarted = false
-                currentPlay = 0
             }
         }
     }
     
     var body: some View {
         NavigationView {
-            ScrollView {
-                
-//                HStack(alignment: .center) {
-//                    Spacer()
-//                    
-//                    HStack(spacing: 0) {
-//                        ZStack {
-//                            Rectangle()
-//                                .foregroundColor(whiteSide ? .green : .gray)
-//                                .frame(width: 40, height: 40)
-//                                .clipShape(RoundedCorner(radius: 5, corners: [.topLeft, .bottomLeft]))
-//                                .padding(0)
-//                            
-//                            
-//                            Image("king-w")
-//                                .resizable()
-//                                .frame(width: 35, height: 35)
-//                                .aspectRatio(contentMode: .fit)
-//                                .onTapGesture {
-//                                    whiteSide = !whiteSide
-//                                }
-//                        }.onTapGesture {
-//                            whiteSide = !whiteSide
-//                        }
-//                        
-//                        ZStack {
-//                            Rectangle()
-//                                .foregroundColor(!whiteSide ? .green : .gray)
-//                                .frame(width: 40, height:40)
-//                                .clipShape(RoundedCorner(radius: 5, corners: [.topRight, .bottomRight]))
-//                                .padding(0)
-//                            
-//                            Image("king-b")
-//                                .resizable()
-//                                .frame(width: 35, height: 35)
-//                                .aspectRatio(contentMode: .fit)
-//                                .onTapGesture {
-//                                    whiteSide = !whiteSide
-//                                }
-//                        }
-//                        .onTapGesture {
-//                            whiteSide = !whiteSide
-//                        }
-//                    } //HStack
-//                    .padding(0)
-//                    
-//                    Spacer()
-//                    HStack(spacing: 0) {
-//                        Toggle("Pieces", isOn: $showPiecesPosition)
-//                            .toggleStyle(TickToggleStyle())
-//                            .padding()
-//                        
-//                        
-//                        Toggle("Coordinates", isOn: $showRanksandFiles)
-//                            .toggleStyle(TickToggleStyle())
-//                            .padding()
-//                    }
-//                }
-//                .padding(.vertical, 5)
-//                .background(.white.opacity(0.10))
-
+            VStack {
                 HStack {
                     EmptyView()
                 }
                 .frame(height: 50)
-            
+                
                 BoardView(showPiecesPosition: $showPiecesPosition,
                           showRanksandFiles: $showRanksandFiles,
                           showCoordinates: $showCoordinates,
@@ -230,22 +169,12 @@ struct GameView: View {
                     let clickedCoordinate = getCoordinate(forIndex: value)
                     if clickedCoordinate == currentCoordinate {
                         // point count increases
-                        points += 1
+                        score += 1
                     }
                     
                     currentPlay += 1
-                    if currentPlay > totalPlay {
-                        // game ended here
-                        gameEnded = true
-                        gameStarted = false
-                        currentPlay = 0
-                    }
-                    else {
-                        // next play
-                        currentCoordinate = getRandomCoordinate()
-                    }
+                    currentCoordinate = getRandomCoordinate()
                 })
-//                .padding(0)
                 
                 ProgressView(value: progress, total: 1.0)
                     .progressViewStyle(LinearProgressViewStyle(tint: Color.green))
@@ -253,71 +182,105 @@ struct GameView: View {
                     .padding(.bottom, 20)
                     .padding(.top, -5)
                 
-                
-                
-                if !gameEnded {
+                Spacer()
+                if gameStarted {
                     Text(currentCoordinate)
                         .font(.largeTitle)
                         .foregroundColor(.white)
                         .padding()
                 }
                 
-                if gameEnded {
-                    Text("Game ended!")
-                        .foregroundColor(.white)
-                }
-                if gameStarted || gameEnded {
-                    Text("Points: \(points)/\(totalPlay)")
-                        .font(.title3)
-                        .foregroundColor(.green)
-                        .padding()
-                }
-                HStack {
+                //                if gameEnded {
+                //                    Text("Game ended!")
+                //                        .foregroundColor(.white)
+                //
+                //                    Text("Score: \(score)/\(currentPlay)")
+                //                        .font(.title3)
+                //                        .foregroundColor(.green)
+                //                        .padding()
+                //                }
+                
+                Spacer()
+                HStack(spacing: 15) {
                     if !gameStarted {
                         Button {
                             gameStarted = true
                             gameEnded = false
                             showCoordinates = false
                             currentCoordinate = getRandomCoordinate()
-                            currentPlay = 1
-                            points = 0
+                            currentPlay = 0
+                            score = 0
                             
                             startProgress()
                         } label: {
-                            Text("Start Game")
+                            Text("Start Training")
                                 .font(.title2)
                                 .foregroundColor(.black)
                                 .padding(.horizontal, 20)
-                                .padding(.vertical, 10)
+                                .frame(height: 60)
                                 .background(.blue)
                                 .cornerRadius(10.0)
                         }
-                    }
-                    
-                    Button {
-                        showingOptionsPopup = true
-                    } label: {
-                        Text("⛭  Options")
-                            .font(.title2)
-                            .foregroundColor(.black)
-                            .padding(.horizontal, 20)
-                            .padding(.vertical, 10)
-                            .background(.cyan)
+                        
+                        
+                        Button {
+                            showingOptionsPopup = true
+                        } label: {
+                            HStack {
+                                Image(systemName: "gearshape")
+                                    .font(.title2)
+                                    .foregroundColor(.black.opacity(0.9))
+                            }
+                            .padding(.horizontal, 15)
+                            .frame(height: 60)
+                            .background(.white.opacity(0.75))
                             .cornerRadius(10.0)
+                        }
+                        .popover(isPresented: $showingOptionsPopup, content: {
+                            PopupOverView(showPiecesPosition: $showPiecesPosition,
+                                      showRanksandFiles: $showRanksandFiles,
+                                      whiteSide: $whiteSide)
+                            .presentationDetents([.medium])
+                        })
                     }
-                    .popover(isPresented: $showingOptionsPopup, content: {
-                        PopupView(showPiecesPosition: $showPiecesPosition,
-                                  showRanksandFiles: $showRanksandFiles,
-                                  whiteSide: $whiteSide)
-                        .presentationDetents([.medium])
-                    })
                 }
-                
-            }
+                Spacer()
+            } //scrollview
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(Color.white.opacity(0.20))
             .navigationTitle("BoardBrain - Games")
             .navigationBarTitleDisplayMode(.inline)
+            .popup(isPresented: $gameEnded) {
+                VStack {
+                    Text("Game ended!")
+                        .foregroundColor(.black)
+                    
+                    Text("Score: \(score)/\(currentPlay)")
+                        .font(.title2)
+                        .foregroundColor(.green)
+                        .padding()
+                }
+                .padding(25)
+                .background(.white)
+                .cornerRadius(15)
+                
+            } customize: {
+                $0
+                    .type(.floater())
+                    .position(.center)
+                    .animation(.spring())
+                    .closeOnTapOutside(true)
+                    .backgroundColor(.black.opacity(0.5))
+                    .autohideIn(5)
+            }
+//                .alert(isPresented: $gameEnded) {
+//                    // Alert content
+//                    Alert(
+//                        title: Text("Game ended!"),
+//                        message: Text("Score: \(score)/\(currentPlay)\n\nBest as white: 18/20\nBest as black: 18/20"),
+//                        dismissButton: .default(Text("OK"))
+//                    )
+//                }
             .toolbar {
                 // Hamburger menu icon on the left
                 ToolbarItem(placement: .navigationBarLeading) {
@@ -342,6 +305,7 @@ struct GameView: View {
             }
             
         }
+        
     }
 }
 
