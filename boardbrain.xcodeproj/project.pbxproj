@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		7019350A2BC9858900ECDA51 /* PopupView in Frameworks */ = {isa = PBXBuildFile; productRef = 701935092BC9858900ECDA51 /* PopupView */; };
+		705D07512BCA626E00AD5F22 /* ScoreModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705D07502BCA626E00AD5F22 /* ScoreModel.swift */; };
 		70614BAA2BC123460053DDAE /* ColorExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70614BA92BC123460053DDAE /* ColorExt.swift */; };
 		70ACA3722BC280CC0052713E /* BoardViewWithControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70ACA3712BC280CC0052713E /* BoardViewWithControls.swift */; };
 		70ACA3742BC280F00052713E /* Square.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70ACA3732BC280F00052713E /* Square.swift */; };
@@ -20,6 +21,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		705D07502BCA626E00AD5F22 /* ScoreModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreModel.swift; sourceTree = "<group>"; };
 		70614BA92BC123460053DDAE /* ColorExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExt.swift; sourceTree = "<group>"; };
 		70ACA3712BC280CC0052713E /* BoardViewWithControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardViewWithControls.swift; sourceTree = "<group>"; };
 		70ACA3732BC280F00052713E /* Square.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Square.swift; sourceTree = "<group>"; };
@@ -60,6 +62,7 @@
 				70C731412BC11D5D000FB2F9 /* BoardView.swift */,
 				70ACA3712BC280CC0052713E /* BoardViewWithControls.swift */,
 				70ACA3752BC28B5E0052713E /* GameView.swift */,
+				705D07502BCA626E00AD5F22 /* ScoreModel.swift */,
 			);
 			path = Game;
 			sourceTree = "<group>";
@@ -176,6 +179,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				705D07512BCA626E00AD5F22 /* ScoreModel.swift in Sources */,
 				70614BAA2BC123460053DDAE /* ColorExt.swift in Sources */,
 				70FD21722BC6BA5E00F6D513 /* Styles.swift in Sources */,
 				70ACA3742BC280F00052713E /* Square.swift in Sources */,

@@ -84,6 +84,11 @@ struct PopupOverView: View {
     }
 }
 
+struct Iteration: Hashable {
+    var question : String
+    var answer : Bool
+}
+
 struct GameView: View {
     @State private var showPiecesPosition = true
     @State private var showRanksandFiles = true
@@ -102,6 +107,14 @@ struct GameView: View {
     @State private var progress: Float = 0.0
     
     @State private var showingOptionsPopup = false
+    
+    @State var questionList: [Iteration] = []
+    
+    @State var scoreModel: ScoreModel = ScoreModel(lastScore: Score(success: 11, attempts: 14),
+                                                   bestScoreWhite: Score(success: 14, attempts: 15),
+                                                   bestScoreBlack: Score(success: 9, attempts: 10),
+                                                   avgScoreWhite: 10.65, totalPlayWhite: 20,
+                                                   avgScoreBlack: 6.10, totalPlayBlack: 10)
     
     //    let totalPlay = 100
     let timerInterval = 0.1
@@ -149,10 +162,18 @@ struct GameView: View {
     var body: some View {
         NavigationView {
             VStack {
-                HStack {
-                    EmptyView()
+                
+                ScrollView(Axis.Set.horizontal, showsIndicators: false) {
+                    HStack(spacing: 20) {
+                        ForEach(questionList, id: \.self) { item in
+                            Text(item.question)
+                                .font(.title2)
+                                .foregroundColor(item.answer ? .green : .red)
+                        }
+                    }
+                    .padding(.horizontal)
+                    .frame(height: 50)
                 }
-                .frame(height: 50)
                 
                 BoardView(showPiecesPosition: $showPiecesPosition,
                           showRanksandFiles: $showRanksandFiles,
@@ -162,15 +183,20 @@ struct GameView: View {
                           gameStarted: $gameStarted,
                           squareClicked: { value in
                     // game logic, validating clicked squares
-                    if gameEnded {
+                    if gameEnded || !gameStarted {
                         return
                     }
+                    
+                    
                     
                     let clickedCoordinate = getCoordinate(forIndex: value)
                     if clickedCoordinate == currentCoordinate {
                         // point count increases
                         score += 1
                     }
+                    
+                    questionList.append(Iteration(question: currentCoordinate,
+                                                  answer: (clickedCoordinate == currentCoordinate)))
                     
                     currentPlay += 1
                     currentCoordinate = getRandomCoordinate()
@@ -189,16 +215,6 @@ struct GameView: View {
                         .foregroundColor(.white)
                         .padding()
                 }
-                
-                //                if gameEnded {
-                //                    Text("Game ended!")
-                //                        .foregroundColor(.white)
-                //
-                //                    Text("Score: \(score)/\(currentPlay)")
-                //                        .font(.title3)
-                //                        .foregroundColor(.green)
-                //                        .padding()
-                //                }
                 
                 Spacer()
                 HStack(spacing: 15) {
@@ -248,7 +264,7 @@ struct GameView: View {
             } //scrollview
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(Color.white.opacity(0.20))
-            .navigationTitle("BoardBrain - Games")
+            .navigationTitle("BoardBrain - training")
             .navigationBarTitleDisplayMode(.inline)
             .popup(isPresented: $gameEnded) {
                 VStack {
@@ -256,9 +272,28 @@ struct GameView: View {
                         .foregroundColor(.black)
                     
                     Text("Score: \(score)/\(currentPlay)")
-                        .font(.title2)
+                        .font(.title)
                         .foregroundColor(.green)
                         .padding()
+                                        
+                    VStack(alignment: .leading) {
+                        Text("Average Score: ")
+                            .foregroundColor(.gray)
+                        Text(String(format: "as White:  %.2f \nas Black:  %.2f ", scoreModel.avgScoreWhite, scoreModel.avgScoreBlack))
+                            .font(.subheadline)
+                            .foregroundColor(.black)
+                            .padding(.bottom)
+                        
+                        Text("Best Score: ")
+                            .foregroundColor(.gray)
+                        Text("as White:  \(scoreModel.bestScoreWhite.success) / \(scoreModel.bestScoreWhite.attempts) \nas Black:  \(scoreModel.bestScoreBlack.success) / \(scoreModel.bestScoreBlack.attempts)")
+                            .font(.subheadline)
+                            .foregroundColor(.black)
+                            .padding(.bottom)
+                    }
+                    .padding(20)
+                    .background(.gray.opacity(0.25))
+                    .cornerRadius(15)
                 }
                 .padding(25)
                 .background(.white)
@@ -271,7 +306,7 @@ struct GameView: View {
                     .animation(.spring())
                     .closeOnTapOutside(true)
                     .backgroundColor(.black.opacity(0.5))
-                    .autohideIn(5)
+                    .autohideIn(60)
             }
 //                .alert(isPresented: $gameEnded) {
 //                    // Alert content
