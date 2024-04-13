@@ -7,12 +7,17 @@
 
 import Foundation
 
-struct Score {
-    var success: Int = 14
-    var attempts: Int = 15
+enum COLOR {
+    case white
+    case black
 }
 
-struct ScoreModel {
+struct Score: Codable {
+    var correctAttempts: Int = 14
+    var totalAttempts: Int = 15
+}
+
+struct ScoreModel: Codable {
     var lastScore: Score
     var bestScoreWhite: Score
     var bestScoreBlack: Score
