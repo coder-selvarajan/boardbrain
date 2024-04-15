@@ -7,10 +7,16 @@
 
 import Foundation
 
-enum COLOR {
+enum COLOR: Codable {
     case white
     case black
 }
+
+enum SquareColor: Codable {
+    case light
+    case dark
+}
+
 
 struct Score: Codable {
     var correctAttempts: Int = 14
@@ -19,6 +25,7 @@ struct Score: Codable {
 
 struct ScoreModel: Codable {
     var lastScore: Score
+    var lastScoreAs: COLOR
     var bestScoreWhite: Score
     var bestScoreBlack: Score
     

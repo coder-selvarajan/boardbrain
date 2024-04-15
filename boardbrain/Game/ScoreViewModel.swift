@@ -21,6 +21,7 @@ class ScoreViewModel: ObservableObject {
         
         //if no user defaults value then assign default values.
         scoreModel = ScoreModel(lastScore: Score(correctAttempts: 0, totalAttempts: 0),
+                                lastScoreAs: .white,
                                 bestScoreWhite: Score(correctAttempts: 0, totalAttempts: 0),
                                 bestScoreBlack: Score(correctAttempts: 0, totalAttempts: 0),
                                 avgScoreWhite: 0.0, totalPlayWhite: 0,
@@ -29,6 +30,7 @@ class ScoreViewModel: ObservableObject {
     
     func updateScore(for color: COLOR, score: Score) {
         scoreModel.lastScore = score
+        scoreModel.lastScoreAs = color
         
         if color == .white {
             // check and update best score

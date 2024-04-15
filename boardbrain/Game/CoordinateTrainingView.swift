@@ -8,12 +8,7 @@
 import SwiftUI
 import PopupView
 
-struct Iteration: Hashable {
-    var question : String
-    var answer : Bool
-}
-
-struct GameView: View {
+struct CoordinateTrainingView: View {
     @ObservedObject var scoreViewModel = ScoreViewModel()
     
     @State private var showPiecesPosition = true
@@ -30,9 +25,9 @@ struct GameView: View {
     @State var gameStarted: Bool = false
     @State var gameEnded: Bool = false
     @State var currentPlay: Int = 0
-    @State private var progress: Float = 0
+    @State private var progress: Float = 0.0
     @State private var showingOptionsPopup = false
-    @State var questionList: [Iteration] = []
+    @State var questionList: [GameIteration] = []
     
     let timerInterval = 0.1
     let totalTime = 30.0
@@ -71,7 +66,8 @@ struct GameView: View {
                 timer.invalidate()
                 
                 //update the scores and persist
-                scoreViewModel.updateScore(for: whiteSide ? .white : .black, score: Score(correctAttempts: score, totalAttempts: currentPlay))
+                scoreViewModel.updateScore(for: whiteSide ? .white : .black, 
+                                           score: Score(correctAttempts: score, totalAttempts: currentPlay))
                 
                 gameEnded = true
                 gameStarted = false
@@ -85,19 +81,23 @@ struct GameView: View {
                 ScrollViewReader { value in
                     ScrollView(Axis.Set.horizontal, showsIndicators: false) {
                         HStack(spacing: 15) {
-                            ForEach(questionList, id: \.self) { item in
+                            ForEach(questionList, id: \.id) { item in
                                 Text(item.question)
                                     .id(item.question)
-                                    .font(.title3)
+                                    .font(.body)
                                     .foregroundColor(item.answer ? .green : .red)
                             }
                         }
                         .padding(.horizontal)
                     }
                     .padding(.horizontal)
-                    .onChange(of: questionList) {     // << here !!
+                    .onChange(of: questionList) {
+                        if questionList.count < 1 {
+                            return
+                        }
                         withAnimation {
-                            value.scrollTo(questionList[questionList.count - 1], anchor: .trailing)
+                            value.scrollTo(questionList[questionList.count - 1],
+                                           anchor: .trailing)
                         }
                     }
                 }
@@ -123,7 +123,7 @@ struct GameView: View {
                         score += 1
                     }
                     
-                    questionList.append(Iteration(question: currentCoordinate,
+                    questionList.append(GameIteration(question: currentCoordinate,
                                                   answer: (clickedCoordinate == currentCoordinate)))
                     
                     currentPlay += 1
@@ -137,11 +137,26 @@ struct GameView: View {
                     .padding(.top, -5)
                 
                 Spacer()
-                if gameStarted {
-                    Text(currentCoordinate)
-                        .font(.largeTitle)
-                        .foregroundColor(.white)
-                        .padding()
+                VStack(alignment: .center, spacing: 5) {
+                    if gameStarted {
+                        Text("Tap this on the board: ")
+                            .font(.footnote)
+                        Text(currentCoordinate)
+                            .font(.largeTitle)
+                            .foregroundColor(.white)
+                            .padding()
+                    } else {
+                        Text(String(format: "Last score (%@): %d/%d",
+                                    scoreViewModel.scoreModel.lastScoreAs == .white ? "w" : "b",
+                                    scoreViewModel.scoreModel.lastScore.correctAttempts,
+                                    scoreViewModel.scoreModel.lastScore.totalAttempts))
+                            .font(.subheadline)
+                            .padding(.bottom)
+                        Text(String(format: "Average score as white: %.2f", scoreViewModel.scoreModel.avgScoreWhite))
+                            .font(.footnote)
+                        Text(String(format: "Average score as black: %.2f", scoreViewModel.scoreModel.avgScoreBlack))
+                            .font(.footnote)
+                    }
                 }
                 
                 Spacer()
@@ -150,7 +165,6 @@ struct GameView: View {
                         Button {
                             gameStarted = true
                             gameEnded = false
-                            showCoordinates = false
                             
                             questionList.removeAll()
                             
@@ -195,7 +209,7 @@ struct GameView: View {
             } //scrollview
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(Color.white.opacity(0.20))
-            .navigationTitle("BoardBrain - training")
+            .navigationTitle("BoardBrain - Coordinates training")
             .navigationBarTitleDisplayMode(.inline)
             .popup(isPresented: $gameEnded) {
                 VStack {
@@ -242,7 +256,7 @@ struct GameView: View {
                             Spacer()
                         }
                     }
-                    .background(.cyan.opacity(0.75))
+                    .background(.cyan.opacity(0.80))
                     .frame(maxWidth: .infinity)
                     .cornerRadius(10)
                 }
@@ -260,20 +274,14 @@ struct GameView: View {
                     .backgroundColor(.black.opacity(0.5))
                     .autohideIn(100)
             }
-            //                .alert(isPresented: $gameEnded) {
-            //                    // Alert content
-            //                    Alert(
-            //                        title: Text("Game ended!"),
-            //                        message: Text("Score: \(score)/\(currentPlay)\n\nBest as white: 18/20\nBest as black: 18/20"),
-            //                        dismissButton: .default(Text("OK"))
-            //                    )
-            //                }
             .toolbar {
                 // Hamburger menu icon on the left
                 ToolbarItem(placement: .navigationBarLeading) {
                     Menu {
-                        Button("Option 1", action: {})
-                        Button("Option 2", action: {})
+                        Button("Introduction", action: {})
+                        Button("Game: Coordinates", action: {})
+                        Button("Game: Moves", action: {})
+                        Button("Game: Light/Dark", action: {})
                     } label: {
                         Image(systemName: "line.horizontal.3")
                             .foregroundColor(.white)
@@ -285,7 +293,7 @@ struct GameView: View {
                     Button(action: {
                         // Action for the gear icon
                     }) {
-                        Image(systemName: "gear")
+                        Image(systemName: "info.circle")
                             .foregroundColor(.white)
                     }
                 }
@@ -297,5 +305,5 @@ struct GameView: View {
 }
 
 #Preview {
-    GameView()
+    CoordinateTrainingView()
 }

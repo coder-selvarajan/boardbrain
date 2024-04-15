@@ -32,7 +32,7 @@ struct boardbrainApp: App {
     
     var body: some Scene {
         WindowGroup {
-            GameView()
+            CoordinateTrainingView()
                 .colorScheme(ColorScheme.dark)
         }
     }
