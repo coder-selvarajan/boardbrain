@@ -91,11 +91,9 @@ struct CoordinateTrainingView: View {
                     }
                     .padding(.horizontal)
                     .onChange(of: questionList) {
-                        if questionList.count < 1 {
-                            return
-                        }
+                        guard !questionList.isEmpty else { return }
                         withAnimation {
-                            value.scrollTo(questionList[questionList.count - 1],
+                            value.scrollTo(questionList.last?.question,
                                            anchor: .trailing)
                         }
                     }
