@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		7019350A2BC9858900ECDA51 /* PopupView in Frameworks */ = {isa = PBXBuildFile; productRef = 701935092BC9858900ECDA51 /* PopupView */; };
+		7044D7532BCED7A700136FD6 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7044D7522BCED7A700136FD6 /* HomeView.swift */; };
 		705D07512BCA626E00AD5F22 /* ScoreModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705D07502BCA626E00AD5F22 /* ScoreModel.swift */; };
 		70614BAA2BC123460053DDAE /* ColorExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70614BA92BC123460053DDAE /* ColorExt.swift */; };
 		7095AB7C2BCC08AA003532CD /* ColorsTrainingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7095AB7B2BCC08AA003532CD /* ColorsTrainingView.swift */; };
@@ -26,6 +27,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7044D7522BCED7A700136FD6 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		705D07502BCA626E00AD5F22 /* ScoreModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreModel.swift; sourceTree = "<group>"; };
 		70614BA92BC123460053DDAE /* ColorExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExt.swift; sourceTree = "<group>"; };
 		7095AB7B2BCC08AA003532CD /* ColorsTrainingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorsTrainingView.swift; sourceTree = "<group>"; };
@@ -106,6 +108,7 @@
 				70C731312BC11AB6000FB2F9 /* boardbrainApp.swift */,
 				70C731372BC11AB9000FB2F9 /* Assets.xcassets */,
 				70C731392BC11AB9000FB2F9 /* Preview Content */,
+				7044D7522BCED7A700136FD6 /* HomeView.swift */,
 			);
 			path = boardbrain;
 			sourceTree = "<group>";
@@ -195,6 +198,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				705D07512BCA626E00AD5F22 /* ScoreModel.swift in Sources */,
+				7044D7532BCED7A700136FD6 /* HomeView.swift in Sources */,
 				7095AB802BCC10DB003532CD /* GameIteration.swift in Sources */,
 				7095AB7E2BCC08D9003532CD /* SimpleBoardView.swift in Sources */,
 				7095AB7C2BCC08AA003532CD /* ColorsTrainingView.swift in Sources */,

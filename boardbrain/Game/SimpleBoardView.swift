@@ -13,6 +13,7 @@ struct SimpleBoardView: View {
     @Binding var showSquareColors: Bool
     @Binding var showSquareBorders: Bool
     @Binding var highlightIndex: Int
+    @Binding var gameEnded: Bool
     let squareClicked: ((Int) -> Void)?
     
     private let rows = 8
@@ -84,7 +85,7 @@ struct SimpleBoardView: View {
                 ZStack {
                     Rectangle()
                         .foregroundColor(highlightIndex == index ? 
-                            .green.opacity(0.75) : Color(hex: "#F0D9B5"))
+                            .white.opacity(0.45) : Color(hex: "#eeeed2"))
 //                        .foregroundColor(Color(hex: "#F0D9B5")
                         .border(showSquareBorders ? Color.black.opacity(0.25) : Color.clear)
                         .onTapGesture {
@@ -92,6 +93,14 @@ struct SimpleBoardView: View {
                         }
                     
                     let coordinate = getCoordinate(forIndex: index)
+                    
+                    if !gameEnded && highlightIndex == index {
+                        Text("\(coordinate.file)\(coordinate.rank)")
+                            .font(.title2)
+                            .foregroundColor(.green)
+                            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+                            .padding([.bottom, .trailing], 3)
+                    }
                     
                     if showCoordinates {
                         if index % columns == 0 {
@@ -117,5 +126,5 @@ struct SimpleBoardView: View {
 }
 
 #Preview {
-    SimpleBoardView(showCoordinates: .constant(true), whiteSide: .constant(true), showSquareColors: .constant(false), showSquareBorders: .constant(true), highlightIndex: .constant(20), squareClicked: nil)
+    SimpleBoardView(showCoordinates: .constant(true), whiteSide: .constant(true), showSquareColors: .constant(false), showSquareBorders: .constant(true), highlightIndex: .constant(20), gameEnded: .constant(true), squareClicked: nil)
 }

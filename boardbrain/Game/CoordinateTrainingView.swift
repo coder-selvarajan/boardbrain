@@ -76,7 +76,6 @@ struct CoordinateTrainingView: View {
     }
     
     var body: some View {
-        NavigationView {
             VStack {
                 ScrollViewReader { value in
                     ScrollView(Axis.Set.horizontal, showsIndicators: false) {
@@ -209,7 +208,7 @@ struct CoordinateTrainingView: View {
             } //scrollview
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(Color.white.opacity(0.20))
-            .navigationTitle("BoardBrain - Coordinates training")
+            .navigationTitle("Coordinates training")
             .navigationBarTitleDisplayMode(.inline)
             .popup(isPresented: $gameEnded) {
                 VStack {
@@ -276,17 +275,17 @@ struct CoordinateTrainingView: View {
             }
             .toolbar {
                 // Hamburger menu icon on the left
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Menu {
-                        Button("Introduction", action: {})
-                        Button("Game: Coordinates", action: {})
-                        Button("Game: Moves", action: {})
-                        Button("Game: Light/Dark", action: {})
-                    } label: {
-                        Image(systemName: "line.horizontal.3")
-                            .foregroundColor(.white)
-                    }
-                }
+//                ToolbarItem(placement: .navigationBarLeading) {
+//                    Menu {
+//                        Button("Introduction", action: {})
+//                        Button("Game: Coordinates", action: {})
+//                        Button("Game: Moves", action: {})
+//                        Button("Game: Light/Dark", action: {})
+//                    } label: {
+//                        Image(systemName: "line.horizontal.3")
+//                            .foregroundColor(.white)
+//                    }
+//                }
                 
                 // Gear icon on the right
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -298,9 +297,6 @@ struct CoordinateTrainingView: View {
                     }
                 }
             }
-            
-        }
-        
     }
 }
 
