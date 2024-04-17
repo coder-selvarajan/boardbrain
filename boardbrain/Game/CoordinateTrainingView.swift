@@ -130,13 +130,13 @@ struct CoordinateTrainingView: View {
                 ProgressView(value: progress, total: 1.0)
                     .progressViewStyle(LinearProgressViewStyle(tint: Color.green))
                     .scaleEffect(x: 1, y: 3, anchor: .center)
-                    .padding(.bottom, 20)
+                    .padding(.bottom, 10)
                     .padding(.top, -5)
                 
                 Spacer()
                 VStack(alignment: .center, spacing: 5) {
                     if gameStarted {
-                        Text("Tap this on the board: ")
+                        Text("Tap this square on the board: ")
                             .font(.footnote)
                         Text(currentCoordinate)
                             .font(.largeTitle)
@@ -148,7 +148,7 @@ struct CoordinateTrainingView: View {
                                     scoreViewModel.scoreModel.lastScore.correctAttempts,
                                     scoreViewModel.scoreModel.lastScore.totalAttempts))
                             .font(.subheadline)
-                            .padding(.bottom)
+                            .padding(.bottom, 10)
                         Text(String(format: "Average score as white: %.2f", scoreViewModel.scoreModel.avgScoreWhite))
                             .font(.footnote)
                         Text(String(format: "Average score as black: %.2f", scoreViewModel.scoreModel.avgScoreBlack))

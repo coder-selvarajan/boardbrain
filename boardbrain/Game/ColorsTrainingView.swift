@@ -159,10 +159,11 @@ struct ColorsTrainingView: View {
                                 answerQuestion(with: SquareColor.dark)
                             }
                     }
-                    
-                    
-                } else {
-                    //
+                } else if currentPlay > 0 {
+                    Text(String(format: "Last score: %d/%d",
+                                score, currentPlay))
+                        .font(.subheadline)
+                        .padding(.bottom, 10)
                 }
             }
             
