@@ -41,7 +41,7 @@ struct HomeView: View {
                 }
                 .padding()
                 
-                NavigationLink(destination: EmptyView()) {
+                NavigationLink(destination: ChessboardView()) {
                     HStack {
                         Image(systemName: "3.circle.fill")
                             .font(.title)

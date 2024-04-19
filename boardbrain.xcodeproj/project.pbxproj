@@ -11,6 +11,9 @@
 		7044D7532BCED7A700136FD6 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7044D7522BCED7A700136FD6 /* HomeView.swift */; };
 		705D07512BCA626E00AD5F22 /* ScoreModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705D07502BCA626E00AD5F22 /* ScoreModel.swift */; };
 		70614BAA2BC123460053DDAE /* ColorExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70614BA92BC123460053DDAE /* ColorExt.swift */; };
+		709379A32BD24081004990BD /* ChessboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 709379A22BD24081004990BD /* ChessboardView.swift */; };
+		709379A52BD240A3004990BD /* ChessPiece.swift in Sources */ = {isa = PBXBuildFile; fileRef = 709379A42BD240A3004990BD /* ChessPiece.swift */; };
+		709379A92BD240FF004990BD /* MovesTrainingHome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 709379A82BD240FF004990BD /* MovesTrainingHome.swift */; };
 		7095AB7C2BCC08AA003532CD /* ColorsTrainingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7095AB7B2BCC08AA003532CD /* ColorsTrainingView.swift */; };
 		7095AB7E2BCC08D9003532CD /* SimpleBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7095AB7D2BCC08D9003532CD /* SimpleBoardView.swift */; };
 		7095AB802BCC10DB003532CD /* GameIteration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7095AB7F2BCC10DB003532CD /* GameIteration.swift */; };
@@ -30,6 +33,9 @@
 		7044D7522BCED7A700136FD6 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		705D07502BCA626E00AD5F22 /* ScoreModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreModel.swift; sourceTree = "<group>"; };
 		70614BA92BC123460053DDAE /* ColorExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExt.swift; sourceTree = "<group>"; };
+		709379A22BD24081004990BD /* ChessboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChessboardView.swift; sourceTree = "<group>"; };
+		709379A42BD240A3004990BD /* ChessPiece.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChessPiece.swift; sourceTree = "<group>"; };
+		709379A82BD240FF004990BD /* MovesTrainingHome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovesTrainingHome.swift; sourceTree = "<group>"; };
 		7095AB7B2BCC08AA003532CD /* ColorsTrainingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorsTrainingView.swift; sourceTree = "<group>"; };
 		7095AB7D2BCC08D9003532CD /* SimpleBoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleBoardView.swift; sourceTree = "<group>"; };
 		7095AB7F2BCC10DB003532CD /* GameIteration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameIteration.swift; sourceTree = "<group>"; };
@@ -62,26 +68,50 @@
 			isa = PBXGroup;
 			children = (
 				70614BA92BC123460053DDAE /* ColorExt.swift */,
-				70ACA3732BC280F00052713E /* Square.swift */,
-				70FD21712BC6BA5E00F6D513 /* Styles.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
 		};
-		70646CBF2BC2FB6F006818B7 /* Game */ = {
+		7093799E2BD23BCA004990BD /* CoordinatesTraining */ = {
 			isa = PBXGroup;
 			children = (
+				70B871DD2BCAAC8300D4D0ED /* BoardOptions.swift */,
 				70C731412BC11D5D000FB2F9 /* BoardView.swift */,
 				70ACA3712BC280CC0052713E /* BoardViewWithControls.swift */,
 				70ACA3752BC28B5E0052713E /* CoordinateTrainingView.swift */,
-				705D07502BCA626E00AD5F22 /* ScoreModel.swift */,
 				70B871DB2BCA916A00D4D0ED /* ScoreViewModel.swift */,
-				70B871DD2BCAAC8300D4D0ED /* BoardOptions.swift */,
+				705D07502BCA626E00AD5F22 /* ScoreModel.swift */,
+			);
+			path = CoordinatesTraining;
+			sourceTree = "<group>";
+		};
+		7093799F2BD23BE7004990BD /* ColorsTraining */ = {
+			isa = PBXGroup;
+			children = (
 				7095AB7B2BCC08AA003532CD /* ColorsTrainingView.swift */,
 				7095AB7D2BCC08D9003532CD /* SimpleBoardView.swift */,
-				7095AB7F2BCC10DB003532CD /* GameIteration.swift */,
 			);
-			path = Game;
+			path = ColorsTraining;
+			sourceTree = "<group>";
+		};
+		709379A02BD23C52004990BD /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				7095AB7F2BCC10DB003532CD /* GameIteration.swift */,
+				70FD21712BC6BA5E00F6D513 /* Styles.swift */,
+				70ACA3732BC280F00052713E /* Square.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		709379A12BD23CAE004990BD /* MovesTraining */ = {
+			isa = PBXGroup;
+			children = (
+				709379A22BD24081004990BD /* ChessboardView.swift */,
+				709379A42BD240A3004990BD /* ChessPiece.swift */,
+				709379A82BD240FF004990BD /* MovesTrainingHome.swift */,
+			);
+			path = MovesTraining;
 			sourceTree = "<group>";
 		};
 		70C731252BC11AB6000FB2F9 = {
@@ -103,12 +133,15 @@
 		70C731302BC11AB6000FB2F9 /* boardbrain */ = {
 			isa = PBXGroup;
 			children = (
-				70646CBF2BC2FB6F006818B7 /* Game */,
+				7093799E2BD23BCA004990BD /* CoordinatesTraining */,
+				709379A12BD23CAE004990BD /* MovesTraining */,
+				709379A02BD23C52004990BD /* Common */,
+				7093799F2BD23BE7004990BD /* ColorsTraining */,
 				70614BA62BC1230E0053DDAE /* Extension */,
 				70C731312BC11AB6000FB2F9 /* boardbrainApp.swift */,
+				7044D7522BCED7A700136FD6 /* HomeView.swift */,
 				70C731372BC11AB9000FB2F9 /* Assets.xcassets */,
 				70C731392BC11AB9000FB2F9 /* Preview Content */,
-				7044D7522BCED7A700136FD6 /* HomeView.swift */,
 			);
 			path = boardbrain;
 			sourceTree = "<group>";
@@ -198,11 +231,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				705D07512BCA626E00AD5F22 /* ScoreModel.swift in Sources */,
+				709379A92BD240FF004990BD /* MovesTrainingHome.swift in Sources */,
 				7044D7532BCED7A700136FD6 /* HomeView.swift in Sources */,
 				7095AB802BCC10DB003532CD /* GameIteration.swift in Sources */,
 				7095AB7E2BCC08D9003532CD /* SimpleBoardView.swift in Sources */,
+				709379A32BD24081004990BD /* ChessboardView.swift in Sources */,
 				7095AB7C2BCC08AA003532CD /* ColorsTrainingView.swift in Sources */,
 				70614BAA2BC123460053DDAE /* ColorExt.swift in Sources */,
+				709379A52BD240A3004990BD /* ChessPiece.swift in Sources */,
 				70FD21722BC6BA5E00F6D513 /* Styles.swift in Sources */,
 				70ACA3742BC280F00052713E /* Square.swift in Sources */,
 				70ACA3762BC28B5E0052713E /* CoordinateTrainingView.swift in Sources */,
