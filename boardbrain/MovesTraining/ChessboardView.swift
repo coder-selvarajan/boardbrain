@@ -10,39 +10,78 @@ import SwiftUI
 struct ChessboardView: View {
     let rows = 8
     let columns = 8
-    let cellSize: CGFloat = 50
-    @State private var piece = ChessPiece(type: ChessPieceType.allCases.randomElement()!, position: CGPoint(x: (Int.random(in: 0..<8) * 50) - Int(25.0), y: (Int.random(in: 0..<8) * 50) - Int(25.0)))  // Initially place the piece at a random point
-
+    @State private var piece = ChessPiece(type: ChessPieceType.allCases.randomElement()!, row: Int.random(in: 0..<8), column: Int.random(in: 0..<8))
+    
     var body: some View {
-        ZStack {
-            ForEach(0..<rows, id: \.self) { row in
-                ForEach(0..<columns, id: \.self) { column in
-                    Rectangle()
-                        .fill((row + column) % 2 == 0 ? Color.white : Color.brown)
-                        .frame(width: cellSize, height: cellSize)
-                        .position(x: CGFloat(column) * cellSize + cellSize / 2, y: CGFloat(row) * cellSize + cellSize / 2)
+        GeometryReader { geometry in
+            let cellSize = geometry.size.width / CGFloat(columns)
+            ZStack {
+                ForEach(0..<rows, id: \.self) { row in
+                    ForEach(0..<columns, id: \.self) { column in
+                        Rectangle()
+                            .fill((row + column) % 2 == 0 ? Color.white : Color.brown)
+                            .frame(width: cellSize, height: cellSize)
+                            .position(x: CGFloat(column) * cellSize + cellSize / 2, y: CGFloat(row) * cellSize + cellSize / 2)
+                    }
                 }
+                Image(piece.type.rawValue)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: cellSize * 0.8, height: cellSize * 0.8)
+                    .foregroundColor((piece.row + piece.column) % 2 == 0 ? .black : .white)
+                    .position(x: CGFloat(piece.column) * cellSize + cellSize / 2, y: CGFloat(piece.row) * cellSize + cellSize / 2)
+                    .gesture(
+                        DragGesture()
+                            .onChanged { gesture in
+                                let newColumn = Int((gesture.location.x / cellSize).rounded())
+                                let newRow = Int((gesture.location.y / cellSize).rounded())
+                                piece.column = newColumn
+                                piece.row = newRow
+                            }
+                    )
             }
-            Image(piece.type.rawValue)
-                .resizable()
-                .scaledToFit()
-                .frame(width: 40, height: 40)
-                .foregroundColor((Int(piece.position.x / cellSize) + Int(piece.position.y / cellSize)) % 2 == 0 ? .black : .white)
-                .position(piece.position)
-                .gesture(
-                    DragGesture()
-                        .onChanged { gesture in
-                            self.piece.position = gesture.location
-                        }
-                        .onEnded { gesture in
-                            let newX = round(gesture.location.x / cellSize) * cellSize + cellSize / 2
-                            let newY = round(gesture.location.y / cellSize) * cellSize + cellSize / 2
-                            self.piece.position = CGPoint(x: newX, y: newY)
-                        }
-                )
+            .frame(width: geometry.size.width, height: geometry.size.width) // Keeping the board square
         }
-        .frame(width: cellSize * CGFloat(columns), height: cellSize * CGFloat(rows))
     }
+    
+    //    let rows = 8
+    //    let columns = 8
+    //    let cellSize: CGFloat = 50
+    //    @State private var piece = ChessPiece(type: ChessPieceType.allCases.randomElement()!, position: CGPoint(x: (Int.random(in: 0..<8) * 50) - Int(25.0), y: (Int.random(in: 0..<8) * 50) - Int(25.0)))  // Initially place the piece at a random point
+    //
+    //    var body: some View {
+    //        GeometryReader { geometry in
+    //            let cellSize = geometry.size.width / CGFloat(columns)
+    //            ZStack {
+    //                ForEach(0..<rows, id: \.self) { row in
+    //                    ForEach(0..<columns, id: \.self) { column in
+    //                        Rectangle()
+    //                            .fill((row + column) % 2 == 0 ? Color.white : Color.brown)
+    //                            .frame(width: cellSize, height: cellSize)
+    //                            .position(x: CGFloat(column) * cellSize + cellSize / 2, y: CGFloat(row) * cellSize + cellSize / 2)
+    //                    }
+    //                }
+    //                Image(piece.type.rawValue)
+    //                    .resizable()
+    //                    .scaledToFit()
+    //                    .frame(width: 40, height: 40)
+    //                    .foregroundColor((Int(piece.position.x / cellSize) + Int(piece.position.y / cellSize)) % 2 == 0 ? .black : .white)
+    //                    .position(piece.position)
+    //                    .gesture(
+    //                        DragGesture()
+    //                            .onChanged { gesture in
+    //                                self.piece.position = gesture.location
+    //                            }
+    //                            .onEnded { gesture in
+    //                                let newX = round(gesture.location.x / cellSize) * cellSize + cellSize / 2
+    //                                let newY = round(gesture.location.y / cellSize) * cellSize + cellSize / 2
+    //                                self.piece.position = CGPoint(x: newX, y: newY)
+    //                            }
+    //                    )
+    //            }
+    //            .frame(width: cellSize * CGFloat(columns), height: cellSize * CGFloat(rows))
+    //        }
+    //    }
 }
 
 #Preview {

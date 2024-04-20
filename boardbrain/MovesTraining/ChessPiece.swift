@@ -17,10 +17,17 @@ import Foundation
 //    var position: (Int, Int)
 //}
 
+//struct ChessPiece: Identifiable {
+//    var id = UUID()
+//    var type: ChessPieceType
+//    var position: CGPoint  // Using CGPoint to track the position in pixels rather than grid coordinates
+//}
+
 struct ChessPiece: Identifiable {
-    var id = UUID()
+    let id = UUID()
     var type: ChessPieceType
-    var position: CGPoint  // Using CGPoint to track the position in pixels rather than grid coordinates
+    var row: Int
+    var column: Int
 }
 
 enum ChessPieceType: String, CaseIterable {
