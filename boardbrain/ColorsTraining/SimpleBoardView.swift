@@ -85,7 +85,7 @@ struct SimpleBoardView: View {
                 ZStack {
                     Rectangle()
                         .foregroundColor(highlightIndex == index ? 
-                            .white.opacity(0.45) : Color(hex: "#eeeed2"))
+                            .yellow : .white)
 //                        .foregroundColor(Color(hex: "#F0D9B5")
                         .border(showSquareBorders ? Color.black.opacity(0.25) : Color.clear)
                         .onTapGesture {
@@ -97,7 +97,7 @@ struct SimpleBoardView: View {
                     if !gameEnded && highlightIndex == index {
                         Text("\(coordinate.file)\(coordinate.rank)")
                             .font(.title2)
-                            .foregroundColor(.green)
+                            .foregroundColor(.black)
                             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
                             .padding([.bottom, .trailing], 3)
                     }

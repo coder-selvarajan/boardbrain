@@ -147,8 +147,7 @@ struct CoordinateTrainingView: View {
                                     scoreViewModel.scoreModel.lastScoreAs == .white ? "w" : "b",
                                     scoreViewModel.scoreModel.lastScore.correctAttempts,
                                     scoreViewModel.scoreModel.lastScore.totalAttempts))
-                            .font(.subheadline)
-                            .padding(.bottom, 10)
+                            .font(.footnote)
                         Text(String(format: "Average score as white: %.2f", scoreViewModel.scoreModel.avgScoreWhite))
                             .font(.footnote)
                         Text(String(format: "Average score as black: %.2f", scoreViewModel.scoreModel.avgScoreBlack))

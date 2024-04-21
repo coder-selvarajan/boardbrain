@@ -11,52 +11,99 @@ struct HomeView: View {
     var body: some View {
         NavigationView {
             VStack {
+                Spacer()
+                
                 NavigationLink(destination: CoordinateTrainingView()) {
-                    HStack {
-                        Image(systemName: "1.circle.fill")
-                            .font(.title)
-                        Text("Coordinates Training")
+                    HStack(alignment: .top) {
+                        Image(systemName: "square.grid.2x2.fill") // "textformat.123")
+                            .font(.largeTitle)
+                            .foregroundColor(.blue)
+                            .padding(.horizontal, 20)
+                        VStack(alignment: .leading) {
+                            Text("Coordinates")
+                                .font(.title2)
+                            Text("Training")
+                                .font(.headline)
+                                .foregroundColor(.gray)
+                        }
+                        Spacer()
                     }
                     .padding()
-                    .foregroundColor(.white)
+                    .foregroundColor(.black)
                     .frame(maxWidth: .infinity)
-                    .background(Color.green)
+                    .frame(height: 70)
+                    .background(Color.white.opacity(0.9))
                     .cornerRadius(10)
                     .padding(.horizontal)
                 }
                 .padding()
                 
-                NavigationLink(destination: ColorsTrainingView()) {
-                    HStack {
-                        Image(systemName: "2.circle.fill")
-                            .font(.title)
-                        Text("Square Colors Training")
-                    }
-                    .padding()
-                    .foregroundColor(.white)
-                    .frame(maxWidth: .infinity)
-                    .background(Color.blue)
-                    .cornerRadius(10)
-                    .padding(.horizontal)
-                }
-                .padding()
                 
                 NavigationLink(destination: ChessboardView()) {
-                    HStack {
-                        Image(systemName: "3.circle.fill")
-                            .font(.title)
-                        Text("Moves Training")
+                    HStack(alignment: .top) {
+                        Image(systemName: "crown.fill")
+                            .font(.largeTitle)
+                            .foregroundColor(.green)
+                            .padding(.horizontal, 15)
+                        VStack(alignment: .leading) {
+                            Text("Piece Moves")
+                                .font(.title2)
+                            Text("Training")
+                                .font(.headline)
+                                .foregroundColor(.gray)
+                        }
+                        
+                        Spacer()
                     }
                     .padding()
-                    .foregroundColor(.white)
+                    .foregroundColor(.black)
                     .frame(maxWidth: .infinity)
-                    .background(Color.orange)
+                    .frame(height: 70)
+                    .background(Color.white.opacity(0.9))
+                    .cornerRadius(10)
+                    .padding(.horizontal)
+                }
+                .padding(.horizontal)
+                
+                NavigationLink(destination: ColorsTrainingView()) {
+                    HStack(alignment: .top) {
+                        Image(systemName: "square.righthalf.filled")
+                            .font(.largeTitle)
+                            .foregroundColor(.orange.opacity(0.95))
+                            .padding(.horizontal, 20)
+                        VStack(alignment: .leading) {
+                            Text("Square Colors")
+                                .font(.title2)
+                            Text("Training")
+                                .font(.headline)
+                                .foregroundColor(.gray)
+                        }
+                        
+                        Spacer()
+                    }
+                    .padding()
+                    .foregroundColor(.black)
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 70)
+                    .background(Color.white.opacity(0.9))
                     .cornerRadius(10)
                     .padding(.horizontal)
                 }
                 .padding()
+                
+                Spacer()
+                
+                BoardView(showPiecesPosition: .constant(true), showRanksandFiles: .constant(false), showCoordinates: .constant(true), whiteSide: .constant(true), targetIndex: .constant(-1), gameStarted: .constant(false), squareClicked: { value in
+                    print(value)
+                })
+                .padding(.horizontal, 30)
+//                .frame(width: 200, height: 200)
+                
+                Spacer()
             }
+            .background(Color.white.opacity(0.20))
             .navigationTitle("Board Brain")
+            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 // Hamburger menu icon on the left
                 ToolbarItem(placement: .navigationBarLeading) {
@@ -87,4 +134,5 @@ struct HomeView: View {
 
 #Preview {
     HomeView()
+        .colorScheme(ColorScheme.dark)
 }

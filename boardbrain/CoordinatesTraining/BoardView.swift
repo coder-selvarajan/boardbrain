@@ -112,8 +112,12 @@ struct BoardView: View {
                     Rectangle()
                         .foregroundColor((highlightResult && index == greenTargetIndex) ? .green : (highlightResult && index == redTargetIndex) ?
                             .red : (index / columns) % 2 == index % 2
-                                         ? Color(hex: "#F0D9B5")
-                                         : Color(hex: "#B58863"))
+                                         ? Color.white
+                                         : Color.gray)
+//                        .foregroundColor((highlightResult && index == greenTargetIndex) ? .green : (highlightResult && index == redTargetIndex) ?
+//                            .red : (index / columns) % 2 == index % 2
+//                                         ? Color(hex: "#F0D9B5")
+//                                         : Color(hex: "#B58863"))
                         .onTapGesture {
                             squareTapped(index: index)
                         }
@@ -121,11 +125,14 @@ struct BoardView: View {
                     let coordinate = getCoordinate(forIndex: index)
                     
                     if showCoordinates {
-                        Text("\(coordinate.file)\(coordinate.rank)")
-                            .font(.headline)
-                            .foregroundColor((index / columns) % 2 == index % 2 ? .black : .white)
-                            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
-                            .padding([.bottom, .trailing], 3)
+                        if !(showPiecesPosition &&  ((1...2).contains(coordinate.rank) || (7...8).contains(coordinate.rank))) {
+                            
+                            Text("\(coordinate.file)\(coordinate.rank)")
+                                .font(.subheadline)
+                                .foregroundColor((index / columns) % 2 == index % 2 ? .black : .white)
+                                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+                                .padding([.bottom, .trailing], 3)
+                        }
                     }
                     
                     if showPiecesPosition {

@@ -143,7 +143,8 @@ struct ColorsTrainingView: View {
                         
                         Rectangle()
                             .frame(width: 60, height: 60)
-                            .foregroundColor(Color(hex: "#F0D9B5"))
+//                            .foregroundColor(Color(hex: "#F0D9B5"))
+                            .foregroundColor(Color.white)
                             .cornerRadius(10.0)
                             .padding(.vertical)
                             .onTapGesture {
@@ -152,7 +153,8 @@ struct ColorsTrainingView: View {
                         
                         Rectangle()
                             .frame(width: 60, height: 60)
-                            .foregroundColor(Color(hex: "#C58863"))
+//                            .foregroundColor(Color(hex: "#C58863"))
+                            .foregroundColor(Color.gray)
                             .cornerRadius(10.0)
                             .padding(.vertical)
                             .onTapGesture {
