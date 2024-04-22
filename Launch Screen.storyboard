@@ -22,10 +22,10 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo-icon" translatesAutoresizingMaskIntoConstraints="NO" id="HBv-E1-lg9">
-                                <rect key="frame" x="132.66666666666666" y="362" width="127.99999999999997" height="128"/>
+                                <rect key="frame" x="121.66666666666669" y="351" width="150" height="150"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="128" id="3EY-ts-0c8"/>
-                                    <constraint firstAttribute="width" constant="128" id="4S4-yB-WQY"/>
+                                    <constraint firstAttribute="height" constant="150" id="RuK-cm-FPn"/>
+                                    <constraint firstAttribute="width" constant="150" id="xki-NB-Etm"/>
                                 </constraints>
                             </imageView>
                         </subviews>
