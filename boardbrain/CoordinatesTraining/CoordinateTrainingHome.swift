@@ -8,7 +8,7 @@
 import SwiftUI
 import PopupView
 
-struct CoordinateTrainingView: View {
+struct CoordinateTrainingHome: View {
     @ObservedObject var scoreViewModel = ScoreViewModel()
     
     @State private var showPiecesPosition = true
@@ -143,15 +143,17 @@ struct CoordinateTrainingView: View {
                             .foregroundColor(.white)
                             .padding()
                     } else {
-                        Text(String(format: "Last score (%@): %d/%d",
-                                    scoreViewModel.scoreModel.lastScoreAs == .white ? "w" : "b",
-                                    scoreViewModel.scoreModel.lastScore.correctAttempts,
-                                    scoreViewModel.scoreModel.lastScore.totalAttempts))
+                        if (scoreViewModel.scoreModel.bestScoreWhite.totalAttempts > 0) {
+                            Text(String(format: "Last score (%@): %d/%d",
+                                        scoreViewModel.scoreModel.lastScoreAs == .white ? "W" : "B",
+                                        scoreViewModel.scoreModel.lastScore.correctAttempts,
+                                        scoreViewModel.scoreModel.lastScore.totalAttempts))
                             .font(.footnote)
-                        Text(String(format: "Average score as white: %.2f", scoreViewModel.scoreModel.avgScoreWhite))
-                            .font(.footnote)
-                        Text(String(format: "Average score as black: %.2f", scoreViewModel.scoreModel.avgScoreBlack))
-                            .font(.footnote)
+                            Text(String(format: "Average score as White: %.2f", scoreViewModel.scoreModel.avgScoreWhite))
+                                .font(.footnote)
+                            Text(String(format: "Average score as Black: %.2f", scoreViewModel.scoreModel.avgScoreBlack))
+                                .font(.footnote)
+                        }
                     }
                 }
                 
@@ -298,5 +300,5 @@ struct CoordinateTrainingView: View {
 }
 
 #Preview {
-    CoordinateTrainingView()
+    CoordinateTrainingHome()
 }

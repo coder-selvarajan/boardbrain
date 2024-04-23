@@ -13,17 +13,18 @@ struct HomeView: View {
             VStack {
                 Spacer()
                 
-                NavigationLink(destination: CoordinateTrainingView()) {
-                    HStack(alignment: .top) {
+                NavigationLink(destination: CoordinateTrainingHome()) {
+                    HStack(alignment: .center) {
                         Image(systemName: "square.grid.2x2.fill") // "textformat.123")
-                            .font(.largeTitle)
+                            .resizable()
+                            .frame(width: 35, height: 35, alignment: .center)
                             .foregroundColor(.blue)
-                            .padding(.horizontal, 20)
+                            .padding(.horizontal, 15)
                         VStack(alignment: .leading) {
                             Text("Coordinates")
-                                .font(.title2)
+                                .font(.title3)
                             Text("Training")
-                                .font(.headline)
+                                .font(.subheadline)
                                 .foregroundColor(.gray)
                         }
                         Spacer()
@@ -39,17 +40,19 @@ struct HomeView: View {
                 .padding()
                 
                 
-                NavigationLink(destination: ChessboardView()) {
-                    HStack(alignment: .top) {
+                NavigationLink(destination: MovesTrainingHome()) {
+                    HStack(alignment: .center) {
                         Image(systemName: "crown.fill")
-                            .font(.largeTitle)
+                            .resizable()
+                            .frame(width: 35, height: 35, alignment: .center)
+//                            .font(.largeTitle)
                             .foregroundColor(.green)
                             .padding(.horizontal, 15)
                         VStack(alignment: .leading) {
-                            Text("Piece Moves")
-                                .font(.title2)
+                            Text("Moves")
+                                .font(.title3)
                             Text("Training")
-                                .font(.headline)
+                                .font(.subheadline)
                                 .foregroundColor(.gray)
                         }
                         
@@ -65,17 +68,18 @@ struct HomeView: View {
                 }
                 .padding(.horizontal)
                 
-                NavigationLink(destination: ColorsTrainingView()) {
-                    HStack(alignment: .top) {
+                NavigationLink(destination: ColorsTrainingHome()) {
+                    HStack(alignment: .center) {
                         Image(systemName: "square.righthalf.filled")
-                            .font(.largeTitle)
+                            .resizable()
+                            .frame(width: 35, height: 35, alignment: .center)
                             .foregroundColor(.orange.opacity(0.95))
-                            .padding(.horizontal, 20)
+                            .padding(.horizontal, 15)
                         VStack(alignment: .leading) {
-                            Text("Square Colors")
-                                .font(.title2)
+                            Text("Colors")
+                                .font(.title3)
                             Text("Training")
-                                .font(.headline)
+                                .font(.subheadline)
                                 .foregroundColor(.gray)
                         }
                         
@@ -93,37 +97,50 @@ struct HomeView: View {
                 
                 Spacer()
                 
-                BoardView(showPiecesPosition: .constant(true), showRanksandFiles: .constant(false), showCoordinates: .constant(true), whiteSide: .constant(true), targetIndex: .constant(-1), gameStarted: .constant(false), squareClicked: { value in
-                    print(value)
-                })
-                .padding(.horizontal, 30)
+                VStack{
+                    Text("Sample Board with Pieces & Coordinates:")
+                        .font(.footnote)
+                    BoardView(showPiecesPosition: .constant(true), showRanksandFiles: .constant(false), showCoordinates: .constant(true), whiteSide: .constant(true), targetIndex: .constant(-1), gameStarted: .constant(false), squareClicked: { value in
+                        print(value)
+                    })
+                    .padding(.horizontal, 30)
+                }
 //                .frame(width: 200, height: 200)
                 
                 Spacer()
             }
             .background(Color.white.opacity(0.20))
-            .navigationTitle("Board Brain")
+//            .navigationTitle("Board Brain")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                // Hamburger menu icon on the left
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Menu {
-                        Button("Introduction", action: {})
-                        Button("Game: Coordinates", action: {})
-                        Button("Game: Moves", action: {})
-                        Button("Game: Light/Dark", action: {})
-                    } label: {
-                        Image(systemName: "line.horizontal.3")
-                            .foregroundColor(.white)
+                ToolbarItem(placement: .principal) {
+                    HStack {
+                        Text("Board Brain").font(.title3)
+                            .foregroundColor(Color.white)
+                            .padding(.horizontal, 20)
+                        Spacer()
                     }
                 }
+                // Hamburger menu icon on the left
+//                ToolbarItem(placement: .navigationBarLeading) {
+//                    Menu {
+//                        Button("Introduction", action: {})
+//                        Button("Game: Coordinates", action: {})
+//                        Button("Game: Moves", action: {})
+//                        Button("Game: Light/Dark", action: {})
+//                    } label: {
+//                        Image(systemName: "line.horizontal.3")
+//                            .foregroundColor(.white)
+//                    }
+//                }
                 
                 // Gear icon on the right
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button(action: {
-                        // Action for the gear icon
-                    }) {
-                        Image(systemName: "info.circle")
+                    Menu {
+                        Button("Settings", action: {})
+                        Button("About", action: {})
+                    } label: {
+                        Image(systemName: "gearshape.fill")
                             .foregroundColor(.white)
                     }
                 }

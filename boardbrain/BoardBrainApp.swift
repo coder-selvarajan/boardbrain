@@ -9,10 +9,11 @@ import SwiftUI
 import SwiftData
 
 @main
-struct boardbrainApp: App {
+struct BoardBrainApp: App {
     var body: some Scene {
         WindowGroup {
             HomeView()
+//            XChessBoardHome()
                 .colorScheme(ColorScheme.dark)
         }
     }

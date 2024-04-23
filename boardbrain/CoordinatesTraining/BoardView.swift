@@ -128,23 +128,23 @@ struct BoardView: View {
                         if (showPiecesPosition &&  (1...2).contains(coordinate.rank)) {
                             Text("\(coordinate.file)\(coordinate.rank)")
                                 .font(.system(size: 8))
-                                .foregroundColor((index / columns) % 2 == index % 2 ? .black.opacity(0.75) : .white.opacity(0.75))
-                                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomLeading)
-                                .padding([.bottom, .leading], 1)
+                                .foregroundColor((index / columns) % 2 == index % 2 ? .black.opacity(0.5) : .white.opacity(0.5))
+                                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+                                .padding([.top, .leading], 1)
                         }
-                        else if (showPiecesPosition &&   (7...8).contains(coordinate.rank)) {
+                        else if (showPiecesPosition &&  (7...8).contains(coordinate.rank)) {
                             Text("\(coordinate.file)\(coordinate.rank)")
                                 .font(.system(size: 8))
-                                .foregroundColor((index / columns) % 2 == index % 2 ? .black.opacity(0.75) : .white.opacity(0.75))
+                                .foregroundColor((index / columns) % 2 == index % 2 ? .black.opacity(0.5) : .white.opacity(0.5))
                                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
                                 .padding([.top, .leading], 1)
                             
                         } else {
                             Text("\(coordinate.file)\(coordinate.rank)")
                                 .font(.subheadline)
-                                .foregroundColor((index / columns) % 2 == index % 2 ? .black.opacity(0.5) : .white.opacity(0.5))
+                                .foregroundColor((index / columns) % 2 == index % 2 ? .black.opacity(0.25) : .white.opacity(0.25))
                                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
-                                .padding([.bottom, .trailing], 3)
+//                                .padding([.bottom, .trailing], 3)
                         }
                     }
                     

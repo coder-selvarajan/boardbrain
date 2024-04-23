@@ -8,7 +8,7 @@
 import SwiftUI
 import PopupView
 
-struct ColorsTrainingView: View {
+struct ColorsTrainingHome: View {
     
     @State private var showCoordinates = false
     @State private var whiteSide = true
@@ -195,7 +195,7 @@ struct ColorsTrainingView: View {
                             .foregroundColor(.black)
                             .padding(.horizontal, 20)
                             .frame(height: 60)
-                            .background(.blue)
+                            .background(.yellow)
                             .cornerRadius(10.0)
                     }
                     
@@ -290,5 +290,5 @@ struct ColorsTrainingView: View {
 }
 
 #Preview {
-    ColorsTrainingView()
+    ColorsTrainingHome()
 }

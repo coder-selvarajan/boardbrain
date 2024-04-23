@@ -10,9 +10,10 @@ import SwiftUI
 struct ChessboardView: View {
     let rows = 8
     let columns = 8
-    @State private var piece = ChessPiece(type: ChessPieceType.allCases.randomElement()!,
-                                          row: Int.random(in: 0..<8),
-                                          column: Int.random(in: 0..<8))
+    @Binding var piece: ChessPiece?
+//     ChessPiece(type: ChessPieceType.allCases.randomElement()!,
+//                                          row: Int.random(in: 0..<8),
+//                                          column: Int.random(in: 0..<8))
     @State var imageScale: CGSize = CGSize(width: 1.0, height: 1.0)
     
     @State var highlightedRow: Int = -1
@@ -53,46 +54,49 @@ struct ChessboardView: View {
                                       y: CGFloat(highlightedRow) * cellSize + cellSize / 2)
                     }
                 }
-                
-                Image(piece.type.rawValue)
-                    .resizable()
-                    .scaledToFit()
-                    .scaleEffect(imageScale)
-                    .frame(width: cellSize * 0.9, height: cellSize * 0.9)
-                    .foregroundColor((piece.row + piece.column) % 2 == 0 ? .black : .white)
-                    .position(x: CGFloat(piece.column) * cellSize + cellSize / 2, y: CGFloat(piece.row) * cellSize + cellSize / 2)
-                    .offset(imageOffset)
-                    .gesture(
-                        DragGesture()
-                            .onChanged { gesture in
-                                gestureLocation = gesture.location
-                                let newColumn = Int((gesture.location.x / cellSize)) //.rounded())
-                                let newRow = Int((gesture.location.y / cellSize)) //.rounded())
-                                highlightedCol = newColumn
-                                highlightedRow = newRow
-                                imageOffset = gesture.translation
-                                
-                                imageScale = CGSize(width: 1.5, height: 1.5)
-                                
-                            }
-                            .onEnded { gesture  in
-                                withAnimation {
+                if var piece = piece {
+                    Image(piece.type.rawValue)
+                        .resizable()
+                        .scaledToFit()
+                        .scaleEffect(imageScale)
+                        .frame(width: cellSize * 0.9, height: cellSize * 0.9)
+                        .foregroundColor((piece.row + piece.column) % 2 == 0 ? .black : .white)
+                        .position(x: CGFloat(piece.column) * cellSize + cellSize / 2, y: CGFloat(piece.row) * cellSize + cellSize / 2)
+                        .offset(imageOffset)
+                        .gesture(
+                            DragGesture()
+                                .onChanged { gesture in
+                                    gestureLocation = gesture.location
                                     let newColumn = Int((gesture.location.x / cellSize)) //.rounded())
                                     let newRow = Int((gesture.location.y / cellSize)) //.rounded())
-                                    piece.column = newColumn
-                                    piece.row = newRow
-                                    imageOffset = .zero
-                                    imageScale = CGSize(width: 1.0, height: 1.0)
+                                    highlightedCol = newColumn
+                                    highlightedRow = newRow
+                                    imageOffset = gesture.translation
                                     
-                                    highlightedCol = -1
-                                    highlightedRow = -1
+                                    imageScale = CGSize(width: 1.5, height: 1.5)
+                                    
                                 }
-                            }
-                    )
+                                .onEnded { gesture  in
+                                    withAnimation {
+                                        let newColumn = Int((gesture.location.x / cellSize)) //.rounded())
+                                        let newRow = Int((gesture.location.y / cellSize)) //.rounded())
+                                        piece.column = newColumn
+                                        piece.row = newRow
+                                        imageOffset = .zero
+                                        imageScale = CGSize(width: 1.0, height: 1.0)
+                                        
+                                        highlightedCol = -1
+                                        highlightedRow = -1
+                                    }
+                                }
+                        )
+                }// piece nil condition
                 
                 //                Text(String.init(format: "%.2f, %.2f", gestureLocation.x, gestureLocation.y))
                 //                    .foregroundColor(.red)
             }
+            .background(.yellow)
+            .foregroundColor(.yellow)
             .frame(width: geometry.size.width, height: geometry.size.width) // Keeping the board square
         }
     }
@@ -100,6 +104,8 @@ struct ChessboardView: View {
 }
 
 #Preview {
-    ChessboardView()
+    ChessboardView(piece: .constant(ChessPiece(type: ChessPieceType.allCases.randomElement()!,
+                                     row: Int.random(in: 0..<8),
+                                     column: Int.random(in: 0..<8))))
         .background(.black)
 }
