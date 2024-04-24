@@ -7,11 +7,64 @@
 
 import SwiftUI
 
+struct GameState {
+    var currentPiece: ChessPiece
+    var initialPosition: Position
+    var possibleMoves: [Position]
+    var targetPosition: Position
+    var question: String
+    
+    static func nextState() -> GameState {
+        let rank = ["a","b","c","d","e","f","g","h"]
+        
+        // excluding pawn, as it has only one move forward
+        let pieceTypes = ChessPieceType.allCases.filter { $0 != .pawn }
+        let randomPieceType = pieceTypes.randomElement()!
+        let randomPosition = Position(row: Int.random(in: 0..<8), column: Int.random(in: 0..<8))
+        let randomPiece = ChessPiece(type: randomPieceType, row: randomPosition.row, column: randomPosition.column)
+        
+        //get possible moves for the piece at the position
+        let allowedMoves = getMoves(for: randomPieceType, from: randomPosition)
+        //pick one target position
+        let targetPosition = allowedMoves.randomElement()!
+        
+        print("targetPosition: ", targetPosition)
+        // form the question
+        let question = "\(randomPiece.type.getShortCode())\(rank[targetPosition.column])\(8 - targetPosition.row)"
+        
+        return GameState(currentPiece: randomPiece,
+                         initialPosition: randomPosition,
+                         possibleMoves: allowedMoves,
+                         targetPosition: targetPosition,
+                         question: question)
+    }
+    
+    static func getMoves(for type: ChessPieceType, from position: Position) -> [Position] {
+        switch type {
+        case .rook:
+            return Position.straightMoves(from: position)
+        case .bishop:
+            return Position.diagonalMoves(from: position)
+        case .knight:
+            return Position.knightMoves(from: position)
+        case .queen:
+            return Position.straightMoves(from: position) + Position.diagonalMoves(from: position)
+        case .king:
+            return Position.kingMoves(from: position)
+        default:
+            return []
+        }
+    }
+
+}
+
 struct MovesTrainingHome: View {
     @ObservedObject var scoreViewModel = ScoreViewModel()
     
-    @State private var showCoordinates = false
+    @State private var showCoordinates = true
     @State private var whiteSide = true
+    @State private var highlightPossibleMoves = true
+    
     @State private var selectedColor = "White"
     @State private var targetIndex: Int = -1
     
@@ -29,34 +82,10 @@ struct MovesTrainingHome: View {
     @State var currentPiece: ChessPiece?
     @State var possibleMoves: [Position]?
     
+    @State var gameState: GameState?
+    
     let timerInterval = 0.1
     let totalTime = 30.0
-    
-    private func getCoordinate(forIndex index: Int) -> String {
-        let filesWhite = ["a", "b", "c", "d", "e", "f", "g", "h"]
-        let filesBlack = ["h", "g", "f", "e", "d", "c", "b", "a"]
-        
-        var rank = 0
-        var file = ""
-        
-        if whiteSide {
-            rank = 8 - index / columns
-            file = filesWhite[index % columns]
-        }
-        else {
-            rank = (8 + index) / columns
-            file = filesBlack[index % columns]
-        }
-        
-        let square = Square(rank: rank, file: file, index: index)
-        return square.getCoordinate()
-    }
-    
-    func getRandomCoordinate() -> String {
-        let rndIndex = Int.random(in: 0..<64)
-        targetIndex = rndIndex
-        return getCoordinate(forIndex: rndIndex)
-    }
     
     private func startProgress() {
         progress = 0.0
@@ -100,35 +129,19 @@ struct MovesTrainingHome: View {
             }
             .frame(height: 50)
             
-            ChessboardView(piece: $currentPiece, possibleMoves: $possibleMoves, showCoordinates: $showCoordinates)
+            ChessboardView(showCoordinates: $showCoordinates,
+                           highlightPossibleMoves: $highlightPossibleMoves,
+                           gameState: $gameState,
+                           pieceMovedTo: { position in
+                if position == gameState!.targetPosition {
+                    score += 1
+                }
+                gameState = GameState.nextState()
+                currentCoordinate = gameState!.question
+                
+//                nextQuestion()
+            })
                 .frame(height: UIScreen.main.bounds.size.width)
-            
-//            BoardView(showPiecesPosition: $showPiecesPosition,
-//                      showRanksandFiles: $showRanksandFiles,
-//                      showCoordinates: $showCoordinates,
-//                      whiteSide: $whiteSide,
-//                      targetIndex: $targetIndex,
-//                      gameStarted: $gameStarted,
-//                      squareClicked: { value in
-//                // game logic, validating clicked squares
-//                if gameEnded || !gameStarted {
-//                    return
-//                }
-//                
-//                
-//                
-//                let clickedCoordinate = getCoordinate(forIndex: value)
-//                if clickedCoordinate == currentCoordinate {
-//                    // point count increases
-//                    score += 1
-//                }
-//                
-//                questionList.append(GameIteration(question: currentCoordinate,
-//                                                  answer: (clickedCoordinate == currentCoordinate)))
-//                
-//                currentPlay += 1
-//                currentCoordinate = getRandomCoordinate()
-//            })
             
             ProgressView(value: progress, total: 1.0)
                 .progressViewStyle(LinearProgressViewStyle(tint: Color.green))
@@ -162,43 +175,18 @@ struct MovesTrainingHome: View {
             HStack(spacing: 15) {
                 if !gameStarted {
                     Button {
-                        let randomPiece = ChessPieceType.allCases.randomElement()!
-                        let randomPosition = Position(row: Int.random(in: 0..<8), column: Int.random(in: 0..<8))
-                        
-                        currentPiece = ChessPiece(type: randomPiece,
-                                                  row: randomPosition.row,
-                                                  column: randomPosition.column)
-                        // get posible moves
-                        var allowedMoves: [Position] = []
-                        if randomPiece == ChessPieceType.rook {
-                            allowedMoves = Position.straightMoves(from: randomPosition)
-                        }
-                        if randomPiece == ChessPieceType.bishop {
-                            allowedMoves = Position.diagonalMoves(from: randomPosition)
-                        }
-                        if randomPiece == ChessPieceType.knight {
-                            allowedMoves = Position.knightMoves(from: randomPosition)
-                        }
-                        if randomPiece == ChessPieceType.queen {
-                            allowedMoves = Position.straightMoves(from: randomPosition) + Position.diagonalMoves(from: randomPosition)
-                        }
-                        if randomPiece == ChessPieceType.king {
-                            allowedMoves = Position.kingMoves(from: randomPosition)
-                        }
-                        if randomPiece == ChessPieceType.pawn {
-                            allowedMoves = Position.pawnMoves(from: randomPosition)
-                        }
-                        possibleMoves = allowedMoves
-//                        print(possibleMoves)
-                        
                         gameStarted = true
                         gameEnded = false
                         
                         questionList.removeAll()
                         
-                        currentCoordinate = getRandomCoordinate()
+//                        currentCoordinate = getRandomCoordinate()
                         currentPlay = 0
                         score = 0
+                        
+                        //pick random square and a piece
+                        gameState = GameState.nextState()
+                        currentCoordinate = gameState!.question
                         
                         startProgress()
                     } label: {
@@ -226,7 +214,7 @@ struct MovesTrainingHome: View {
                         .cornerRadius(10.0)
                     }
                     .popover(isPresented: $showingOptionsPopup, content: {
-                        MovesPopupOptions(showCoordinates: $showCoordinates, whiteSide: $whiteSide)
+                        MovesPopupOptions(showCoordinates: $showCoordinates, whiteSide: $whiteSide, highlightPossibleMoves: $highlightPossibleMoves)
                             .presentationDetents([.medium])
                     })
                 }
@@ -314,7 +302,7 @@ struct MovesTrainingHome: View {
     }
 }
 
-#Preview {
-    MovesTrainingHome()
-        .colorScheme(ColorScheme.dark)
-}
+//#Preview {
+//    MovesTrainingHome()
+//        .colorScheme(ColorScheme.dark)
+//}

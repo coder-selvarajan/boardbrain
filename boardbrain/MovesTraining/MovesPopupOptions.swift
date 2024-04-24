@@ -11,6 +11,7 @@ struct MovesPopupOptions: View {
     // Binding variables to pass state between views
     @Binding var showCoordinates: Bool
     @Binding var whiteSide: Bool
+    @Binding var highlightPossibleMoves: Bool
     
     var body: some View {
         VStack {
@@ -20,6 +21,10 @@ struct MovesPopupOptions: View {
             Divider()
             
             Toggle("Show Coordinates", isOn: $showCoordinates)
+                .font(.title2)
+                .padding()
+            
+            Toggle("Show Possible Moves", isOn: $highlightPossibleMoves)
                 .font(.title2)
                 .padding()
             
@@ -80,5 +85,5 @@ struct MovesPopupOptions: View {
 }
 
 #Preview {
-    MovesPopupOptions(showCoordinates: .constant(false), whiteSide: .constant(true))
+    MovesPopupOptions(showCoordinates: .constant(false), whiteSide: .constant(true), highlightPossibleMoves: .constant(true))
 }
