@@ -10,8 +10,6 @@ import SwiftUI
 struct MovesTrainingHome: View {
     @ObservedObject var scoreViewModel = ScoreViewModel()
     
-    @State private var showPiecesPosition = true
-    @State private var showRanksandFiles = true
     @State private var showCoordinates = false
     @State private var whiteSide = true
     @State private var selectedColor = "White"
@@ -29,6 +27,7 @@ struct MovesTrainingHome: View {
     @State var questionList: [GameIteration] = []
     
     @State var currentPiece: ChessPiece?
+    @State var possibleMoves: [Position]?
     
     let timerInterval = 0.1
     let totalTime = 30.0
@@ -101,7 +100,7 @@ struct MovesTrainingHome: View {
             }
             .frame(height: 50)
             
-            ChessboardView(piece: $currentPiece)
+            ChessboardView(piece: $currentPiece, possibleMoves: $possibleMoves, showCoordinates: $showCoordinates)
                 .frame(height: UIScreen.main.bounds.size.width)
             
 //            BoardView(showPiecesPosition: $showPiecesPosition,
@@ -170,26 +169,27 @@ struct MovesTrainingHome: View {
                                                   row: randomPosition.row,
                                                   column: randomPosition.column)
                         // get posible moves
-                        var possibleMoves: [Position] = []
+                        var allowedMoves: [Position] = []
                         if randomPiece == ChessPieceType.rook {
-                            possibleMoves = Position.straightMoves(from: randomPosition)
+                            allowedMoves = Position.straightMoves(from: randomPosition)
                         }
                         if randomPiece == ChessPieceType.bishop {
-                            possibleMoves = Position.diagonalMoves(from: randomPosition)
+                            allowedMoves = Position.diagonalMoves(from: randomPosition)
                         }
                         if randomPiece == ChessPieceType.knight {
-                            possibleMoves = Position.knightMoves(from: randomPosition)
+                            allowedMoves = Position.knightMoves(from: randomPosition)
                         }
                         if randomPiece == ChessPieceType.queen {
-                            possibleMoves = Position.straightMoves(from: randomPosition)
+                            allowedMoves = Position.straightMoves(from: randomPosition) + Position.diagonalMoves(from: randomPosition)
                         }
                         if randomPiece == ChessPieceType.king {
-                            possibleMoves = Position.kingMoves(from: randomPosition)
+                            allowedMoves = Position.kingMoves(from: randomPosition)
                         }
                         if randomPiece == ChessPieceType.pawn {
-                            possibleMoves = Position.pawnMoves(from: randomPosition)
+                            allowedMoves = Position.pawnMoves(from: randomPosition)
                         }
-                        print(possibleMoves)
+                        possibleMoves = allowedMoves
+//                        print(possibleMoves)
                         
                         gameStarted = true
                         gameEnded = false
@@ -226,10 +226,8 @@ struct MovesTrainingHome: View {
                         .cornerRadius(10.0)
                     }
                     .popover(isPresented: $showingOptionsPopup, content: {
-                        PopupBoardOptions(showPiecesPosition: $showPiecesPosition,
-                                          showRanksandFiles: $showRanksandFiles,
-                                          whiteSide: $whiteSide)
-                        .presentationDetents([.medium])
+                        MovesPopupOptions(showCoordinates: $showCoordinates, whiteSide: $whiteSide)
+                            .presentationDetents([.medium])
                     })
                 }
             }

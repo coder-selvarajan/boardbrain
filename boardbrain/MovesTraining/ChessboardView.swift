@@ -11,15 +11,16 @@ struct ChessboardView: View {
     let rows = 8
     let columns = 8
     @Binding var piece: ChessPiece?
-//     ChessPiece(type: ChessPieceType.allCases.randomElement()!,
-//                                          row: Int.random(in: 0..<8),
-//                                          column: Int.random(in: 0..<8))
-    @State var imageScale: CGSize = CGSize(width: 1.0, height: 1.0)
+    @Binding var possibleMoves: [Position]?
+    @Binding var showCoordinates: Bool
     
+    @State var imageScale: CGSize = CGSize(width: 1.0, height: 1.0)
     @State var highlightedRow: Int = -1
     @State var highlightedCol: Int = -1
     @State var imageOffset: CGSize = .zero
     @State var gestureLocation: CGPoint = .zero
+    
+    let rank = ["a","b","c","d","e","f","g","h","i","j"]
     
     var body: some View {
         GeometryReader { geometry in
@@ -29,14 +30,47 @@ struct ChessboardView: View {
                 
                 ForEach(0..<rows, id: \.self) { row in
                     ForEach(0..<columns, id: \.self) { column in
-                        Rectangle()
-                            .fill((row + column) % 2 == 0 ? Color.white : Color.gray)
-                        //                            .fill(
-                        //                                (row == highlightedRow && column == highlightedCol) ? Color.green : Color.clear)
-                            .frame(width: cellSize, height: cellSize)
-                            .position(x: CGFloat(column) * cellSize + cellSize / 2,
-                                      y: CGFloat(row) * cellSize + cellSize / 2)
-                        
+                        ZStack {
+                            Rectangle()
+                                .fill((row + column) % 2 == 0 ? Color.white : Color.gray)
+                            //                            .fill(
+                            //                                (row == highlightedRow && column == highlightedCol) ? Color.green : Color.clear)
+                                .frame(width: cellSize, height: cellSize)
+                                .position(x: CGFloat(column) * cellSize + cellSize / 2,
+                                          y: CGFloat(row) * cellSize + cellSize / 2)
+                            
+                            if let possibleMoves = possibleMoves {
+                                if possibleMoves.contains(Position(row: row, column: column)) {
+                                    Circle()
+                                        .fill(.green)
+                                        .frame(width: cellSize * 0.25, height: cellSize * 0.25)
+                                        .position(x: CGFloat(column) * cellSize + cellSize / 2,
+                                                  y: CGFloat(row) * cellSize + cellSize / 2)
+                                }
+                            }
+                            
+                            if showCoordinates {
+                                if column == 0 {
+                                    Text("\(8 - row)")
+                                        .font(.caption2)
+                                        .foregroundColor(row % 2 == 0 ? .gray : .white)
+                                        .frame(width: cellSize, height: cellSize, alignment: .topLeading)
+                                        .position(x: CGFloat(column) * cellSize + cellSize / 2,
+                                                  y: CGFloat(row) * cellSize + cellSize / 2)
+                                        .padding([.top, .leading], 1)
+                                }
+                                // print 'a'
+                                if row == 7 {
+                                    Text("\(rank[column])")
+                                        .font(.caption2)
+                                        .foregroundColor(column % 2 == 0 ? .white : .gray)
+                                        .frame(width: cellSize, height: cellSize, alignment: .bottomTrailing)
+                                        .position(x: CGFloat(column) * cellSize + cellSize / 2,
+                                                  y: CGFloat(row) * cellSize + cellSize / 2)
+                                        .padding([.bottom, .trailing], 2)
+                                }
+                            }
+                        }
                     }
                 }
                 
@@ -106,6 +140,8 @@ struct ChessboardView: View {
 #Preview {
     ChessboardView(piece: .constant(ChessPiece(type: ChessPieceType.allCases.randomElement()!,
                                      row: Int.random(in: 0..<8),
-                                     column: Int.random(in: 0..<8))))
+                                               column: Int.random(in: 0..<8))), 
+                   possibleMoves: .constant([]),
+                   showCoordinates: .constant(false))
         .background(.black)
 }
