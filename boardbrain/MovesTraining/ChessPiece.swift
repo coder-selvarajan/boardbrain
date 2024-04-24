@@ -47,8 +47,6 @@ enum ChessPieceType: String, CaseIterable {
             return "N"
         case .pawn:
             return "P"
-        default:
-            return ""
         }
     }
 }

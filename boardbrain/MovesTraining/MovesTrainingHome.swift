@@ -13,6 +13,7 @@ struct GameState {
     var possibleMoves: [Position]
     var targetPosition: Position
     var question: String
+    var gameEnded: Bool = false
     
     static func nextState() -> GameState {
         let rank = ["a","b","c","d","e","f","g","h"]
@@ -97,7 +98,9 @@ struct MovesTrainingHome: View {
                 //update the scores and persist
                 scoreViewModel.updateScore(for: whiteSide ? .white : .black,
                                            score: Score(correctAttempts: score, totalAttempts: currentPlay))
-                
+                if gameState != nil {
+                    gameState!.gameEnded = true
+                }
                 gameEnded = true
                 gameStarted = false
             }
@@ -133,11 +136,19 @@ struct MovesTrainingHome: View {
                            highlightPossibleMoves: $highlightPossibleMoves,
                            gameState: $gameState,
                            pieceMovedTo: { position in
-                if position == gameState!.targetPosition {
+                
+                let isCorrectAnswer: Bool = (position == gameState!.targetPosition)
+                if isCorrectAnswer {
                     score += 1
                 }
+                questionList.append(GameIteration(question: currentCoordinate,
+                                                  answer: isCorrectAnswer))
+                
+                // trigger the next question
                 gameState = GameState.nextState()
                 currentCoordinate = gameState!.question
+                
+                currentPlay += 1
                 
 //                nextQuestion()
             })
