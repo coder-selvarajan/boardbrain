@@ -9,7 +9,7 @@ import SwiftUI
 import PopupView
 
 struct CoordinateTrainingHome: View {
-    @ObservedObject var scoreViewModel = ScoreViewModel()
+    @ObservedObject var scoreViewModel = ScoreViewModel(type: TrainingType.Coordinates)
     
     @State private var showPiecesPosition = true
     @State private var showRanksandFiles = true
@@ -143,7 +143,7 @@ struct CoordinateTrainingHome: View {
                             .foregroundColor(.white)
                             .padding()
                     } else {
-                        if (scoreViewModel.scoreModel.bestScoreWhite.totalAttempts > 0) {
+                        if (scoreViewModel.scoreModel.totalPlayBlack > 0 || scoreViewModel.scoreModel.totalPlayWhite > 0) {
                             Text(String(format: "Last score (%@): %d/%d",
                                         scoreViewModel.scoreModel.lastScoreAs == .white ? "W" : "B",
                                         scoreViewModel.scoreModel.lastScore.correctAttempts,
@@ -196,7 +196,7 @@ struct CoordinateTrainingHome: View {
                             .cornerRadius(10.0)
                         }
                         .popover(isPresented: $showingOptionsPopup, content: {
-                            PopupBoardOptions(showPiecesPosition: $showPiecesPosition,
+                            CoordinatesPopupOptions(showPiecesPosition: $showPiecesPosition,
                                               showRanksandFiles: $showRanksandFiles,
                                               whiteSide: $whiteSide)
                             .presentationDetents([.medium])

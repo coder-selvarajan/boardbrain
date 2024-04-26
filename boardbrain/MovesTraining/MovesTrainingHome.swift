@@ -7,60 +7,9 @@
 
 import SwiftUI
 
-struct GameState {
-    var currentPiece: ChessPiece
-    var initialPosition: Position
-    var possibleMoves: [Position]
-    var targetPosition: Position
-    var question: String
-    var gameEnded: Bool = false
-    
-    static func nextState() -> GameState {
-        let rank = ["a","b","c","d","e","f","g","h"]
-        
-        // excluding pawn, as it has only one move forward
-        let pieceTypes = ChessPieceType.allCases.filter { $0 != .pawn }
-        let randomPieceType = pieceTypes.randomElement()!
-        let randomPosition = Position(row: Int.random(in: 0..<8), column: Int.random(in: 0..<8))
-        let randomPiece = ChessPiece(type: randomPieceType, row: randomPosition.row, column: randomPosition.column)
-        
-        //get possible moves for the piece at the position
-        let allowedMoves = getMoves(for: randomPieceType, from: randomPosition)
-        //pick one target position
-        let targetPosition = allowedMoves.randomElement()!
-        
-        print("targetPosition: ", targetPosition)
-        // form the question
-        let question = "\(randomPiece.type.getShortCode())\(rank[targetPosition.column])\(8 - targetPosition.row)"
-        
-        return GameState(currentPiece: randomPiece,
-                         initialPosition: randomPosition,
-                         possibleMoves: allowedMoves,
-                         targetPosition: targetPosition,
-                         question: question)
-    }
-    
-    static func getMoves(for type: ChessPieceType, from position: Position) -> [Position] {
-        switch type {
-        case .rook:
-            return Position.straightMoves(from: position)
-        case .bishop:
-            return Position.diagonalMoves(from: position)
-        case .knight:
-            return Position.knightMoves(from: position)
-        case .queen:
-            return Position.straightMoves(from: position) + Position.diagonalMoves(from: position)
-        case .king:
-            return Position.kingMoves(from: position)
-        default:
-            return []
-        }
-    }
-
-}
 
 struct MovesTrainingHome: View {
-    @ObservedObject var scoreViewModel = ScoreViewModel()
+    @ObservedObject var movesScoreViewModel = ScoreViewModel(type: TrainingType.Moves)
     
     @State private var showCoordinates = true
     @State private var whiteSide = true
@@ -96,7 +45,7 @@ struct MovesTrainingHome: View {
                 timer.invalidate()
                 
                 //update the scores and persist
-                scoreViewModel.updateScore(for: whiteSide ? .white : .black,
+                movesScoreViewModel.updateScore(for: whiteSide ? .white : .black,
                                            score: Score(correctAttempts: score, totalAttempts: currentPlay))
                 if gameState != nil {
                     gameState!.gameEnded = true
@@ -132,7 +81,7 @@ struct MovesTrainingHome: View {
             }
             .frame(height: 50)
             
-            ChessboardView(showCoordinates: $showCoordinates,
+            MovesBoardView(showCoordinates: $showCoordinates,
                            highlightPossibleMoves: $highlightPossibleMoves,
                            gameState: $gameState,
                            pieceMovedTo: { position in
@@ -150,7 +99,6 @@ struct MovesTrainingHome: View {
                 
                 currentPlay += 1
                 
-//                nextQuestion()
             })
                 .frame(height: UIScreen.main.bounds.size.width)
             
@@ -170,15 +118,17 @@ struct MovesTrainingHome: View {
                         .foregroundColor(.white)
                         .padding()
                 } else {
-                    Text(String(format: "Last score (%@): %d/%d",
-                                scoreViewModel.scoreModel.lastScoreAs == .white ? "w" : "b",
-                                scoreViewModel.scoreModel.lastScore.correctAttempts,
-                                scoreViewModel.scoreModel.lastScore.totalAttempts))
-                    .font(.footnote)
-                    Text(String(format: "Average score as white: %.2f", scoreViewModel.scoreModel.avgScoreWhite))
+                    if (movesScoreViewModel.scoreModel.totalPlayBlack > 0 || movesScoreViewModel.scoreModel.totalPlayWhite > 0) {
+                        Text(String(format: "Last score (%@): %d/%d",
+                                    movesScoreViewModel.scoreModel.lastScoreAs == .white ? "w" : "b",
+                                    movesScoreViewModel.scoreModel.lastScore.correctAttempts,
+                                    movesScoreViewModel.scoreModel.lastScore.totalAttempts))
                         .font(.footnote)
-                    Text(String(format: "Average score as black: %.2f", scoreViewModel.scoreModel.avgScoreBlack))
-                        .font(.footnote)
+                        Text(String(format: "Average score as white: %.2f", movesScoreViewModel.scoreModel.avgScoreWhite))
+                            .font(.footnote)
+                        Text(String(format: "Average score as black: %.2f", movesScoreViewModel.scoreModel.avgScoreBlack))
+                            .font(.footnote)
+                    }
                 }
             }
             
@@ -249,14 +199,14 @@ struct MovesTrainingHome: View {
                 VStack(alignment: .leading) {
                     Text("Average Score: ")
                         .foregroundColor(.gray)
-                    Text(String(format: "as White:  %.2f \nas Black:  %.2f ", scoreViewModel.scoreModel.avgScoreWhite, scoreViewModel.scoreModel.avgScoreBlack))
+                    Text(String(format: "as White:  %.2f \nas Black:  %.2f ", movesScoreViewModel.scoreModel.avgScoreWhite, movesScoreViewModel.scoreModel.avgScoreBlack))
                         .font(.subheadline)
                         .foregroundColor(.black)
                         .padding(.bottom)
                     
                     Text("Best Score: ")
                         .foregroundColor(.gray)
-                    Text("as White:  \(scoreViewModel.scoreModel.bestScoreWhite.correctAttempts) / \(scoreViewModel.scoreModel.bestScoreWhite.totalAttempts) \nas Black:  \(scoreViewModel.scoreModel.bestScoreBlack.correctAttempts) / \(scoreViewModel.scoreModel.bestScoreBlack.totalAttempts)")
+                    Text("as White:  \(movesScoreViewModel.scoreModel.bestScoreWhite.correctAttempts) / \(movesScoreViewModel.scoreModel.bestScoreWhite.totalAttempts) \nas Black:  \(movesScoreViewModel.scoreModel.bestScoreBlack.correctAttempts) / \(movesScoreViewModel.scoreModel.bestScoreBlack.totalAttempts)")
                         .font(.subheadline)
                         .foregroundColor(.black)
                         .padding(.bottom)
@@ -317,3 +267,55 @@ struct MovesTrainingHome: View {
 //    MovesTrainingHome()
 //        .colorScheme(ColorScheme.dark)
 //}
+
+struct GameState {
+    var currentPiece: ChessPiece
+    var initialPosition: Position
+    var possibleMoves: [Position]
+    var targetPosition: Position
+    var question: String
+    var gameEnded: Bool = false
+    
+    static func nextState() -> GameState {
+        let rank = ["a","b","c","d","e","f","g","h"]
+        
+        // excluding pawn, as it has only one move forward
+        let pieceTypes = ChessPieceType.allCases.filter { $0 != .pawn }
+        let randomPieceType = pieceTypes.randomElement()!
+        let randomPosition = Position(row: Int.random(in: 0..<8), column: Int.random(in: 0..<8))
+        let randomPiece = ChessPiece(type: randomPieceType, row: randomPosition.row, column: randomPosition.column)
+        
+        //get possible moves for the piece at the position
+        let allowedMoves = getMoves(for: randomPieceType, from: randomPosition)
+        //pick one target position
+        let targetPosition = allowedMoves.randomElement()!
+        
+        print("targetPosition: ", targetPosition)
+        // form the question
+        let question = "\(randomPiece.type.getShortCode())\(rank[targetPosition.column])\(8 - targetPosition.row)"
+        
+        return GameState(currentPiece: randomPiece,
+                         initialPosition: randomPosition,
+                         possibleMoves: allowedMoves,
+                         targetPosition: targetPosition,
+                         question: question)
+    }
+    
+    static func getMoves(for type: ChessPieceType, from position: Position) -> [Position] {
+        switch type {
+        case .rook:
+            return Position.straightMoves(from: position)
+        case .bishop:
+            return Position.diagonalMoves(from: position)
+        case .knight:
+            return Position.knightMoves(from: position)
+        case .queen:
+            return Position.straightMoves(from: position) + Position.diagonalMoves(from: position)
+        case .king:
+            return Position.kingMoves(from: position)
+        default:
+            return []
+        }
+    }
+
+}

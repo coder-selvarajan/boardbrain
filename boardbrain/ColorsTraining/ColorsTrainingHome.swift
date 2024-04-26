@@ -9,6 +9,7 @@ import SwiftUI
 import PopupView
 
 struct ColorsTrainingHome: View {
+    @ObservedObject var colorsScoreViewModel = ScoreViewModel(type: TrainingType.Colors)
     
     @State private var showCoordinates = false
     @State private var whiteSide = true
@@ -82,8 +83,9 @@ struct ColorsTrainingHome: View {
                 timer.invalidate()
                 
                 //update the scores and persist
-                //                scoreViewModel.updateScore(for: whiteSide ? .white : .black,
-                //                                           score: Score(correctAttempts: score, totalAttempts: currentPlay))
+                colorsScoreViewModel.updateScore(for: whiteSide ? .white : .black,
+                                                 score: Score(correctAttempts: score,
+                                                        totalAttempts: currentPlay))
                 
                 gameEnded = true
                 gameStarted = false
@@ -117,12 +119,13 @@ struct ColorsTrainingHome: View {
             }
             .frame(height: 50)
             
-            SimpleBoardView(showCoordinates: .constant(true), 
+            ColorsBoardView(showCoordinates: .constant(true), 
                             whiteSide: .constant(true),
                             showSquareColors: .constant(false),
                             showSquareBorders: .constant(true),
                             highlightIndex: $targetIndex,
                             gameEnded: $gameEnded, 
+                            gameStarted: $gameStarted,
                             squareClicked: nil)
             
             ProgressView(value: progress, total: 1.0)
@@ -161,11 +164,22 @@ struct ColorsTrainingHome: View {
                                 answerQuestion(with: SquareColor.dark)
                             }
                     }
-                } else if currentPlay > 0 {
-                    Text(String(format: "Last score: %d/%d",
-                                score, currentPlay))
-                        .font(.subheadline)
-                        .padding(.bottom, 10)
+                } else { // if currentPlay > 0 {
+//                    Text(String(format: "Last score: %d/%d",
+//                                score, currentPlay))
+//                        .font(.subheadline)
+//                        .padding(.bottom, 10)
+                    if (colorsScoreViewModel.scoreModel.totalPlayBlack > 0 || colorsScoreViewModel.scoreModel.totalPlayWhite > 0) {
+                        Text(String(format: "Last score (%@): %d/%d",
+                                    colorsScoreViewModel.scoreModel.lastScoreAs == .white ? "W" : "B",
+                                    colorsScoreViewModel.scoreModel.lastScore.correctAttempts,
+                                    colorsScoreViewModel.scoreModel.lastScore.totalAttempts))
+                        .font(.footnote)
+                        Text(String(format: "Average score as white: %.2f", colorsScoreViewModel.scoreModel.avgScoreWhite))
+                            .font(.footnote)
+                        Text(String(format: "Average score as black: %.2f", colorsScoreViewModel.scoreModel.avgScoreBlack))
+                            .font(.footnote)
+                    }
                 }
             }
             
@@ -199,20 +213,19 @@ struct ColorsTrainingHome: View {
                             .cornerRadius(10.0)
                     }
                     
-                    
-//                    Button {
-//                        showingOptionsPopup = true
-//                    } label: {
-//                        HStack {
-//                            Image(systemName: "gearshape")
-//                                .font(.title2)
-//                                .foregroundColor(.black.opacity(0.9))
-//                        }
-//                        .padding(.horizontal, 15)
-//                        .frame(height: 60)
-//                        .background(.white.opacity(0.75))
-//                        .cornerRadius(10.0)
-//                    }
+                    Button {
+                        showingOptionsPopup = true
+                    } label: {
+                        HStack {
+                            Image(systemName: "gearshape")
+                                .font(.title2)
+                                .foregroundColor(.black.opacity(0.9))
+                        }
+                        .padding(.horizontal, 15)
+                        .frame(height: 60)
+                        .background(.white.opacity(0.75))
+                        .cornerRadius(10.0)
+                    }
                     //
                 }
             }
@@ -231,6 +244,28 @@ struct ColorsTrainingHome: View {
                 Text("Score: \(score)/\(currentPlay)")
                     .font(.title)
                     .foregroundColor(.green)
+                
+                VStack(alignment: .leading) {
+                    Text("Average Score: ")
+                        .foregroundColor(.gray)
+                    Text(String(format: "as White:  %.2f \nas Black:  %.2f ", colorsScoreViewModel.scoreModel.avgScoreWhite, colorsScoreViewModel.scoreModel.avgScoreBlack))
+                        .font(.subheadline)
+                        .foregroundColor(.black)
+                        .padding(.bottom)
+                    
+                    Text("Best Score: ")
+                        .foregroundColor(.gray)
+                    Text("as White:  \(colorsScoreViewModel.scoreModel.bestScoreWhite.correctAttempts) / \(colorsScoreViewModel.scoreModel.bestScoreWhite.totalAttempts) \nas Black:  \(colorsScoreViewModel.scoreModel.bestScoreBlack.correctAttempts) / \(colorsScoreViewModel.scoreModel.bestScoreBlack.totalAttempts)")
+                        .font(.subheadline)
+                        .foregroundColor(.black)
+                        .padding(.bottom)
+                    
+                }
+                .padding(20)
+                .frame(maxWidth: .infinity)
+                .background(.gray.opacity(0.25))
+                .cornerRadius(15)
+                .padding(.bottom)
                 
                 Button {
                     gameEnded = false

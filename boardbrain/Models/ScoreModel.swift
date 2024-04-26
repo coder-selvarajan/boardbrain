@@ -19,8 +19,8 @@ enum SquareColor: Codable {
 
 
 struct Score: Codable {
-    var correctAttempts: Int = 14
-    var totalAttempts: Int = 15
+    var correctAttempts: Int = 0
+    var totalAttempts: Int = 0
 }
 
 struct ScoreModel: Codable {

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ChessboardView: View {
+struct MovesBoardView: View {
     let rows = 8
     let columns = 8
     @Binding var showCoordinates: Bool
@@ -151,7 +151,7 @@ struct ChessboardView: View {
 }
 
 #Preview {
-    ChessboardView(showCoordinates: .constant(true), highlightPossibleMoves: .constant(false),
+    MovesBoardView(showCoordinates: .constant(true), highlightPossibleMoves: .constant(false),
                    gameState: .constant(nil),
                    pieceMovedTo: { value in
                         print(value)

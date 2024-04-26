@@ -45,7 +45,7 @@ struct HomeView: View {
                         Image(systemName: "crown.fill")
                             .resizable()
                             .frame(width: 35, height: 35, alignment: .center)
-//                            .font(.largeTitle)
+                        //                            .font(.largeTitle)
                             .foregroundColor(.green)
                             .padding(.horizontal, 15)
                         VStack(alignment: .leading) {
@@ -73,7 +73,7 @@ struct HomeView: View {
                         Image(systemName: "square.righthalf.filled")
                             .resizable()
                             .frame(width: 35, height: 35, alignment: .center)
-                            .foregroundColor(.orange.opacity(0.95))
+                            .foregroundColor(.yellow.opacity(0.95))
                             .padding(.horizontal, 15)
                         VStack(alignment: .leading) {
                             Text("Colors")
@@ -105,49 +105,51 @@ struct HomeView: View {
                     })
                     .padding(.horizontal, 30)
                 }
-//                .frame(width: 200, height: 200)
+                //                .frame(width: 200, height: 200)
                 
                 Spacer()
-            }
+            } // VStack
             .background(Color.white.opacity(0.20))
-//            .navigationTitle("Board Brain")
+            //            .navigationTitle("Board Brain")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .principal) {
                     HStack {
+                        Image("logo-smooth-corners")
+                            .resizable()
+                            .frame(width: 35, height: 35)
+                        //                            .padding(.leading, 10)
                         Text("Board Brain").font(.title3)
                             .foregroundColor(Color.white)
-                            .padding(.horizontal, 20)
+                            .padding(.horizontal, 10)
                         Spacer()
                     }
-                }
-                // Hamburger menu icon on the left
-//                ToolbarItem(placement: .navigationBarLeading) {
-//                    Menu {
-//                        Button("Introduction", action: {})
-//                        Button("Game: Coordinates", action: {})
-//                        Button("Game: Moves", action: {})
-//                        Button("Game: Light/Dark", action: {})
-//                    } label: {
-//                        Image(systemName: "line.horizontal.3")
-//                            .foregroundColor(.white)
+                } //ToolbarItem
+                // Gear icon on the right
+//                ToolbarItem(placement: .navigationBarTrailing) {
+//                    NavigationLink(destination: SettingsView()) {
+//                        Image(systemName: "gearshape.fill").foregroundColor(.white)
 //                    }
 //                }
-                
-                // Gear icon on the right
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Menu {
-                        Button("Settings", action: {})
-                        Button("About", action: {})
+                        NavigationLink(destination: SettingsView()) {
+                            Label("Settings", systemImage: "gearshape")
+                        }
+                        NavigationLink(destination: SettingsView()) {
+                            Label("About", systemImage: "info")
+                        }
+                        
                     } label: {
                         Image(systemName: "gearshape.fill")
                             .foregroundColor(.white)
                     }
-                }
-            }
-        }
+                } //ToolbarItem
+            } // toolbar
+        } // NavigationView
     }
 }
+// +91 91088 83355
 
 #Preview {
     HomeView()

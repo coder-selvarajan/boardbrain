@@ -1,5 +1,5 @@
 //
-//  SimpleBoardView.swift
+//  ColorsBoardView.swift
 //  boardbrain
 //
 //  Created by Selvarajan on 14/04/24.
@@ -7,13 +7,14 @@
 
 import SwiftUI
 
-struct SimpleBoardView: View {
+struct ColorsBoardView: View {
     @Binding var showCoordinates: Bool
     @Binding var whiteSide: Bool
     @Binding var showSquareColors: Bool
     @Binding var showSquareBorders: Bool
     @Binding var highlightIndex: Int
     @Binding var gameEnded: Bool
+    @Binding var gameStarted: Bool
     let squareClicked: ((Int) -> Void)?
     
     private let rows = 8
@@ -84,9 +85,11 @@ struct SimpleBoardView: View {
             ForEach(0..<(rows * columns), id: \.self) { index in
                 ZStack {
                     Rectangle()
-                        .foregroundColor(highlightIndex == index ? 
-                            .yellow : .white)
-//                        .foregroundColor(Color(hex: "#F0D9B5")
+                        .foregroundColor(gameStarted
+                                         ? (highlightIndex == index ? .yellow : .white)
+                                         : ((index / columns) % 2 == index % 2
+                                            ? Color.white
+                                            : Color.gray))
                         .border(showSquareBorders ? Color.black.opacity(0.25) : Color.clear)
                         .onTapGesture {
                             squareTapped(index: index)
@@ -94,7 +97,7 @@ struct SimpleBoardView: View {
                     
                     let coordinate = getCoordinate(forIndex: index)
                     
-                    if !gameEnded && highlightIndex == index {
+                    if gameStarted && highlightIndex == index {
                         Text("\(coordinate.file)\(coordinate.rank)")
                             .font(.title2)
                             .foregroundColor(.black)
@@ -126,5 +129,5 @@ struct SimpleBoardView: View {
 }
 
 #Preview {
-    SimpleBoardView(showCoordinates: .constant(true), whiteSide: .constant(true), showSquareColors: .constant(false), showSquareBorders: .constant(true), highlightIndex: .constant(20), gameEnded: .constant(true), squareClicked: nil)
+    ColorsBoardView(showCoordinates: .constant(true), whiteSide: .constant(true), showSquareColors: .constant(false), showSquareBorders: .constant(true), highlightIndex: .constant(20), gameEnded: .constant(true), gameStarted: .constant(false), squareClicked: nil)
 }

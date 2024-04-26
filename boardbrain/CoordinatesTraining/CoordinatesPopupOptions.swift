@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct PopupBoardOptions: View {
+struct CoordinatesPopupOptions: View {
     // Binding variables to pass state between views
     @Binding var showPiecesPosition: Bool
     @Binding var showRanksandFiles: Bool

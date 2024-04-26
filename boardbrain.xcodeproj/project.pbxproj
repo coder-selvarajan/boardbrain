@@ -10,22 +10,22 @@
 		70082AF52BD7897A00B013D9 /* XChessBoardHome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70082AF42BD7897A00B013D9 /* XChessBoardHome.swift */; };
 		70082AF72BD7FF9000B013D9 /* Position.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70082AF62BD7FF9000B013D9 /* Position.swift */; };
 		7019350A2BC9858900ECDA51 /* PopupView in Frameworks */ = {isa = PBXBuildFile; productRef = 701935092BC9858900ECDA51 /* PopupView */; };
+		70259A102BDB6C08003A0215 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70259A0F2BDB6C08003A0215 /* SettingsView.swift */; };
+		70259A142BDBE82F003A0215 /* ScoreViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70259A132BDBE82F003A0215 /* ScoreViewModel.swift */; };
 		7033FBEE2BD8AD2F00492508 /* MovesPopupOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7033FBED2BD8AD2F00492508 /* MovesPopupOptions.swift */; };
 		7044D7532BCED7A700136FD6 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7044D7522BCED7A700136FD6 /* HomeView.swift */; };
 		705D07512BCA626E00AD5F22 /* ScoreModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705D07502BCA626E00AD5F22 /* ScoreModel.swift */; };
 		70614BAA2BC123460053DDAE /* ColorExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70614BA92BC123460053DDAE /* ColorExt.swift */; };
 		707E90942BD3906C00190753 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 707E90932BD3906C00190753 /* Launch Screen.storyboard */; };
-		709379A32BD24081004990BD /* ChessboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 709379A22BD24081004990BD /* ChessboardView.swift */; };
+		709379A32BD24081004990BD /* MovesBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 709379A22BD24081004990BD /* MovesBoardView.swift */; };
 		709379A52BD240A3004990BD /* ChessPiece.swift in Sources */ = {isa = PBXBuildFile; fileRef = 709379A42BD240A3004990BD /* ChessPiece.swift */; };
 		709379A92BD240FF004990BD /* MovesTrainingHome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 709379A82BD240FF004990BD /* MovesTrainingHome.swift */; };
 		7095AB7C2BCC08AA003532CD /* ColorsTrainingHome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7095AB7B2BCC08AA003532CD /* ColorsTrainingHome.swift */; };
-		7095AB7E2BCC08D9003532CD /* SimpleBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7095AB7D2BCC08D9003532CD /* SimpleBoardView.swift */; };
+		7095AB7E2BCC08D9003532CD /* ColorsBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7095AB7D2BCC08D9003532CD /* ColorsBoardView.swift */; };
 		7095AB802BCC10DB003532CD /* GameIteration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7095AB7F2BCC10DB003532CD /* GameIteration.swift */; };
-		70ACA3722BC280CC0052713E /* BoardViewWithControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70ACA3712BC280CC0052713E /* BoardViewWithControls.swift */; };
 		70ACA3742BC280F00052713E /* Square.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70ACA3732BC280F00052713E /* Square.swift */; };
 		70ACA3762BC28B5E0052713E /* CoordinateTrainingHome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70ACA3752BC28B5E0052713E /* CoordinateTrainingHome.swift */; };
-		70B871DC2BCA916A00D4D0ED /* ScoreViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B871DB2BCA916A00D4D0ED /* ScoreViewModel.swift */; };
-		70B871DE2BCAAC8300D4D0ED /* BoardOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B871DD2BCAAC8300D4D0ED /* BoardOptions.swift */; };
+		70B871DE2BCAAC8300D4D0ED /* CoordinatesPopupOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B871DD2BCAAC8300D4D0ED /* CoordinatesPopupOptions.swift */; };
 		70C731322BC11AB6000FB2F9 /* BoardBrainApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C731312BC11AB6000FB2F9 /* BoardBrainApp.swift */; };
 		70C731382BC11AB9000FB2F9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 70C731372BC11AB9000FB2F9 /* Assets.xcassets */; };
 		70C7313B2BC11AB9000FB2F9 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 70C7313A2BC11AB9000FB2F9 /* Preview Assets.xcassets */; };
@@ -36,22 +36,22 @@
 /* Begin PBXFileReference section */
 		70082AF42BD7897A00B013D9 /* XChessBoardHome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XChessBoardHome.swift; sourceTree = "<group>"; };
 		70082AF62BD7FF9000B013D9 /* Position.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Position.swift; sourceTree = "<group>"; };
+		70259A0F2BDB6C08003A0215 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		70259A132BDBE82F003A0215 /* ScoreViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreViewModel.swift; sourceTree = "<group>"; };
 		7033FBED2BD8AD2F00492508 /* MovesPopupOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovesPopupOptions.swift; sourceTree = "<group>"; };
 		7044D7522BCED7A700136FD6 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		705D07502BCA626E00AD5F22 /* ScoreModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreModel.swift; sourceTree = "<group>"; };
 		70614BA92BC123460053DDAE /* ColorExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExt.swift; sourceTree = "<group>"; };
 		707E90932BD3906C00190753 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
-		709379A22BD24081004990BD /* ChessboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChessboardView.swift; sourceTree = "<group>"; };
+		709379A22BD24081004990BD /* MovesBoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovesBoardView.swift; sourceTree = "<group>"; };
 		709379A42BD240A3004990BD /* ChessPiece.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChessPiece.swift; sourceTree = "<group>"; };
 		709379A82BD240FF004990BD /* MovesTrainingHome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovesTrainingHome.swift; sourceTree = "<group>"; };
 		7095AB7B2BCC08AA003532CD /* ColorsTrainingHome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorsTrainingHome.swift; sourceTree = "<group>"; };
-		7095AB7D2BCC08D9003532CD /* SimpleBoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleBoardView.swift; sourceTree = "<group>"; };
+		7095AB7D2BCC08D9003532CD /* ColorsBoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorsBoardView.swift; sourceTree = "<group>"; };
 		7095AB7F2BCC10DB003532CD /* GameIteration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameIteration.swift; sourceTree = "<group>"; };
-		70ACA3712BC280CC0052713E /* BoardViewWithControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardViewWithControls.swift; sourceTree = "<group>"; };
 		70ACA3732BC280F00052713E /* Square.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Square.swift; sourceTree = "<group>"; };
 		70ACA3752BC28B5E0052713E /* CoordinateTrainingHome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinateTrainingHome.swift; sourceTree = "<group>"; };
-		70B871DB2BCA916A00D4D0ED /* ScoreViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreViewModel.swift; sourceTree = "<group>"; };
-		70B871DD2BCAAC8300D4D0ED /* BoardOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardOptions.swift; sourceTree = "<group>"; };
+		70B871DD2BCAAC8300D4D0ED /* CoordinatesPopupOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatesPopupOptions.swift; sourceTree = "<group>"; };
 		70BED1D12BD3809100D5755F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		70C7312E2BC11AB6000FB2F9 /* boardbrain.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = boardbrain.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		70C731312BC11AB6000FB2F9 /* BoardBrainApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardBrainApp.swift; sourceTree = "<group>"; };
@@ -73,6 +73,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		70259A152BDBFC4D003A0215 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				705D07502BCA626E00AD5F22 /* ScoreModel.swift */,
+				70259A132BDBE82F003A0215 /* ScoreViewModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		70614BA62BC1230E0053DDAE /* Extension */ = {
 			isa = PBXGroup;
 			children = (
@@ -84,12 +93,9 @@
 		7093799E2BD23BCA004990BD /* CoordinatesTraining */ = {
 			isa = PBXGroup;
 			children = (
-				70B871DD2BCAAC8300D4D0ED /* BoardOptions.swift */,
+				70B871DD2BCAAC8300D4D0ED /* CoordinatesPopupOptions.swift */,
 				70C731412BC11D5D000FB2F9 /* BoardView.swift */,
-				70ACA3712BC280CC0052713E /* BoardViewWithControls.swift */,
 				70ACA3752BC28B5E0052713E /* CoordinateTrainingHome.swift */,
-				70B871DB2BCA916A00D4D0ED /* ScoreViewModel.swift */,
-				705D07502BCA626E00AD5F22 /* ScoreModel.swift */,
 			);
 			path = CoordinatesTraining;
 			sourceTree = "<group>";
@@ -98,7 +104,7 @@
 			isa = PBXGroup;
 			children = (
 				7095AB7B2BCC08AA003532CD /* ColorsTrainingHome.swift */,
-				7095AB7D2BCC08D9003532CD /* SimpleBoardView.swift */,
+				7095AB7D2BCC08D9003532CD /* ColorsBoardView.swift */,
 			);
 			path = ColorsTraining;
 			sourceTree = "<group>";
@@ -106,6 +112,8 @@
 		709379A02BD23C52004990BD /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				70082AF62BD7FF9000B013D9 /* Position.swift */,
+				709379A42BD240A3004990BD /* ChessPiece.swift */,
 				7095AB7F2BCC10DB003532CD /* GameIteration.swift */,
 				70FD21712BC6BA5E00F6D513 /* Styles.swift */,
 				70ACA3732BC280F00052713E /* Square.swift */,
@@ -116,10 +124,8 @@
 		709379A12BD23CAE004990BD /* MovesTraining */ = {
 			isa = PBXGroup;
 			children = (
-				709379A22BD24081004990BD /* ChessboardView.swift */,
-				709379A42BD240A3004990BD /* ChessPiece.swift */,
+				709379A22BD24081004990BD /* MovesBoardView.swift */,
 				709379A82BD240FF004990BD /* MovesTrainingHome.swift */,
-				70082AF62BD7FF9000B013D9 /* Position.swift */,
 				7033FBED2BD8AD2F00492508 /* MovesPopupOptions.swift */,
 			);
 			path = MovesTraining;
@@ -128,7 +134,6 @@
 		70C731252BC11AB6000FB2F9 = {
 			isa = PBXGroup;
 			children = (
-				707E90932BD3906C00190753 /* Launch Screen.storyboard */,
 				70C731302BC11AB6000FB2F9 /* boardbrain */,
 				70C7312F2BC11AB6000FB2F9 /* Products */,
 			);
@@ -145,7 +150,7 @@
 		70C731302BC11AB6000FB2F9 /* boardbrain */ = {
 			isa = PBXGroup;
 			children = (
-				70BED1D12BD3809100D5755F /* Info.plist */,
+				70259A152BDBFC4D003A0215 /* Models */,
 				7093799E2BD23BCA004990BD /* CoordinatesTraining */,
 				709379A12BD23CAE004990BD /* MovesTraining */,
 				709379A02BD23C52004990BD /* Common */,
@@ -153,9 +158,12 @@
 				70614BA62BC1230E0053DDAE /* Extension */,
 				70C731312BC11AB6000FB2F9 /* BoardBrainApp.swift */,
 				7044D7522BCED7A700136FD6 /* HomeView.swift */,
-				70C731372BC11AB9000FB2F9 /* Assets.xcassets */,
-				70C731392BC11AB9000FB2F9 /* Preview Content */,
 				70082AF42BD7897A00B013D9 /* XChessBoardHome.swift */,
+				70259A0F2BDB6C08003A0215 /* SettingsView.swift */,
+				70C731392BC11AB9000FB2F9 /* Preview Content */,
+				70BED1D12BD3809100D5755F /* Info.plist */,
+				707E90932BD3906C00190753 /* Launch Screen.storyboard */,
+				70C731372BC11AB9000FB2F9 /* Assets.xcassets */,
 			);
 			path = boardbrain;
 			sourceTree = "<group>";
@@ -250,19 +258,19 @@
 				709379A92BD240FF004990BD /* MovesTrainingHome.swift in Sources */,
 				7044D7532BCED7A700136FD6 /* HomeView.swift in Sources */,
 				7095AB802BCC10DB003532CD /* GameIteration.swift in Sources */,
-				7095AB7E2BCC08D9003532CD /* SimpleBoardView.swift in Sources */,
-				709379A32BD24081004990BD /* ChessboardView.swift in Sources */,
+				7095AB7E2BCC08D9003532CD /* ColorsBoardView.swift in Sources */,
+				709379A32BD24081004990BD /* MovesBoardView.swift in Sources */,
 				7095AB7C2BCC08AA003532CD /* ColorsTrainingHome.swift in Sources */,
 				70614BAA2BC123460053DDAE /* ColorExt.swift in Sources */,
 				709379A52BD240A3004990BD /* ChessPiece.swift in Sources */,
 				70FD21722BC6BA5E00F6D513 /* Styles.swift in Sources */,
 				70ACA3742BC280F00052713E /* Square.swift in Sources */,
 				7033FBEE2BD8AD2F00492508 /* MovesPopupOptions.swift in Sources */,
+				70259A142BDBE82F003A0215 /* ScoreViewModel.swift in Sources */,
 				70ACA3762BC28B5E0052713E /* CoordinateTrainingHome.swift in Sources */,
 				70C731422BC11D5D000FB2F9 /* BoardView.swift in Sources */,
-				70B871DC2BCA916A00D4D0ED /* ScoreViewModel.swift in Sources */,
-				70B871DE2BCAAC8300D4D0ED /* BoardOptions.swift in Sources */,
-				70ACA3722BC280CC0052713E /* BoardViewWithControls.swift in Sources */,
+				70B871DE2BCAAC8300D4D0ED /* CoordinatesPopupOptions.swift in Sources */,
+				70259A102BDB6C08003A0215 /* SettingsView.swift in Sources */,
 				70082AF72BD7FF9000B013D9 /* Position.swift in Sources */,
 				70C731322BC11AB6000FB2F9 /* BoardBrainApp.swift in Sources */,
 			);
