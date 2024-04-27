@@ -110,12 +110,17 @@ struct MovesBoardView: View {
                                     gestureLocation = gesture.location
                                     let newColumn = Int((gesture.location.x / cellSize)) //.rounded())
                                     let newRow = Int((gesture.location.y / cellSize)) //.rounded())
-                                    highlightedCol = newColumn
-                                    highlightedRow = newRow
+                                    if newColumn < 0 || newColumn > 7 || newRow < 0 || newRow > 7 {
+                                        // disabling highlights while moving outside of the board
+                                        highlightedCol = -1
+                                        highlightedRow = -1
+                                    }
+                                    else {
+                                        highlightedCol = newColumn
+                                        highlightedRow = newRow
+                                    }
                                     imageOffset = gesture.translation
-                                    
                                     imageScale = CGSize(width: 2, height: 2)
-                                    
                                 }
                                 .onEnded { gesture  in
                                     withAnimation {
