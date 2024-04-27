@@ -25,7 +25,7 @@ struct MovesTrainingHome: View {
     @State var gameStarted: Bool = false
     @State var gameEnded: Bool = false
     @State var currentPlay: Int = 0
-    @State private var progress: Float = 0.0
+    @State private var progress = 0.0
     @State private var showingOptionsPopup = false
     @State var questionList: [GameIteration] = []
     
@@ -40,7 +40,7 @@ struct MovesTrainingHome: View {
     private func startProgress() {
         progress = 0.0
         Timer.scheduledTimer(withTimeInterval: timerInterval, repeats: true) { timer in
-            self.progress += Float(timerInterval / totalTime)
+            self.progress += Double(timerInterval / totalTime)
             if self.progress >= 1.0 {
                 timer.invalidate()
                 
@@ -61,13 +61,13 @@ struct MovesTrainingHome: View {
             self.presentationMode.wrappedValue.dismiss()
         }) {
             HStack(spacing: 3) {
-                Image(systemName: "chevron.left")
+                Image(systemName: "chevron.backward")
                     .imageScale(.large)
-                    .foregroundColor(.blue)
-                    .padding(0)
+//                    .foregroundColor(.blue)
+//                    .padding(0)
                 Text("Back")
                     .foregroundColor(.blue)
-                    .font(.system(size: 17))
+//                    .font(.system(size: 17))
             }
             .padding(.horizontal, 0)
         }
@@ -205,6 +205,7 @@ struct MovesTrainingHome: View {
         .navigationBarBackButtonHidden(gameStarted)
         .navigationBarItems(leading: !gameStarted ? nil : backButton)
         .navigationBarTitleDisplayMode(.inline)
+//        .navigationPopGestureDisabled(gameStarted)
         .popup(isPresented: $gameEnded) {
             VStack {
                 Text("Game over!")

@@ -109,6 +109,7 @@ struct HomeView: View {
                 
                 Spacer()
             } // VStack
+//            .navigationPopGestureDisabled(false)
             .background(Color.white.opacity(0.20))
             //            .navigationTitle("Board Brain")
             .navigationBarTitleDisplayMode(.inline)

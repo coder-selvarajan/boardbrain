@@ -22,50 +22,13 @@ struct MovesBoardView: View {
     
     let rank = ["a","b","c","d","e","f","g","h"]
     
-    let cellSize = UIScreen.main.bounds.size.width / 8.0
+//    let cellSize = UIScreen.main.bounds.size.width / 8.0
     
     let pieceMovedTo: ((Position) -> Void)?
     
-    var pieceDragGesture: some Gesture {
-        DragGesture()
-            .onChanged { gesture in
-                gestureLocation = gesture.location
-                let newColumn = Int((gesture.location.x / cellSize)) //.rounded())
-                let newRow = Int((gesture.location.y / cellSize)) //.rounded())
-                highlightedCol = newColumn
-                highlightedRow = newRow
-                imageOffset = gesture.translation
-                
-                imageScale = CGSize(width: 2, height: 2)
-                
-            }
-            .onEnded { gesture  in
-                withAnimation {
-                    let newColumn = Int((gesture.location.x / cellSize)) //.rounded())
-                    let newRow = Int((gesture.location.y / cellSize)) //.rounded())
-                    
-                    let targetPosition = Position(row: newRow, column: newColumn)
-                    
-                    imageOffset = .zero
-                    imageScale = CGSize(width: 1.0, height: 1.0)
-                    
-                    highlightedCol = -1
-                    highlightedRow = -1
-                    
-                    if gameState!.possibleMoves.contains(targetPosition) {
-                        gameState!.currentPiece.column = newColumn
-                        gameState!.currentPiece.row = newRow
-                        
-                        //call back for piece movement
-                        pieceMovedTo!(targetPosition)
-                    }
-                }
-            }
-    }
-    
     var body: some View {
         GeometryReader { geometry in
-            //            let cellSize = geometry.size.width / CGFloat(columns)
+            let cellSize = geometry.size.width / CGFloat(columns)
             ZStack {
                 ForEach(0..<rows, id: \.self) { row in
                     ForEach(0..<columns, id: \.self) { column in
@@ -178,6 +141,17 @@ struct MovesBoardView: View {
                                 }
                         ) //gesture
                 }// piece nil condition
+            }
+            .onReceive([self.gameState].publisher.first()) { (state) in
+                if state != nil {
+                    if state!.gameEnded {
+                        imageOffset = .zero
+                        imageScale = CGSize(width: 1.0, height: 1.0)
+                        
+                        highlightedCol = -1
+                        highlightedRow = -1
+                    }
+                }
             }
             .background(.yellow)
             .foregroundColor(.yellow)
