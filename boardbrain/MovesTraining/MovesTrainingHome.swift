@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-
 struct MovesTrainingHome: View {
     @ObservedObject var movesScoreViewModel = ScoreViewModel(type: TrainingType.Moves)
+    @Environment(\.presentationMode) var presentationMode
     
     @State private var showCoordinates = true
     @State private var whiteSide = true
@@ -46,13 +46,30 @@ struct MovesTrainingHome: View {
                 
                 //update the scores and persist
                 movesScoreViewModel.updateScore(for: whiteSide ? .white : .black,
-                                           score: Score(correctAttempts: score, totalAttempts: currentPlay))
+                                                score: Score(correctAttempts: score, totalAttempts: currentPlay))
                 if gameState != nil {
                     gameState!.gameEnded = true
                 }
                 gameEnded = true
                 gameStarted = false
             }
+        }
+    }
+    
+    private var backButton: some View {
+        Button(action: {
+            self.presentationMode.wrappedValue.dismiss()
+        }) {
+            HStack(spacing: 3) {
+                Image(systemName: "chevron.left")
+                    .imageScale(.large)
+                    .foregroundColor(.blue)
+                    .padding(0)
+                Text("Back")
+                    .foregroundColor(.blue)
+                    .font(.system(size: 17))
+            }
+            .padding(.horizontal, 0)
         }
     }
     
@@ -100,7 +117,7 @@ struct MovesTrainingHome: View {
                 currentPlay += 1
                 
             })
-                .frame(height: UIScreen.main.bounds.size.width)
+            .frame(height: UIScreen.main.bounds.size.width)
             
             ProgressView(value: progress, total: 1.0)
                 .progressViewStyle(LinearProgressViewStyle(tint: Color.green))
@@ -141,7 +158,7 @@ struct MovesTrainingHome: View {
                         
                         questionList.removeAll()
                         
-//                        currentCoordinate = getRandomCoordinate()
+                        //                        currentCoordinate = getRandomCoordinate()
                         currentPlay = 0
                         score = 0
                         
@@ -185,6 +202,8 @@ struct MovesTrainingHome: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.white.opacity(0.20))
         .navigationTitle("Moves training")
+        .navigationBarBackButtonHidden(gameStarted)
+        .navigationBarItems(leading: !gameStarted ? nil : backButton)
         .navigationBarTitleDisplayMode(.inline)
         .popup(isPresented: $gameEnded) {
             VStack {
@@ -317,5 +336,5 @@ struct GameState {
             return []
         }
     }
-
+    
 }

@@ -22,11 +22,50 @@ struct MovesBoardView: View {
     
     let rank = ["a","b","c","d","e","f","g","h"]
     
+    let cellSize = UIScreen.main.bounds.size.width / 8.0
+    
     let pieceMovedTo: ((Position) -> Void)?
+    
+    var pieceDragGesture: some Gesture {
+        DragGesture()
+            .onChanged { gesture in
+                gestureLocation = gesture.location
+                let newColumn = Int((gesture.location.x / cellSize)) //.rounded())
+                let newRow = Int((gesture.location.y / cellSize)) //.rounded())
+                highlightedCol = newColumn
+                highlightedRow = newRow
+                imageOffset = gesture.translation
+                
+                imageScale = CGSize(width: 2, height: 2)
+                
+            }
+            .onEnded { gesture  in
+                withAnimation {
+                    let newColumn = Int((gesture.location.x / cellSize)) //.rounded())
+                    let newRow = Int((gesture.location.y / cellSize)) //.rounded())
+                    
+                    let targetPosition = Position(row: newRow, column: newColumn)
+                    
+                    imageOffset = .zero
+                    imageScale = CGSize(width: 1.0, height: 1.0)
+                    
+                    highlightedCol = -1
+                    highlightedRow = -1
+                    
+                    if gameState!.possibleMoves.contains(targetPosition) {
+                        gameState!.currentPiece.column = newColumn
+                        gameState!.currentPiece.row = newRow
+                        
+                        //call back for piece movement
+                        pieceMovedTo!(targetPosition)
+                    }
+                }
+            }
+    }
     
     var body: some View {
         GeometryReader { geometry in
-            let cellSize = geometry.size.width / CGFloat(columns)
+            //            let cellSize = geometry.size.width / CGFloat(columns)
             ZStack {
                 ForEach(0..<rows, id: \.self) { row in
                     ForEach(0..<columns, id: \.self) { column in
@@ -38,6 +77,7 @@ struct MovesBoardView: View {
                                 .frame(width: cellSize, height: cellSize)
                                 .position(x: CGFloat(column) * cellSize + cellSize / 2,
                                           y: CGFloat(row) * cellSize + cellSize / 2)
+                                
                             
                             if gameState != nil && !gameState!.gameEnded {
                                 if highlightPossibleMoves {
@@ -91,7 +131,7 @@ struct MovesBoardView: View {
                                           y: CGFloat(highlightedRow) * cellSize + cellSize / 2)
                         }
                     }
-
+                    
                     // Random Chess piece
                     Image(gameState!.currentPiece.type.rawValue)
                         .resizable()
@@ -136,16 +176,14 @@ struct MovesBoardView: View {
                                         }
                                     }
                                 }
-                        )
+                        ) //gesture
                 }// piece nil condition
-                
-                //                Text(String.init(format: "%.2f, %.2f", gestureLocation.x, gestureLocation.y))
-                //                    .foregroundColor(.red)
             }
             .background(.yellow)
             .foregroundColor(.yellow)
             .frame(width: geometry.size.width, height: geometry.size.width) // Keeping the board square
         }
+        
     }
     
 }
@@ -154,7 +192,7 @@ struct MovesBoardView: View {
     MovesBoardView(showCoordinates: .constant(true), highlightPossibleMoves: .constant(false),
                    gameState: .constant(nil),
                    pieceMovedTo: { value in
-                        print(value)
-                    })
+        print(value)
+    })
     .background(.black)
 }
