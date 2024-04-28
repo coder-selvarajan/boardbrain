@@ -1,17 +1,16 @@
 //
-//  MovesPopupOptions.swift
+//  ColorsPopupOptions.swift
 //  boardbrain
 //
-//  Created by Selvarajan on 24/04/24.
+//  Created by Selvarajan on 28/04/24.
 //
 
 import SwiftUI
 
-struct MovesPopupOptions: View {
+struct ColorsPopupOptions: View {
     // Binding variables to pass state between views
     @Binding var showCoordinates: Bool
     @Binding var whiteSide: Bool
-    @Binding var highlightPossibleMoves: Bool
     
     var body: some View {
         VStack {
@@ -20,12 +19,9 @@ struct MovesPopupOptions: View {
                 .padding(.bottom)
             Divider()
                 .background(.white.opacity(0.80))
+                
             
             Toggle("Show Coordinates", isOn: $showCoordinates)
-                .font(.title2)
-                .padding()
-            
-            Toggle("Show Possible Moves", isOn: $highlightPossibleMoves)
                 .font(.title2)
                 .padding()
             
@@ -88,5 +84,5 @@ struct MovesPopupOptions: View {
 }
 
 #Preview {
-    MovesPopupOptions(showCoordinates: .constant(false), whiteSide: .constant(true), highlightPossibleMoves: .constant(true))
+    ColorsPopupOptions(showCoordinates: .constant(true), whiteSide: .constant(true))
 }

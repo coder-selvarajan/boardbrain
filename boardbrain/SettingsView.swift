@@ -13,10 +13,39 @@ struct SettingsView: View {
     @State private var logoImage: Image = Image(systemName: "photo")
 
     var body: some View {
-        NavigationView {
+        VStack {
             Form {
                 Section(header: Text("Home Page Settings")) {
-                    ColorPicker("Choose Color", selection: $selectedColor)
+                    VStack(alignment: .leading) {
+                        Text("Chessboard theme")
+                        HStack {
+                            Image(systemName: "square.grid.2x2.fill")
+                                .resizable()
+                                .frame(width: 30, height: 30)
+                                .foregroundColor(.gray)
+                            
+                            Image(systemName: "square.grid.2x2.fill")
+                                .resizable()
+                                .frame(width: 30, height: 30)
+                                .foregroundColor(.blue)
+                            
+                            Image(systemName: "square.grid.2x2.fill")
+                                .resizable()
+                                .frame(width: 30, height: 30)
+                                .foregroundColor(.green)
+                            
+                            Image(systemName: "square.grid.2x2.fill")
+                                .resizable()
+                                .frame(width: 30, height: 30)
+                                .foregroundColor(.orange)
+                            
+                            Image(systemName: "square.grid.2x2.fill")
+                                .resizable()
+                                .frame(width: 30, height: 30)
+                                .foregroundColor(.yellow)
+                        }
+                    }
+                    
                     HStack {
                         Text("Timer Value (seconds)")
                         Slider(value: $timerValue, in: 5...120, step: 5)
@@ -25,13 +54,14 @@ struct SettingsView: View {
                         Text("Current Timer: \(Int(timerValue))s")
                     }
                 }
-                
-                Section(header: Text("Logo Settings")) {
-                    LogoPicker(selectedImage: $logoImage)
-                }
             }
-            .navigationTitle("Settings")
+            .background(Color.white.opacity(20.0))
+            
         }
+        .scrollContentBackground(.hidden)
+        .background(Color.white.opacity(20.0))
+        .navigationTitle("Settings")
+        .navigationBarTitleDisplayMode(NavigationBarItem.TitleDisplayMode.inline)
     }
 }
 

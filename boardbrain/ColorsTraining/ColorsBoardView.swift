@@ -10,8 +10,6 @@ import SwiftUI
 struct ColorsBoardView: View {
     @Binding var showCoordinates: Bool
     @Binding var whiteSide: Bool
-    @Binding var showSquareColors: Bool
-    @Binding var showSquareBorders: Bool
     @Binding var highlightIndex: Int
     @Binding var gameEnded: Bool
     @Binding var gameStarted: Bool
@@ -81,53 +79,75 @@ struct ColorsBoardView: View {
     }
     
     var body: some View {
-        LazyVGrid(columns: gridLayout, spacing: 0) {
-            ForEach(0..<(rows * columns), id: \.self) { index in
-                ZStack {
-                    Rectangle()
-                        .foregroundColor(gameStarted
-                                         ? (highlightIndex == index ? .yellow : .white)
-                                         : ((index / columns) % 2 == index % 2
-                                            ? Color.white
-                                            : Color.gray))
-                        .border(showSquareBorders ? Color.black.opacity(0.25) : Color.clear)
-                        .onTapGesture {
-                            squareTapped(index: index)
-                        }
-                    
-                    let coordinate = getCoordinate(forIndex: index)
-                    
-                    if gameStarted && highlightIndex == index {
-                        Text("\(coordinate.file)\(coordinate.rank)")
-                            .font(.title2)
-                            .foregroundColor(.black)
-                            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
-                            .padding([.bottom, .trailing], 3)
-                    }
-                    
-                    if showCoordinates {
-                        if index % columns == 0 {
-                            Text("\(coordinate.rank)")
-                                .font(.caption2)
+        ZStack {
+            LazyVGrid(columns: gridLayout, spacing: 0) {
+                ForEach(0..<(rows * columns), id: \.self) { index in
+                    ZStack {
+                        Rectangle()
+                            .foregroundColor(gameStarted
+                                             ? (highlightIndex == index ? .yellow : .white)
+                                             : ((index / columns) % 2 == index % 2
+                                                ? Color.white
+                                                : Color.gray))
+                            .border(gameStarted ? Color.black.opacity(0.25) : Color.clear)
+                            .onTapGesture {
+                                squareTapped(index: index)
+                            }
+                        
+                        let coordinate = getCoordinate(forIndex: index)
+                        
+                        if gameStarted && highlightIndex == index {
+                            Text("\(coordinate.file)\(coordinate.rank)")
+                                .font(.title2)
                                 .foregroundColor(.black)
-                                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-                                .padding([.top, .leading], 4)
+                                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+                                .padding([.bottom, .trailing], 3)
                         }
-                        if index > 55 {
-                            Text("\(coordinate.file)")
-                                .font(.caption2)
-                                .foregroundColor(.black)
-                                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
-                                .padding([.bottom, .trailing], 4)
+                        
+                        if showCoordinates {
+                            if index % columns == 0 {
+                                Text("\(coordinate.rank)")
+                                    .font(.caption2)
+                                    .foregroundColor(.black)
+                                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+                                    .padding([.top, .leading], 4)
+                            }
+                            if index > 55 {
+                                Text("\(coordinate.file)")
+                                    .font(.caption2)
+                                    .foregroundColor(.black)
+                                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
+                                    .padding([.bottom, .trailing], 4)
+                            }
                         }
                     }
+                    .aspectRatio(1, contentMode: .fit)
                 }
-                .aspectRatio(1, contentMode: .fit)
+            }.padding(0) // LazyGrid
+            
+            HStack(alignment: .center) {
+                Spacer()
+                VStack {
+                    Image(systemName: "chevron.compact.up")
+                        .resizable()
+                        .frame(width: 10, height: 5)
+                        .foregroundColor(.white)
+                        .padding(.bottom, -5)
+                    Image(whiteSide ? "king-w" : "king-b")
+                        .resizable()
+                        .frame(width: 25, height: 25)
+                        .padding(0)
+                }
             }
-        }.padding(0) // LazyGrid
+            .frame(maxWidth: UIScreen.main.bounds.size.width, maxHeight: UIScreen.main.bounds.size.width, alignment: .bottomTrailing)
+            .padding(.bottom, -120)
+            .padding(.trailing, 10)
+            
+        }
+//        .frame(width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.width)
     }
 }
 
 #Preview {
-    ColorsBoardView(showCoordinates: .constant(true), whiteSide: .constant(true), showSquareColors: .constant(false), showSquareBorders: .constant(true), highlightIndex: .constant(20), gameEnded: .constant(true), gameStarted: .constant(false), squareClicked: nil)
+    ColorsBoardView(showCoordinates: .constant(true), whiteSide: .constant(true), highlightIndex: .constant(20), gameEnded: .constant(true), gameStarted: .constant(false), squareClicked: nil)
 }

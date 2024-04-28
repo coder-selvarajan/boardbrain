@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		70082AF52BD7897A00B013D9 /* XChessBoardHome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70082AF42BD7897A00B013D9 /* XChessBoardHome.swift */; };
 		70082AF72BD7FF9000B013D9 /* Position.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70082AF62BD7FF9000B013D9 /* Position.swift */; };
 		7019350A2BC9858900ECDA51 /* PopupView in Frameworks */ = {isa = PBXBuildFile; productRef = 701935092BC9858900ECDA51 /* PopupView */; };
 		70259A102BDB6C08003A0215 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70259A0F2BDB6C08003A0215 /* SettingsView.swift */; };
@@ -31,11 +30,11 @@
 		70C731382BC11AB9000FB2F9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 70C731372BC11AB9000FB2F9 /* Assets.xcassets */; };
 		70C7313B2BC11AB9000FB2F9 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 70C7313A2BC11AB9000FB2F9 /* Preview Assets.xcassets */; };
 		70C731422BC11D5D000FB2F9 /* BoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C731412BC11D5D000FB2F9 /* BoardView.swift */; };
+		70CA225A2BDE7A5800D0FDAB /* ColorsPopupOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CA22592BDE7A5800D0FDAB /* ColorsPopupOptions.swift */; };
 		70FD21722BC6BA5E00F6D513 /* Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70FD21712BC6BA5E00F6D513 /* Styles.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		70082AF42BD7897A00B013D9 /* XChessBoardHome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XChessBoardHome.swift; sourceTree = "<group>"; };
 		70082AF62BD7FF9000B013D9 /* Position.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Position.swift; sourceTree = "<group>"; };
 		70259A0F2BDB6C08003A0215 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		70259A132BDBE82F003A0215 /* ScoreViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreViewModel.swift; sourceTree = "<group>"; };
@@ -60,6 +59,7 @@
 		70C731372BC11AB9000FB2F9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		70C7313A2BC11AB9000FB2F9 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		70C731412BC11D5D000FB2F9 /* BoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardView.swift; sourceTree = "<group>"; };
+		70CA22592BDE7A5800D0FDAB /* ColorsPopupOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorsPopupOptions.swift; sourceTree = "<group>"; };
 		70FD21712BC6BA5E00F6D513 /* Styles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Styles.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -107,6 +107,7 @@
 			children = (
 				7095AB7B2BCC08AA003532CD /* ColorsTrainingHome.swift */,
 				7095AB7D2BCC08D9003532CD /* ColorsBoardView.swift */,
+				70CA22592BDE7A5800D0FDAB /* ColorsPopupOptions.swift */,
 			);
 			path = ColorsTraining;
 			sourceTree = "<group>";
@@ -156,12 +157,11 @@
 				70259A152BDBFC4D003A0215 /* Models */,
 				7093799E2BD23BCA004990BD /* CoordinatesTraining */,
 				709379A12BD23CAE004990BD /* MovesTraining */,
-				709379A02BD23C52004990BD /* Common */,
 				7093799F2BD23BE7004990BD /* ColorsTraining */,
+				709379A02BD23C52004990BD /* Common */,
 				70614BA62BC1230E0053DDAE /* Extension */,
 				70C731312BC11AB6000FB2F9 /* BoardBrainApp.swift */,
 				7044D7522BCED7A700136FD6 /* HomeView.swift */,
-				70082AF42BD7897A00B013D9 /* XChessBoardHome.swift */,
 				70259A0F2BDB6C08003A0215 /* SettingsView.swift */,
 				70C731392BC11AB9000FB2F9 /* Preview Content */,
 				70BED1D12BD3809100D5755F /* Info.plist */,
@@ -257,7 +257,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				705D07512BCA626E00AD5F22 /* ScoreModel.swift in Sources */,
-				70082AF52BD7897A00B013D9 /* XChessBoardHome.swift in Sources */,
 				709379A92BD240FF004990BD /* MovesTrainingHome.swift in Sources */,
 				7044D7532BCED7A700136FD6 /* HomeView.swift in Sources */,
 				7095AB802BCC10DB003532CD /* GameIteration.swift in Sources */,
@@ -275,6 +274,7 @@
 				70C731422BC11D5D000FB2F9 /* BoardView.swift in Sources */,
 				70B871DE2BCAAC8300D4D0ED /* CoordinatesPopupOptions.swift in Sources */,
 				70259A102BDB6C08003A0215 /* SettingsView.swift in Sources */,
+				70CA225A2BDE7A5800D0FDAB /* ColorsPopupOptions.swift in Sources */,
 				70082AF72BD7FF9000B013D9 /* Position.swift in Sources */,
 				70C731322BC11AB6000FB2F9 /* BoardBrainApp.swift in Sources */,
 			);

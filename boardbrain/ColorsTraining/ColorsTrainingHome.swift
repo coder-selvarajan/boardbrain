@@ -11,7 +11,7 @@ import PopupView
 struct ColorsTrainingHome: View {
     @ObservedObject var colorsScoreViewModel = ScoreViewModel(type: TrainingType.Colors)
     
-    @State private var showCoordinates = false
+    @State private var showCoordinates = true
     @State private var whiteSide = true
     @State private var selectedColor = "White"
     @State private var targetIndex: Int = -1
@@ -119,12 +119,10 @@ struct ColorsTrainingHome: View {
             }
             .frame(height: 50)
             
-            ColorsBoardView(showCoordinates: .constant(true), 
-                            whiteSide: .constant(true),
-                            showSquareColors: .constant(false),
-                            showSquareBorders: .constant(true),
+            ColorsBoardView(showCoordinates: $showCoordinates,
+                            whiteSide: $whiteSide,
                             highlightIndex: $targetIndex,
-                            gameEnded: $gameEnded, 
+                            gameEnded: $gameEnded,
                             gameStarted: $gameStarted,
                             squareClicked: nil)
             
@@ -135,6 +133,7 @@ struct ColorsTrainingHome: View {
                 .padding(.top, -5)
             
             Spacer()
+            
             VStack(alignment: .center, spacing: 5) {
                 if gameStarted {
                     Text("Choose the right color")
@@ -164,12 +163,7 @@ struct ColorsTrainingHome: View {
                                 answerQuestion(with: SquareColor.dark)
                             }
                     }
-                } else { // if currentPlay > 0 {
-//                    Text(String(format: "Last score: %d/%d",
-//                                score, currentPlay))
-//                        .font(.subheadline)
-//                        .padding(.bottom, 10)
-                    if (colorsScoreViewModel.scoreModel.totalPlayBlack > 0 || colorsScoreViewModel.scoreModel.totalPlayWhite > 0) {
+                } else if (colorsScoreViewModel.scoreModel.totalPlayBlack > 0 || colorsScoreViewModel.scoreModel.totalPlayWhite > 0) {
                         Text(String(format: "Last score (%@): %d/%d",
                                     colorsScoreViewModel.scoreModel.lastScoreAs == .white ? "W" : "B",
                                     colorsScoreViewModel.scoreModel.lastScore.correctAttempts,
@@ -179,9 +173,9 @@ struct ColorsTrainingHome: View {
                             .font(.footnote)
                         Text(String(format: "Average score as black: %.2f", colorsScoreViewModel.scoreModel.avgScoreBlack))
                             .font(.footnote)
-                    }
                 }
             }
+//            .padding(.top, -40)
             
             Spacer()
             HStack(spacing: 15) {
@@ -226,7 +220,11 @@ struct ColorsTrainingHome: View {
                         .background(.white.opacity(0.75))
                         .cornerRadius(10.0)
                     }
-                    //
+                    .popover(isPresented: $showingOptionsPopup, content: {
+                        ColorsPopupOptions(showCoordinates: $showCoordinates, 
+                                           whiteSide: $whiteSide)
+                            .presentationDetents([.medium])
+                    })
                 }
             }
             Spacer()

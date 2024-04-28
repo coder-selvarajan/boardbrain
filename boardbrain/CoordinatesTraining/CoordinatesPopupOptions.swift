@@ -19,6 +19,7 @@ struct CoordinatesPopupOptions: View {
                 .font(.title2)
                 .padding(.bottom)
             Divider()
+                .background(.white.opacity(0.80))
             
             Toggle("Show Pieces", isOn: $showPiecesPosition)
                 .font(.title2)
@@ -80,5 +81,7 @@ struct CoordinatesPopupOptions: View {
             Spacer()
         }
         .padding()
+        .foregroundColor(.white)
+        .background(.black.opacity(0.95))
     }
 }

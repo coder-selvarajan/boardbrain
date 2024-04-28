@@ -12,6 +12,7 @@ struct MovesBoardView: View {
     let columns = 8
     @Binding var showCoordinates: Bool
     @Binding var highlightPossibleMoves: Bool
+    @Binding var whiteSide: Bool
     @Binding var gameState: GameState?
     
     @State var imageScale: CGSize = CGSize(width: 1.0, height: 1.0)
@@ -21,8 +22,9 @@ struct MovesBoardView: View {
     @State var gestureLocation: CGPoint = .zero
     
     let rank = ["a","b","c","d","e","f","g","h"]
+//    let blackRank = ["a","b","c","d","e","f","g","h"]
     
-//    let cellSize = UIScreen.main.bounds.size.width / 8.0
+    //    let cellSize = UIScreen.main.bounds.size.width / 8.0
     
     let pieceMovedTo: ((Position) -> Void)?
     
@@ -40,7 +42,7 @@ struct MovesBoardView: View {
                                 .frame(width: cellSize, height: cellSize)
                                 .position(x: CGFloat(column) * cellSize + cellSize / 2,
                                           y: CGFloat(row) * cellSize + cellSize / 2)
-                                
+                            
                             
                             if gameState != nil && !gameState!.gameEnded {
                                 if highlightPossibleMoves {
@@ -56,7 +58,7 @@ struct MovesBoardView: View {
                             
                             if showCoordinates {
                                 if column == 0 {
-                                    Text("\(8 - row)")
+                                    Text(whiteSide ? "\(Int(8 - row))" : "\(row + 1)")
                                         .font(.caption2)
                                         .foregroundColor(row % 2 == 0 ? .gray : .white)
                                         .frame(width: cellSize, height: cellSize, alignment: .topLeading)
@@ -66,7 +68,7 @@ struct MovesBoardView: View {
                                 }
                                 // print 'a'
                                 if row == 7 {
-                                    Text("\(rank[column])")
+                                    Text(whiteSide ? rank[column] : rank.reversed()[column])
                                         .font(.caption2)
                                         .foregroundColor(column % 2 == 0 ? .white : .gray)
                                         .frame(width: cellSize, height: cellSize, alignment: .bottomTrailing)
@@ -111,7 +113,7 @@ struct MovesBoardView: View {
                                     let newColumn = Int((gesture.location.x / cellSize)) //.rounded())
                                     let newRow = Int((gesture.location.y / cellSize)) //.rounded())
                                     if newColumn < 0 || newColumn > 7 || newRow < 0 || newRow > 7 {
-                                        // disabling highlights while moving outside of the board
+                                        // disabling highlights while dragging outside of the board
                                         highlightedCol = -1
                                         highlightedRow = -1
                                     }
@@ -146,6 +148,25 @@ struct MovesBoardView: View {
                                 }
                         ) //gesture
                 }// piece nil condition
+                
+                // Board side indicator
+                HStack(alignment: .center) {
+                    Spacer()
+                    VStack {
+                        Image(systemName: "chevron.compact.up")
+                            .resizable()
+                            .frame(width: 10, height: 5)
+                            .foregroundColor(.white)
+                            .padding(.bottom, -5)
+                        Image(whiteSide ? "king-w" : "king-b")
+                            .resizable()
+                            .frame(width: 25, height: 25)
+                            .padding(0)
+                    }
+                }
+                .frame(maxWidth: UIScreen.main.bounds.size.width, maxHeight: UIScreen.main.bounds.size.width, alignment: .bottomTrailing)
+                .padding(.bottom, -120)
+                .padding(.trailing, 10)
             }
             .onReceive([self.gameState].publisher.first()) { (state) in
                 if state != nil {
@@ -162,13 +183,12 @@ struct MovesBoardView: View {
             .foregroundColor(.yellow)
             .frame(width: geometry.size.width, height: geometry.size.width) // Keeping the board square
         }
-        
     }
-    
 }
 
 #Preview {
     MovesBoardView(showCoordinates: .constant(true), highlightPossibleMoves: .constant(false),
+                   whiteSide: .constant(true),
                    gameState: .constant(nil),
                    pieceMovedTo: { value in
         print(value)

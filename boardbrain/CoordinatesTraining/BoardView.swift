@@ -106,81 +106,104 @@ struct BoardView: View {
     
     
     var body: some View {
-        LazyVGrid(columns: gridLayout, spacing: 0) {
-            ForEach(0..<(rows * columns), id: \.self) { index in
-                ZStack {
-                    Rectangle()
-                        .foregroundColor((highlightResult && index == greenTargetIndex) ? .green : (highlightResult && index == redTargetIndex) ?
-                            .red : (index / columns) % 2 == index % 2
-                                         ? Color.white
-                                         : Color.gray)
-//                        .foregroundColor((highlightResult && index == greenTargetIndex) ? .green : (highlightResult && index == redTargetIndex) ?
-//                            .red : (index / columns) % 2 == index % 2
-//                                         ? Color(hex: "#F0D9B5")
-//                                         : Color(hex: "#B58863"))
-                        .onTapGesture {
-                            squareTapped(index: index)
+        ZStack {
+            LazyVGrid(columns: gridLayout, spacing: 0) {
+                ForEach(0..<(rows * columns), id: \.self) { index in
+                    ZStack {
+                        Rectangle()
+                            .foregroundColor((highlightResult && index == greenTargetIndex) ? .green : (highlightResult && index == redTargetIndex) ?
+                                .red : (index / columns) % 2 == index % 2
+                                             ? Color.white
+                                             : Color.gray)
+                        //                        .foregroundColor((highlightResult && index == greenTargetIndex) ? .green : (highlightResult && index == redTargetIndex) ?
+                        //                            .red : (index / columns) % 2 == index % 2
+                        //                                         ? Color(hex: "#F0D9B5")
+                        //                                         : Color(hex: "#B58863"))
+                            .onTapGesture {
+                                squareTapped(index: index)
+                            }
+                        
+                        let coordinate = getCoordinate(forIndex: index)
+                        
+                        if showCoordinates {
+                            if (showPiecesPosition &&  (1...2).contains(coordinate.rank)) {
+                                Text("\(coordinate.file)\(coordinate.rank)")
+                                    .font(.system(size: 8))
+                                    .foregroundColor((index / columns) % 2 == index % 2 ? .black.opacity(0.5) : .white.opacity(0.5))
+                                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+                                    .padding([.top, .leading], 1)
+                            }
+                            else if (showPiecesPosition &&  (7...8).contains(coordinate.rank)) {
+                                Text("\(coordinate.file)\(coordinate.rank)")
+                                    .font(.system(size: 8))
+                                    .foregroundColor((index / columns) % 2 == index % 2 ? .black.opacity(0.5) : .white.opacity(0.5))
+                                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+                                    .padding([.top, .leading], 1)
+                                
+                            } else {
+                                Text("\(coordinate.file)\(coordinate.rank)")
+                                    .font(.subheadline)
+                                    .foregroundColor((index / columns) % 2 == index % 2 ? .black.opacity(0.25) : .white.opacity(0.25))
+                                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+                                //                                .padding([.bottom, .trailing], 3)
+                            }
                         }
-                    
-                    let coordinate = getCoordinate(forIndex: index)
-                    
-                    if showCoordinates {
-                        if (showPiecesPosition &&  (1...2).contains(coordinate.rank)) {
-                            Text("\(coordinate.file)\(coordinate.rank)")
-                                .font(.system(size: 8))
-                                .foregroundColor((index / columns) % 2 == index % 2 ? .black.opacity(0.5) : .white.opacity(0.5))
-                                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-                                .padding([.top, .leading], 1)
+                        
+                        if showPiecesPosition {
+                            if let imageName = pieceAt(index: index), !imageName.isEmpty {
+                                Image(imageName)
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .padding(5) // Adjust padding to your liking
+                                    .onTapGesture {
+                                        squareTapped(index: index)
+                                    }
+                            }
                         }
-                        else if (showPiecesPosition &&  (7...8).contains(coordinate.rank)) {
-                            Text("\(coordinate.file)\(coordinate.rank)")
-                                .font(.system(size: 8))
-                                .foregroundColor((index / columns) % 2 == index % 2 ? .black.opacity(0.5) : .white.opacity(0.5))
-                                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-                                .padding([.top, .leading], 1)
-                            
-                        } else {
-                            Text("\(coordinate.file)\(coordinate.rank)")
-                                .font(.subheadline)
-                                .foregroundColor((index / columns) % 2 == index % 2 ? .black.opacity(0.25) : .white.opacity(0.25))
-                                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
-//                                .padding([.bottom, .trailing], 3)
+                        
+                        if showRanksandFiles {
+                            if index % columns == 0 {
+                                Text("\(coordinate.rank)")
+                                    .font(.caption2)
+                                    .foregroundColor((index / columns) % 2 == index % 2 ? .black : .white)
+                                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+                                    .padding([.top, .leading], 1)
+                            }
+                            // print 'a'
+                            if index > 55 {
+                                Text("\(coordinate.file)")
+                                    .font(.caption2)
+                                    .foregroundColor((index / columns) % 2 == index % 2 ? .black : .white)
+                                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
+                                    .padding([.bottom, .trailing], 1)
+                            }
                         }
                     }
-                    
-                    if showPiecesPosition {
-                        if let imageName = pieceAt(index: index), !imageName.isEmpty {
-                            Image(imageName)
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .padding(5) // Adjust padding to your liking
-                                .onTapGesture {
-                                    squareTapped(index: index)
-                                }
-                        }
-                    }
-                    
-                    if showRanksandFiles {
-                        if index % columns == 0 {
-                            Text("\(coordinate.rank)")
-                                .font(.caption2)
-                                .foregroundColor((index / columns) % 2 == index % 2 ? .black : .white)
-                                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-                                .padding([.top, .leading], 1)
-                        }
-                        // print 'a'
-                        if index > 55 {
-                            Text("\(coordinate.file)")
-                                .font(.caption2)
-                                .foregroundColor((index / columns) % 2 == index % 2 ? .black : .white)
-                                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
-                                .padding([.bottom, .trailing], 1)
-                        }
+                    .aspectRatio(1, contentMode: .fit)
+                }
+            }.padding(0) // LazyGrid
+            
+            if !showPiecesPosition {
+                HStack(alignment: .center) {
+                    Spacer()
+                    VStack {
+                        Image(systemName: "chevron.compact.up")
+                            .resizable()
+                            .frame(width: 10, height: 5)
+                            .foregroundColor(.white)
+                            .padding(.bottom, -5)
+                        Image(whiteSide ? "king-w" : "king-b")
+                            .resizable()
+                            .frame(width: 25, height: 25)
+                            .padding(0)
                     }
                 }
-                .aspectRatio(1, contentMode: .fit)
+                .frame(maxWidth: UIScreen.main.bounds.size.width,
+                       maxHeight: UIScreen.main.bounds.size.width, alignment: .bottomTrailing)
+                .padding(.bottom, -120)
+                .padding(.trailing, 10)
             }
-        }.padding(0) // LazyGrid
+        }
     }
 }
 

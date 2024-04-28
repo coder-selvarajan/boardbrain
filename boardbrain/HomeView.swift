@@ -103,6 +103,8 @@ struct HomeView: View {
                     BoardView(showPiecesPosition: .constant(true), showRanksandFiles: .constant(false), showCoordinates: .constant(true), whiteSide: .constant(true), targetIndex: .constant(-1), gameStarted: .constant(false), squareClicked: { value in
                         print(value)
                     })
+                    .frame(maxWidth: UIScreen.main.bounds.size.width - 60,
+                           maxHeight:  UIScreen.main.bounds.size.width - 60)
                     .padding(.horizontal, 30)
                 }
                 //                .frame(width: 200, height: 200)

@@ -100,6 +100,7 @@ struct MovesTrainingHome: View {
             
             MovesBoardView(showCoordinates: $showCoordinates,
                            highlightPossibleMoves: $highlightPossibleMoves,
+                           whiteSide: $whiteSide,
                            gameState: $gameState,
                            pieceMovedTo: { position in
                 
