@@ -77,7 +77,14 @@ struct MovesTrainingHome: View {
         VStack {
             ScrollViewReader { value in
                 ScrollView(Axis.Set.horizontal, showsIndicators: false) {
-                    HStack(spacing: 15) {
+                    HStack(alignment: .center, spacing: 15) {
+                        if questionList.count > 0 {
+                            Text("Result: ")
+                                .font(.footnote)
+                                .foregroundColor(.white.opacity(0.9))
+                                .padding(0)
+                        }
+                        
                         ForEach(questionList, id: \.id) { item in
                             Text(item.question)
                                 .id(item.question)
@@ -85,7 +92,7 @@ struct MovesTrainingHome: View {
                                 .foregroundColor(item.answer ? .green : .red)
                         }
                     }
-                    .padding(.horizontal)
+                    .padding(.trailing)
                 }
                 .padding(.horizontal)
                 .onChange(of: questionList) {
@@ -112,7 +119,7 @@ struct MovesTrainingHome: View {
                                                   answer: isCorrectAnswer))
                 
                 // trigger the next question
-                gameState = GameState.nextState()
+                gameState = GameState.nextState(whiteSide: whiteSide)
                 currentCoordinate = gameState!.question
                 
                 currentPlay += 1
@@ -164,18 +171,24 @@ struct MovesTrainingHome: View {
                         score = 0
                         
                         //pick random square and a piece
-                        gameState = GameState.nextState()
+                        gameState = GameState.nextState(whiteSide: whiteSide)
                         currentCoordinate = gameState!.question
                         
                         startProgress()
                     } label: {
-                        Text("Start Training")
-                            .font(.title2)
-                            .foregroundColor(.black)
-                            .padding(.horizontal, 20)
-                            .frame(height: 60)
-                            .background(.green)
-                            .cornerRadius(10.0)
+                        HStack(alignment: .center, spacing: 10) {
+                            Image(systemName: "play.circle")
+                                .font(.title3)
+                                .foregroundColor(.black.opacity(0.75))
+                        
+                            Text("Start Training")
+                                .font(.title3)
+                                .foregroundColor(.black)
+                        }
+                        .padding(.horizontal, 20)
+                        .frame(height: 60)
+                        .background(.green)
+                        .cornerRadius(10.0)
                     }
                     
                     
@@ -183,7 +196,7 @@ struct MovesTrainingHome: View {
                         showingOptionsPopup = true
                     } label: {
                         HStack {
-                            Image(systemName: "gearshape")
+                            Image(systemName: "checklist")
                                 .font(.title2)
                                 .foregroundColor(.black.opacity(0.9))
                         }
@@ -290,6 +303,7 @@ struct MovesTrainingHome: View {
 //}
 
 struct GameState {
+    var whiteSide: Bool
     var currentPiece: ChessPiece
     var initialPosition: Position
     var possibleMoves: [Position]
@@ -297,7 +311,7 @@ struct GameState {
     var question: String
     var gameEnded: Bool = false
     
-    static func nextState() -> GameState {
+    static func nextState(whiteSide: Bool) -> GameState {
         let rank = ["a","b","c","d","e","f","g","h"]
         
         // excluding pawn, as it has only one move forward
@@ -313,9 +327,16 @@ struct GameState {
         
         print("targetPosition: ", targetPosition)
         // form the question
-        let question = "\(randomPiece.type.getShortCode())\(rank[targetPosition.column])\(8 - targetPosition.row)"
+        var question = ""
+        if whiteSide {
+            question = "\(randomPiece.type.getShortCode())\(rank[targetPosition.column])\(8 - targetPosition.row)"
+        }
+        else {
+            question =  "\(randomPiece.type.getShortCode())\(rank.reversed()[targetPosition.column])\(targetPosition.row + 1)"
+        }
         
-        return GameState(currentPiece: randomPiece,
+        return GameState(whiteSide: whiteSide,
+                         currentPiece: randomPiece,
                          initialPosition: randomPosition,
                          possibleMoves: allowedMoves,
                          targetPosition: targetPosition,

@@ -18,48 +18,32 @@ struct SettingsView: View {
                 Section(header: Text("Home Page Settings")) {
                     VStack(alignment: .leading) {
                         Text("Chessboard theme")
-                        HStack {
-                            Image(systemName: "square.grid.2x2.fill")
-                                .resizable()
-                                .frame(width: 30, height: 30)
-                                .foregroundColor(.gray)
-                            
-                            Image(systemName: "square.grid.2x2.fill")
-                                .resizable()
-                                .frame(width: 30, height: 30)
-                                .foregroundColor(.blue)
-                            
-                            Image(systemName: "square.grid.2x2.fill")
-                                .resizable()
-                                .frame(width: 30, height: 30)
-                                .foregroundColor(.green)
-                            
-                            Image(systemName: "square.grid.2x2.fill")
-                                .resizable()
-                                .frame(width: 30, height: 30)
-                                .foregroundColor(.orange)
-                            
-                            Image(systemName: "square.grid.2x2.fill")
-                                .resizable()
-                                .frame(width: 30, height: 30)
-                                .foregroundColor(.yellow)
+                        HStack (spacing: 15) {
+                            ThemeBoard(lightColor: Color.white, darkColor: Color.gray)
+                                .frame(width: 50, height: 50)
+                            ThemeBoard(lightColor: Color.white, darkColor: Color.brown)
+                                .frame(width: 50, height: 50)
+                            ThemeBoard(lightColor: Color.white, darkColor: Color.green)
+                                .frame(width: 50, height: 50)
+                            ThemeBoard(lightColor: Color.white, darkColor: Color.blue)
+                                .frame(width: 50, height: 50)
                         }
                     }
+                    HStack(alignment: .center) {
+                        Text("Game Timer")
+                        Spacer()
+                        TextField("Game Timer", value: $timerValue, format: .number)
+                            .textFieldStyle(.roundedBorder)
+//                            .padding()
+                    }
                     
-                    HStack {
-                        Text("Timer Value (seconds)")
-                        Slider(value: $timerValue, in: 5...120, step: 5)
-                    }
-                    HStack {
-                        Text("Current Timer: \(Int(timerValue))s")
-                    }
                 }
             }
             .background(Color.white.opacity(20.0))
             
         }
-        .scrollContentBackground(.hidden)
-        .background(Color.white.opacity(20.0))
+//        .scrollContentBackground(.hidden)
+//        .background(Color.white.opacity(20.0))
         .navigationTitle("Settings")
         .navigationBarTitleDisplayMode(NavigationBarItem.TitleDisplayMode.inline)
     }

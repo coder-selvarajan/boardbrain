@@ -13,6 +13,7 @@
 		70259A142BDBE82F003A0215 /* ScoreViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70259A132BDBE82F003A0215 /* ScoreViewModel.swift */; };
 		702A92D62BDCA31700E20420 /* NavigationDisabler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702A92D52BDCA31700E20420 /* NavigationDisabler.swift */; };
 		7033FBEE2BD8AD2F00492508 /* MovesPopupOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7033FBED2BD8AD2F00492508 /* MovesPopupOptions.swift */; };
+		70361EE22BDFCED7001F0859 /* ThemeBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70361EE12BDFCED7001F0859 /* ThemeBoard.swift */; };
 		7044D7532BCED7A700136FD6 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7044D7522BCED7A700136FD6 /* HomeView.swift */; };
 		705D07512BCA626E00AD5F22 /* ScoreModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705D07502BCA626E00AD5F22 /* ScoreModel.swift */; };
 		70614BAA2BC123460053DDAE /* ColorExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70614BA92BC123460053DDAE /* ColorExt.swift */; };
@@ -40,6 +41,7 @@
 		70259A132BDBE82F003A0215 /* ScoreViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreViewModel.swift; sourceTree = "<group>"; };
 		702A92D52BDCA31700E20420 /* NavigationDisabler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationDisabler.swift; sourceTree = "<group>"; };
 		7033FBED2BD8AD2F00492508 /* MovesPopupOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovesPopupOptions.swift; sourceTree = "<group>"; };
+		70361EE12BDFCED7001F0859 /* ThemeBoard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeBoard.swift; sourceTree = "<group>"; };
 		7044D7522BCED7A700136FD6 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		705D07502BCA626E00AD5F22 /* ScoreModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreModel.swift; sourceTree = "<group>"; };
 		70614BA92BC123460053DDAE /* ColorExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExt.swift; sourceTree = "<group>"; };
@@ -121,6 +123,7 @@
 				70FD21712BC6BA5E00F6D513 /* Styles.swift */,
 				70ACA3732BC280F00052713E /* Square.swift */,
 				702A92D52BDCA31700E20420 /* NavigationDisabler.swift */,
+				70361EE12BDFCED7001F0859 /* ThemeBoard.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -274,6 +277,7 @@
 				70C731422BC11D5D000FB2F9 /* BoardView.swift in Sources */,
 				70B871DE2BCAAC8300D4D0ED /* CoordinatesPopupOptions.swift in Sources */,
 				70259A102BDB6C08003A0215 /* SettingsView.swift in Sources */,
+				70361EE22BDFCED7001F0859 /* ThemeBoard.swift in Sources */,
 				70CA225A2BDE7A5800D0FDAB /* ColorsPopupOptions.swift in Sources */,
 				70082AF72BD7FF9000B013D9 /* Position.swift in Sources */,
 				70C731322BC11AB6000FB2F9 /* BoardBrainApp.swift in Sources */,

@@ -79,7 +79,14 @@ struct CoordinateTrainingHome: View {
             VStack {
                 ScrollViewReader { value in
                     ScrollView(Axis.Set.horizontal, showsIndicators: false) {
-                        HStack(spacing: 15) {
+                        HStack(alignment: .center, spacing: 15) {
+                            if questionList.count > 0 {
+                                Text("Result: ")
+                                    .font(.footnote)
+                                    .foregroundColor(.white.opacity(0.9))
+                                    .padding(0)
+                            }
+                            
                             ForEach(questionList, id: \.id) { item in
                                 Text(item.question)
                                     .id(item.question)
@@ -87,7 +94,7 @@ struct CoordinateTrainingHome: View {
                                     .foregroundColor(item.answer ? .green : .red)
                             }
                         }
-                        .padding(.horizontal)
+                        .padding(.trailing)
                     }
                     .padding(.horizontal)
                     .onChange(of: questionList) {
@@ -172,21 +179,26 @@ struct CoordinateTrainingHome: View {
                             
                             startProgress()
                         } label: {
-                            Text("Start Training")
-                                .font(.title2)
-                                .foregroundColor(.black)
-                                .padding(.horizontal, 20)
-                                .frame(height: 60)
-                                .background(.blue)
-                                .cornerRadius(10.0)
+                            HStack(alignment: .center, spacing: 10) {
+                                Image(systemName: "play.circle")
+                                    .font(.title3)
+                                    .foregroundColor(.black.opacity(0.75))
+                            
+                                Text("Start Training")
+                                    .font(.title3)
+                                    .foregroundColor(.black)
+                            }
+                            .padding(.horizontal, 20)
+                            .frame(height: 60)
+                            .background(.blue)
+                            .cornerRadius(10.0)
                         }
-                        
                         
                         Button {
                             showingOptionsPopup = true
                         } label: {
                             HStack {
-                                Image(systemName: "gearshape")
+                                Image(systemName: "checklist")
                                     .font(.title2)
                                     .foregroundColor(.black.opacity(0.9))
                             }

@@ -20,6 +20,7 @@ struct CoordinatesPopupOptions: View {
                 .padding(.bottom)
             Divider()
                 .background(.white.opacity(0.80))
+                .padding(.bottom)
             
             Toggle("Show Pieces", isOn: $showPiecesPosition)
                 .font(.title2)
@@ -29,7 +30,7 @@ struct CoordinatesPopupOptions: View {
                 .padding()
             
             HStack(alignment: .center) {
-                Text("Color")
+                Text("Board Side")
                     .font(.title2)
                     .padding(.leading)
                 

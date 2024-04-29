@@ -20,6 +20,7 @@ struct MovesPopupOptions: View {
                 .padding(.bottom)
             Divider()
                 .background(.white.opacity(0.80))
+                .padding(.bottom)
             
             Toggle("Show Coordinates", isOn: $showCoordinates)
                 .font(.title2)
