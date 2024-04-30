@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct BoardView: View {
+    @EnvironmentObject var themeManager: ThemeManager
+    
     @Binding var showPiecesPosition: Bool
     @Binding var showRanksandFiles: Bool
     @Binding var showCoordinates: Bool
@@ -113,8 +115,8 @@ struct BoardView: View {
                         Rectangle()
                             .foregroundColor((highlightResult && index == greenTargetIndex) ? .green : (highlightResult && index == redTargetIndex) ?
                                 .red : (index / columns) % 2 == index % 2
-                                             ? Color.white
-                                             : Color.gray)
+                                             ? themeManager.boardColors.0   //Color.white
+                                             : themeManager.boardColors.1)  //Color.gray)
                         //                        .foregroundColor((highlightResult && index == greenTargetIndex) ? .green : (highlightResult && index == redTargetIndex) ?
                         //                            .red : (index / columns) % 2 == index % 2
                         //                                         ? Color(hex: "#F0D9B5")

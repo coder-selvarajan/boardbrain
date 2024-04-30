@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct MovesBoardView: View {
+    @EnvironmentObject var themeManager: ThemeManager
+    
     let rows = 8
     let columns = 8
     @Binding var showCoordinates: Bool
@@ -36,7 +38,7 @@ struct MovesBoardView: View {
                     ForEach(0..<columns, id: \.self) { column in
                         ZStack {
                             Rectangle()
-                                .fill((row + column) % 2 == 0 ? Color.white : Color.gray)
+                                .fill((row + column) % 2 == 0 ? themeManager.boardColors.0 : themeManager.boardColors.1)
                                 .fill(
                                     (row == highlightedRow && column == highlightedCol) ? Color.green : Color.clear)
                                 .frame(width: cellSize, height: cellSize)
@@ -60,7 +62,7 @@ struct MovesBoardView: View {
                                 if column == 0 {
                                     Text(whiteSide ? "\(Int(8 - row))" : "\(row + 1)")
                                         .font(.caption2)
-                                        .foregroundColor(row % 2 == 0 ? .gray : .white)
+                                        .foregroundColor(row % 2 == 0 ? themeManager.boardColors.1 : themeManager.boardColors.0)
                                         .frame(width: cellSize, height: cellSize, alignment: .topLeading)
                                         .position(x: CGFloat(column) * cellSize + cellSize / 2,
                                                   y: CGFloat(row) * cellSize + cellSize / 2)
@@ -70,7 +72,7 @@ struct MovesBoardView: View {
                                 if row == 7 {
                                     Text(whiteSide ? rank[column] : rank.reversed()[column])
                                         .font(.caption2)
-                                        .foregroundColor(column % 2 == 0 ? .white : .gray)
+                                        .foregroundColor(column % 2 == 0 ? themeManager.boardColors.0 : themeManager.boardColors.1)
                                         .frame(width: cellSize, height: cellSize, alignment: .bottomTrailing)
                                         .position(x: CGFloat(column) * cellSize + cellSize / 2,
                                                   y: CGFloat(row) * cellSize + cellSize / 2)

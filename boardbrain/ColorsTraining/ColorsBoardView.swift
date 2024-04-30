@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct ColorsBoardView: View {
+    @EnvironmentObject var themeManager: ThemeManager
+    
     @Binding var showCoordinates: Bool
     @Binding var whiteSide: Bool
     @Binding var highlightIndex: Int
@@ -87,8 +89,8 @@ struct ColorsBoardView: View {
                             .foregroundColor(gameStarted
                                              ? (highlightIndex == index ? .yellow : .white)
                                              : ((index / columns) % 2 == index % 2
-                                                ? Color.white
-                                                : Color.gray))
+                                                ? themeManager.boardColors.0
+                                                : themeManager.boardColors.1))
                             .border(gameStarted ? Color.black.opacity(0.25) : Color.clear)
                             .onTapGesture {
                                 squareTapped(index: index)

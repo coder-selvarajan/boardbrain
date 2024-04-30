@@ -15,6 +15,7 @@ struct BoardBrainApp: App {
             HomeView()
 //            XChessBoardHome()
                 .colorScheme(ColorScheme.dark)
+                .environmentObject(ThemeManager())
         }
     }
 }

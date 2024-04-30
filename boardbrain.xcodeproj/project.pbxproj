@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		70082AF72BD7FF9000B013D9 /* Position.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70082AF62BD7FF9000B013D9 /* Position.swift */; };
 		7019350A2BC9858900ECDA51 /* PopupView in Frameworks */ = {isa = PBXBuildFile; productRef = 701935092BC9858900ECDA51 /* PopupView */; };
+		70203BA32BE0038B00AA241E /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70203BA22BE0038B00AA241E /* ThemeManager.swift */; };
 		70259A102BDB6C08003A0215 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70259A0F2BDB6C08003A0215 /* SettingsView.swift */; };
 		70259A142BDBE82F003A0215 /* ScoreViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70259A132BDBE82F003A0215 /* ScoreViewModel.swift */; };
 		702A92D62BDCA31700E20420 /* NavigationDisabler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702A92D52BDCA31700E20420 /* NavigationDisabler.swift */; };
@@ -37,6 +38,7 @@
 
 /* Begin PBXFileReference section */
 		70082AF62BD7FF9000B013D9 /* Position.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Position.swift; sourceTree = "<group>"; };
+		70203BA22BE0038B00AA241E /* ThemeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeManager.swift; sourceTree = "<group>"; };
 		70259A0F2BDB6C08003A0215 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		70259A132BDBE82F003A0215 /* ScoreViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreViewModel.swift; sourceTree = "<group>"; };
 		702A92D52BDCA31700E20420 /* NavigationDisabler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationDisabler.swift; sourceTree = "<group>"; };
@@ -82,6 +84,7 @@
 			children = (
 				705D07502BCA626E00AD5F22 /* ScoreModel.swift */,
 				70259A132BDBE82F003A0215 /* ScoreViewModel.swift */,
+				70203BA22BE0038B00AA241E /* ThemeManager.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -259,6 +262,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				70203BA32BE0038B00AA241E /* ThemeManager.swift in Sources */,
 				705D07512BCA626E00AD5F22 /* ScoreModel.swift in Sources */,
 				709379A92BD240FF004990BD /* MovesTrainingHome.swift in Sources */,
 				7044D7532BCED7A700136FD6 /* HomeView.swift in Sources */,
