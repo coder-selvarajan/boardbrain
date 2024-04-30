@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-enum BoardTheme: Identifiable, CaseIterable {
+enum BoardTheme: Identifiable, CaseIterable, Codable {
     var id: Self { self }
     case gray, brown, blue, green
     
