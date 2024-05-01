@@ -27,7 +27,7 @@ struct ThemeBoard: View {
                         .foregroundColor(lightColor)
                 }
             }
-            .border(/*@START_MENU_TOKEN@*/Color.black/*@END_MENU_TOKEN@*/.opacity(0.7),width: 1.0)
+//            .border(/*@START_MENU_TOKEN@*/Color.black/*@END_MENU_TOKEN@*/.opacity(0.7),width: 1.0)
         }
 //        .frame(width: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/, height: 100)
         

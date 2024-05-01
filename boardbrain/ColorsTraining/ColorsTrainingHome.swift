@@ -10,6 +10,7 @@ import PopupView
 
 struct ColorsTrainingHome: View {
     @ObservedObject var colorsScoreViewModel = ScoreViewModel(type: TrainingType.Colors)
+    @EnvironmentObject var themeManager: ThemeManager
     
     @State private var showCoordinates = true
     @State private var whiteSide = true
@@ -151,8 +152,7 @@ struct ColorsTrainingHome: View {
                         
                         Rectangle()
                             .frame(width: 60, height: 60)
-//                            .foregroundColor(Color(hex: "#F0D9B5"))
-                            .foregroundColor(Color.white)
+                            .foregroundColor(themeManager.boardColors.0)
                             .cornerRadius(10.0)
                             .padding(.vertical)
                             .onTapGesture {
@@ -161,8 +161,7 @@ struct ColorsTrainingHome: View {
                         
                         Rectangle()
                             .frame(width: 60, height: 60)
-//                            .foregroundColor(Color(hex: "#C58863"))
-                            .foregroundColor(Color.gray)
+                            .foregroundColor(themeManager.boardColors.1)
                             .cornerRadius(10.0)
                             .padding(.vertical)
                             .onTapGesture {

@@ -33,6 +33,7 @@
 		70C7313B2BC11AB9000FB2F9 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 70C7313A2BC11AB9000FB2F9 /* Preview Assets.xcassets */; };
 		70C731422BC11D5D000FB2F9 /* BoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C731412BC11D5D000FB2F9 /* BoardView.swift */; };
 		70CA225A2BDE7A5800D0FDAB /* ColorsPopupOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CA22592BDE7A5800D0FDAB /* ColorsPopupOptions.swift */; };
+		70E2B4CE2BE21D5B00C3F8A3 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E2B4CD2BE21D5B00C3F8A3 /* AboutView.swift */; };
 		70FD21722BC6BA5E00F6D513 /* Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70FD21712BC6BA5E00F6D513 /* Styles.swift */; };
 /* End PBXBuildFile section */
 
@@ -64,6 +65,7 @@
 		70C7313A2BC11AB9000FB2F9 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		70C731412BC11D5D000FB2F9 /* BoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardView.swift; sourceTree = "<group>"; };
 		70CA22592BDE7A5800D0FDAB /* ColorsPopupOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorsPopupOptions.swift; sourceTree = "<group>"; };
+		70E2B4CD2BE21D5B00C3F8A3 /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
 		70FD21712BC6BA5E00F6D513 /* Styles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Styles.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -169,6 +171,7 @@
 				70C731312BC11AB6000FB2F9 /* BoardBrainApp.swift */,
 				7044D7522BCED7A700136FD6 /* HomeView.swift */,
 				70259A0F2BDB6C08003A0215 /* SettingsView.swift */,
+				70E2B4CD2BE21D5B00C3F8A3 /* AboutView.swift */,
 				70C731392BC11AB9000FB2F9 /* Preview Content */,
 				70BED1D12BD3809100D5755F /* Info.plist */,
 				707E90932BD3906C00190753 /* Launch Screen.storyboard */,
@@ -278,6 +281,7 @@
 				7033FBEE2BD8AD2F00492508 /* MovesPopupOptions.swift in Sources */,
 				70259A142BDBE82F003A0215 /* ScoreViewModel.swift in Sources */,
 				70ACA3762BC28B5E0052713E /* CoordinateTrainingHome.swift in Sources */,
+				70E2B4CE2BE21D5B00C3F8A3 /* AboutView.swift in Sources */,
 				70C731422BC11D5D000FB2F9 /* BoardView.swift in Sources */,
 				70B871DE2BCAAC8300D4D0ED /* CoordinatesPopupOptions.swift in Sources */,
 				70259A102BDB6C08003A0215 /* SettingsView.swift in Sources */,

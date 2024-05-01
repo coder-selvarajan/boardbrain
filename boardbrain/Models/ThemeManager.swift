@@ -11,15 +11,18 @@ import SwiftUI
 
 class ThemeManager: ObservableObject {
     @Published var boardColors: (Color, Color) = (.clear, .clear)
+    @Published var boardTheme: BoardTheme = .green
 
     init() {
         // Set the initial value
-        let initialColors = loadTheme()
-        boardColors = initialColors
+        let theme = loadTheme()
+        boardColors = (theme.0, theme.1)
+        boardTheme = theme.2
     }
 
-    func updateTheme(primary: Color, secondary: Color) {
+    func updateTheme(primary: Color, secondary: Color, theme: BoardTheme) {
         boardColors = (primary, secondary)
+        boardTheme = theme
         
         saveTheme()
     }
@@ -28,15 +31,19 @@ class ThemeManager: ObservableObject {
         // Convert Colors to a storable format and save to UserDefaults
         UserDefaults.standard.set(encodeColor(color: boardColors.0), forKey: "primaryColor")
         UserDefaults.standard.set(encodeColor(color: boardColors.1), forKey: "secondaryColor")
+        UserDefaults.standard.set(boardTheme.rawValue, forKey: "boardTheme")
     }
     
-    private func loadTheme() -> (Color, Color) {
+    private func loadTheme() -> (Color, Color, BoardTheme) {
         // Load colors from UserDefaults or default if not available
         guard   let primaryColor = UserDefaults.standard.string(forKey: "primaryColor"),
-                let secondaryColor = UserDefaults.standard.string(forKey: "secondaryColor")
-        else { return (.white, .gray) }
+                let secondaryColor = UserDefaults.standard.string(forKey: "secondaryColor"),
+                let boardTheme = UserDefaults.standard.string(forKey: "boardTheme")
+        else { return (.white, .gray, .gray) }
         
-        return (decodeColor(from: primaryColor), decodeColor(from: secondaryColor))
+        return (decodeColor(from: primaryColor),
+                decodeColor(from: secondaryColor),
+                BoardTheme(rawValue: boardTheme)! )
     }
 
     private func encodeColor(color: Color) -> String {

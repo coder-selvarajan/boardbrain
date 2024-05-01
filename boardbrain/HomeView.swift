@@ -139,7 +139,7 @@ struct HomeView: View {
                         NavigationLink(destination: SettingsView()) {
                             Label("Settings", systemImage: "gearshape")
                         }
-                        NavigationLink(destination: SettingsView()) {
+                        NavigationLink(destination: AboutView()) {
                             Label("About", systemImage: "info")
                         }
                         
