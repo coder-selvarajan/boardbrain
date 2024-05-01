@@ -48,11 +48,10 @@ struct SettingsView: View {
     var body: some View {
         VStack {
             Form {
-                Section() {
+                Section(header: Text("Theme Setting")) {
                     VStack(alignment: .leading) {
-                        Text("Chessboard theme :")
+                        Text("Choose Board theme :")
                         HStack (spacing: 25) {
-                            Spacer()
                             ForEach(BoardTheme.allCases, id:\.self) { theme in
                                 ThemeBoard(lightColor: theme.lightColor, darkColor: theme.darkColor)
                                     .frame(width: 45, height: 45)
@@ -73,28 +72,89 @@ struct SettingsView: View {
                             }
                         }.padding(.vertical, 10)
                     }
-                    HStack(alignment: .center, spacing: 30) {
-                        Text("Game Timer")
-                        Spacer()
-                        TextField("Game Timer", value: $timerValue, format: .number)
-                            .textFieldStyle(.roundedBorder)
-                            .frame(width: 100)
-                        //                            .padding()
-                    }
-                    .padding(.vertical, 10)
                     
-                }
+//                    HStack(alignment: .center, spacing: 30) {
+//                        Text("Game Timer")
+//                        Spacer()
+//                        TextField("Game Timer", value: $timerValue, format: .number)
+//                            .textFieldStyle(.roundedBorder)
+//                            .frame(width: 100)
+//                    }
+//                    .padding(.vertical, 10)
+                    
+                } // Section
+                
+                Section(header: Text("Score Reset")) {
+                    VStack {
+                        Button {
+                            //
+                        } label: {
+                            HStack(alignment: .center, spacing: 10) {
+                                Image(systemName: "arrow.clockwise")
+                                    .font(.title3)
+                                    .foregroundColor(.black.opacity(0.75))
+                            
+                                Text("Reset - Coordinates score")
+                                    .font(.body)
+                                    .foregroundColor(.black)
+                                
+                                Spacer()
+                            }
+                            .padding(.horizontal, 20)
+                            .frame(height: 40)
+                            .background(.white.opacity(0.8))
+                            .cornerRadius(10.0)
+                        }
+                        
+                        Button {
+                            //
+                        } label: {
+                            HStack(alignment: .center, spacing: 10) {
+                                Image(systemName: "arrow.clockwise")
+                                    .font(.title3)
+                                    .foregroundColor(.black.opacity(0.75))
+                            
+                                Text("Reset - Moves score")
+                                    .font(.body)
+                                    .foregroundColor(.black)
+                                
+                                Spacer()
+                            }
+                            .padding(.horizontal, 20)
+                            .frame(height: 40)
+                            .background(.white.opacity(0.8))
+                            .cornerRadius(10.0)
+                        }
+                        .padding(.vertical)
+                        
+                        Button {
+                            //
+                        } label: {
+                            HStack(alignment: .center, spacing: 10) {
+                                Image(systemName: "arrow.clockwise")
+                                    .font(.title3)
+                                    .foregroundColor(.black.opacity(0.75))
+                            
+                                Text("Reset - Colors score")
+                                    .font(.body)
+                                    .foregroundColor(.black)
+                                
+                                Spacer()
+                            }
+                            .padding(.horizontal, 20)
+                            .frame(height: 40)
+                            .background(.white.opacity(0.8))
+                            .cornerRadius(10.0)
+                        }
+
+                    } // VStack
+                    .padding(.vertical)
+                } //Section
             }
             .background(Color.white.opacity(20.0))
             
         } // VStack
         .background(Color.white.opacity(0.20))
-//        .onAppear(perform: {
-//            selectedBoardTheme = themeManager.boardTheme
-//            print(selectedBoardTheme)
-//        })
-        //        .scrollContentBackground(.hidden)
-        //        .background(Color.white.opacity(20.0))
         .navigationTitle("Settings")
         .navigationBarTitleDisplayMode(NavigationBarItem.TitleDisplayMode.inline)
     }

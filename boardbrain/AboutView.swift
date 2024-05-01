@@ -11,9 +11,19 @@ struct AboutView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
-                Text("BoardBrain")
-                    .font(.title)
-                    .fontWeight(.bold)
+                HStack {
+                    Image("logo-smooth-corners")
+                        .resizable()
+                        .frame(width: 35, height: 35)
+                    
+                    Text("Board Brain").font(.title)
+                        .foregroundColor(Color.white)
+                        .padding(.horizontal, 10)
+                    Spacer()
+                }
+//                Text("BoardBrain")
+//                    .font(.title)
+//                    .fontWeight(.bold)
                 
                 Text("BoardBrain is an app designed to help both novice and experienced chess players improve their skills. It offers interactive games and exercises that focus on mastering chessboard coordinates, understanding piece movements, and recognizing square colors.")
                     .font(.body)
@@ -39,9 +49,12 @@ struct AboutView: View {
                     Text("BoardBrain is an ad-free app that requires no internet connectivity. It does not require access to any information from the user's phone.")
                         .font(.caption)
                         .padding(.bottom)
-                    Text("Technologies used: SwiftUI & SwiftData")
+                    Text("This app is built using the SwiftUI framework.")
                         .font(.caption)
                     Link("Developer Website", destination: URL(string: "https://selvarajan.in")!)
+                        .font(.caption)
+                        .foregroundColor(.blue)
+                    Link("Github Profile", destination: URL(string: "https://github.com/coder-selvarajan")!)
                         .font(.caption)
                         .foregroundColor(.blue)
                 }

@@ -8,7 +8,42 @@
 import SwiftUI
 import PopupView
 
+struct IntroModalView: View {
+    @Binding var showIntroModal: Bool
+    @AppStorage("showCoordinatesIntro") private var showIntro: Bool = true
+    
+    var body: some View {
+        VStack(alignment: .center, spacing: 20) {
+            Text("Welcome to Chessboard Coordinates Training!")
+                .font(.title2)
+                .fontWeight(.bold)
+                .multilineTextAlignment(.center)
+            
+            Text("Learn how to quickly identify chessboard coordinates through interactive challenges.")
+                .font(.body)
+                .multilineTextAlignment(.center)
+                .padding()
+            
+            Toggle("Don't show this again", isOn: $showIntro)
+                .onChange(of: showIntro) { value in
+                    showIntroModal = !value // Close the modal when user chooses to not show it again
+                }
+            
+            Button("Start Training") {
+                showIntroModal = false // Close the modal when the user starts the training
+            }
+            .foregroundColor(.white)
+            .padding()
+            .background(Color.gray)
+            .cornerRadius(10)
+        }
+        .padding()
+//        .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+}
+
 struct CoordinateTrainingHome: View {
+    @AppStorage("showCoordinatesIntro") private var showIntro = true
     @ObservedObject var scoreViewModel = ScoreViewModel(type: TrainingType.Coordinates)
     
     @State private var showPiecesPosition = true
@@ -28,6 +63,8 @@ struct CoordinateTrainingHome: View {
     @State private var progress: Float = 0.0
     @State private var showingOptionsPopup = false
     @State var questionList: [GameIteration] = []
+    
+    @State private var showIntroModal = false
     
     let timerInterval = 0.1
     let totalTime = 30.0
@@ -217,10 +254,28 @@ struct CoordinateTrainingHome: View {
                 }
                 Spacer()
             } //scrollview
+            .onAppear {
+                if showIntro {
+                    showIntroModal = true
+                }
+            }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(Color.white.opacity(0.20))
             .navigationTitle("Coordinates training")
             .navigationBarTitleDisplayMode(.inline)
+            .popup(isPresented: $showIntroModal) {
+                ZStack {
+                    // Background dimming layer
+                    Color.black.opacity(0.4)
+                        .edgesIgnoringSafeArea(.all)
+                        .onTapGesture {
+                            // Optionally allow dismissing the popup by tapping outside
+                            showIntroModal = false
+                        }
+                    
+                    IntroModalView(showIntroModal: $showIntroModal)
+                }
+            }
             .popup(isPresented: $gameEnded) {
                 VStack {
                     Text("Game over!")
@@ -301,7 +356,7 @@ struct CoordinateTrainingHome: View {
                 // Gear icon on the right
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: {
-                        // Action for the gear icon
+                        showIntroModal = true
                     }) {
                         Image(systemName: "info.circle")
                             .foregroundColor(.white)

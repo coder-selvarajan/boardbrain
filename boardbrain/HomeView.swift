@@ -129,11 +129,6 @@ struct HomeView: View {
                     }
                 } //ToolbarItem
                 // Gear icon on the right
-//                ToolbarItem(placement: .navigationBarTrailing) {
-//                    NavigationLink(destination: SettingsView()) {
-//                        Image(systemName: "gearshape.fill").foregroundColor(.white)
-//                    }
-//                }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Menu {
                         NavigationLink(destination: SettingsView()) {
