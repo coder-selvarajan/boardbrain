@@ -10,7 +10,7 @@ import SwiftUI
 struct AboutView: View {
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: 20) {
+            VStack(alignment: .leading, spacing: 15) {
                 HStack {
                     Image("logo-smooth-corners")
                         .resizable()
@@ -51,18 +51,24 @@ struct AboutView: View {
                         .padding(.bottom)
                     Text("This app is built using the SwiftUI framework.")
                         .font(.caption)
-                    Link("Developer Website", destination: URL(string: "https://selvarajan.in")!)
-                        .font(.caption)
-                        .foregroundColor(.blue)
-                    Link("Github Profile", destination: URL(string: "https://github.com/coder-selvarajan")!)
-                        .font(.caption)
-                        .foregroundColor(.blue)
+                    HStack {
+                        Link("Developer Website", destination: URL(string: "https://selvarajan.in")!)
+                            .font(.caption)
+                            .foregroundColor(.blue)
+                        Text(" | ")
+                            .font(.footnote)
+                            .foregroundStyle(.white.opacity(0.7))
+                        Link("Github Profile", destination: URL(string: "https://github.com/coder-selvarajan")!)
+                            .font(.caption)
+                            .foregroundColor(.blue)
+                    }
                 }
                 
                 Spacer()
             }
             .padding()
         }
+        .padding(.horizontal)
         .background(Color.white.opacity(0.20))
         .navigationTitle("About")
         .navigationBarTitleDisplayMode(NavigationBarItem.TitleDisplayMode.inline)

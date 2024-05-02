@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct MovesTrainingHome: View {
+    @AppStorage("showMovesIntro") private var showIntro = true
     @ObservedObject var movesScoreViewModel = ScoreViewModel(type: TrainingType.Moves)
     @Environment(\.presentationMode) var presentationMode
     
@@ -33,6 +34,8 @@ struct MovesTrainingHome: View {
     @State var possibleMoves: [Position]?
     
     @State var gameState: GameState?
+    
+    @State private var showIntroModal = false
     
     let timerInterval = 0.1
     let totalTime = 30.0
@@ -213,6 +216,11 @@ struct MovesTrainingHome: View {
             }
             Spacer()
         } //scrollview
+        .onAppear {
+            if showIntro {
+                showIntroModal = true
+            }
+        }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.white.opacity(0.20))
         .navigationTitle("Moves training")
@@ -220,6 +228,20 @@ struct MovesTrainingHome: View {
         .navigationBarItems(leading: !gameStarted ? nil : backButton)
         .navigationBarTitleDisplayMode(.inline)
 //        .navigationPopGestureDisabled(gameStarted)
+        .popup(isPresented: $showIntroModal) {
+            MovesIntroPopup(showIntroModal: $showIntroModal) {
+                //
+            }
+        } customize: {
+            $0
+                .type(.floater())
+                .position(.center)
+                .animation(.spring())
+                .closeOnTapOutside(false)
+                .closeOnTap(false)
+                .backgroundColor(.black.opacity(0.5))
+                .autohideIn(50)
+        }
         .popup(isPresented: $gameEnded) {
             VStack {
                 Text("Game over!")
@@ -287,7 +309,7 @@ struct MovesTrainingHome: View {
             // Gear icon on the right
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button(action: {
-                    // Action for the gear icon
+                    showIntroModal = true
                 }) {
                     Image(systemName: "info.circle")
                         .foregroundColor(.white)

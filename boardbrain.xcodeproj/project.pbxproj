@@ -8,7 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		70082AF72BD7FF9000B013D9 /* Position.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70082AF62BD7FF9000B013D9 /* Position.swift */; };
+		700917B32BE3453F003C0DFF /* CoordinatesIntroPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 700917B22BE3453F003C0DFF /* CoordinatesIntroPopup.swift */; };
 		7019350A2BC9858900ECDA51 /* PopupView in Frameworks */ = {isa = PBXBuildFile; productRef = 701935092BC9858900ECDA51 /* PopupView */; };
+		701F2BFA2BE3DDCC00515FFD /* MovesIntroPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701F2BF92BE3DDCC00515FFD /* MovesIntroPopup.swift */; };
+		701F2BFC2BE3DE0400515FFD /* ColorsIntroPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701F2BFB2BE3DE0400515FFD /* ColorsIntroPopup.swift */; };
 		70203BA32BE0038B00AA241E /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70203BA22BE0038B00AA241E /* ThemeManager.swift */; };
 		70259A102BDB6C08003A0215 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70259A0F2BDB6C08003A0215 /* SettingsView.swift */; };
 		70259A142BDBE82F003A0215 /* ScoreViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70259A132BDBE82F003A0215 /* ScoreViewModel.swift */; };
@@ -39,6 +42,9 @@
 
 /* Begin PBXFileReference section */
 		70082AF62BD7FF9000B013D9 /* Position.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Position.swift; sourceTree = "<group>"; };
+		700917B22BE3453F003C0DFF /* CoordinatesIntroPopup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatesIntroPopup.swift; sourceTree = "<group>"; };
+		701F2BF92BE3DDCC00515FFD /* MovesIntroPopup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovesIntroPopup.swift; sourceTree = "<group>"; };
+		701F2BFB2BE3DE0400515FFD /* ColorsIntroPopup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorsIntroPopup.swift; sourceTree = "<group>"; };
 		70203BA22BE0038B00AA241E /* ThemeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeManager.swift; sourceTree = "<group>"; };
 		70259A0F2BDB6C08003A0215 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		70259A132BDBE82F003A0215 /* ScoreViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreViewModel.swift; sourceTree = "<group>"; };
@@ -105,6 +111,7 @@
 				70B871DD2BCAAC8300D4D0ED /* CoordinatesPopupOptions.swift */,
 				70C731412BC11D5D000FB2F9 /* BoardView.swift */,
 				70ACA3752BC28B5E0052713E /* CoordinateTrainingHome.swift */,
+				700917B22BE3453F003C0DFF /* CoordinatesIntroPopup.swift */,
 			);
 			path = CoordinatesTraining;
 			sourceTree = "<group>";
@@ -115,6 +122,7 @@
 				7095AB7B2BCC08AA003532CD /* ColorsTrainingHome.swift */,
 				7095AB7D2BCC08D9003532CD /* ColorsBoardView.swift */,
 				70CA22592BDE7A5800D0FDAB /* ColorsPopupOptions.swift */,
+				701F2BFB2BE3DE0400515FFD /* ColorsIntroPopup.swift */,
 			);
 			path = ColorsTraining;
 			sourceTree = "<group>";
@@ -139,6 +147,7 @@
 				709379A22BD24081004990BD /* MovesBoardView.swift */,
 				709379A82BD240FF004990BD /* MovesTrainingHome.swift */,
 				7033FBED2BD8AD2F00492508 /* MovesPopupOptions.swift */,
+				701F2BF92BE3DDCC00515FFD /* MovesIntroPopup.swift */,
 			);
 			path = MovesTraining;
 			sourceTree = "<group>";
@@ -271,6 +280,7 @@
 				7044D7532BCED7A700136FD6 /* HomeView.swift in Sources */,
 				7095AB802BCC10DB003532CD /* GameIteration.swift in Sources */,
 				7095AB7E2BCC08D9003532CD /* ColorsBoardView.swift in Sources */,
+				700917B32BE3453F003C0DFF /* CoordinatesIntroPopup.swift in Sources */,
 				709379A32BD24081004990BD /* MovesBoardView.swift in Sources */,
 				7095AB7C2BCC08AA003532CD /* ColorsTrainingHome.swift in Sources */,
 				70614BAA2BC123460053DDAE /* ColorExt.swift in Sources */,
@@ -286,6 +296,8 @@
 				70B871DE2BCAAC8300D4D0ED /* CoordinatesPopupOptions.swift in Sources */,
 				70259A102BDB6C08003A0215 /* SettingsView.swift in Sources */,
 				70361EE22BDFCED7001F0859 /* ThemeBoard.swift in Sources */,
+				701F2BFC2BE3DE0400515FFD /* ColorsIntroPopup.swift in Sources */,
+				701F2BFA2BE3DDCC00515FFD /* MovesIntroPopup.swift in Sources */,
 				70CA225A2BDE7A5800D0FDAB /* ColorsPopupOptions.swift in Sources */,
 				70082AF72BD7FF9000B013D9 /* Position.swift in Sources */,
 				70C731322BC11AB6000FB2F9 /* BoardBrainApp.swift in Sources */,

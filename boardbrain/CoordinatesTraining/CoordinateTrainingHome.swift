@@ -8,40 +8,6 @@
 import SwiftUI
 import PopupView
 
-struct IntroModalView: View {
-    @Binding var showIntroModal: Bool
-    @AppStorage("showCoordinatesIntro") private var showIntro: Bool = true
-    
-    var body: some View {
-        VStack(alignment: .center, spacing: 20) {
-            Text("Welcome to Chessboard Coordinates Training!")
-                .font(.title2)
-                .fontWeight(.bold)
-                .multilineTextAlignment(.center)
-            
-            Text("Learn how to quickly identify chessboard coordinates through interactive challenges.")
-                .font(.body)
-                .multilineTextAlignment(.center)
-                .padding()
-            
-            Toggle("Don't show this again", isOn: $showIntro)
-                .onChange(of: showIntro) { value in
-                    showIntroModal = !value // Close the modal when user chooses to not show it again
-                }
-            
-            Button("Start Training") {
-                showIntroModal = false // Close the modal when the user starts the training
-            }
-            .foregroundColor(.white)
-            .padding()
-            .background(Color.gray)
-            .cornerRadius(10)
-        }
-        .padding()
-//        .frame(maxWidth: .infinity, maxHeight: .infinity)
-    }
-}
-
 struct CoordinateTrainingHome: View {
     @AppStorage("showCoordinatesIntro") private var showIntro = true
     @ObservedObject var scoreViewModel = ScoreViewModel(type: TrainingType.Coordinates)
@@ -264,17 +230,18 @@ struct CoordinateTrainingHome: View {
             .navigationTitle("Coordinates training")
             .navigationBarTitleDisplayMode(.inline)
             .popup(isPresented: $showIntroModal) {
-                ZStack {
-                    // Background dimming layer
-                    Color.black.opacity(0.4)
-                        .edgesIgnoringSafeArea(.all)
-                        .onTapGesture {
-                            // Optionally allow dismissing the popup by tapping outside
-                            showIntroModal = false
-                        }
-                    
-                    IntroModalView(showIntroModal: $showIntroModal)
+                CoordinatesIntroPopup(showIntroModal: $showIntroModal) {
+                    // 
                 }
+            } customize: {
+                $0
+                    .type(.floater())
+                    .position(.center)
+                    .animation(.spring())
+                    .closeOnTapOutside(false)
+                    .closeOnTap(false)
+                    .backgroundColor(.black.opacity(0.5))
+                    .autohideIn(50)
             }
             .popup(isPresented: $gameEnded) {
                 VStack {

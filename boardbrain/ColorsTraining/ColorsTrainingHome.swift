@@ -9,6 +9,7 @@ import SwiftUI
 import PopupView
 
 struct ColorsTrainingHome: View {
+    @AppStorage("showColorsIntro") private var showIntro = true
     @ObservedObject var colorsScoreViewModel = ScoreViewModel(type: TrainingType.Colors)
     @EnvironmentObject var themeManager: ThemeManager
     
@@ -29,6 +30,8 @@ struct ColorsTrainingHome: View {
     @State private var progress: Float = 0.0
     @State private var showingOptionsPopup = false
     @State var questionList: [GameIteration] = []
+    
+    @State private var showIntroModal = false
     
     let timerInterval = 0.1
     let totalTime = 30.0
@@ -240,10 +243,29 @@ struct ColorsTrainingHome: View {
             }
             Spacer()
         } //VStack
+        .onAppear {
+            if showIntro {
+                showIntroModal = true
+            }
+        }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.white.opacity(0.20))
         .navigationTitle("Colors training")
         .navigationBarTitleDisplayMode(.inline)
+        .popup(isPresented: $showIntroModal) {
+            ColorsIntroPopup(showIntroModal: $showIntroModal) {
+                //
+            }
+        } customize: {
+            $0
+                .type(.floater())
+                .position(.center)
+                .animation(.spring())
+                .closeOnTapOutside(false)
+                .closeOnTap(false)
+                .backgroundColor(.black.opacity(0.5))
+                .autohideIn(50)
+        }
         .popup(isPresented: $gameEnded) {
             VStack {
                 Text("Game over!")
@@ -323,7 +345,7 @@ struct ColorsTrainingHome: View {
             // Gear icon on the right
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button(action: {
-                    // Action for the gear icon
+                    showIntroModal = true
                 }) {
                     Image(systemName: "info.circle")
                         .foregroundColor(.white)
