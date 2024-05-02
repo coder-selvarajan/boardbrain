@@ -17,15 +17,16 @@ struct CoordinatesIntroPopup: View {
         ZStack {
             VStack(alignment: .leading) {
                 
-                Text("Game Intro!")
+                Text("Game Intro: ")
                     .font(.body)
+                    .fontWeight(.bold)
 //                Text("Coordinates Training")
 //                    .font(.caption)
                 //                .fontWeight(.bold)
                 
-                Divider()
+                
                 Text("Coordinates training module helps to quickly identify chessboard coordinates through interactive challenges.")
-                    .font(.footnote)
+                    .font(.callout)
                     .padding(.vertical, 10)
                     .fixedSize(horizontal: false, vertical: true)
                 
@@ -37,10 +38,10 @@ struct CoordinatesIntroPopup: View {
                     HStack(alignment: .top, spacing: 20) {
                         Image(systemName: "rectangle.and.hand.point.up.left.filled")
                             .resizable()
-                            .frame(width: 30, height: 30)
+                            .frame(width: 25, height: 25)
                         
                         Text("Random square coordinates will appear on the screen. Tap each square to earn a point.")
-                            .font(.footnote)
+                            .font(.subheadline)
 //                            .fixedSize(horizontal: false, vertical: true)
                     }
                     
@@ -52,7 +53,7 @@ struct CoordinatesIntroPopup: View {
                             .frame(width: 25, height: 25)
                         
                         Text("The game continues for a duration of 30 seconds.")
-                            .font(.footnote)
+                            .font(.subheadline)
 //                            .fixedSize(horizontal: false, vertical: true)
                     }
                     
@@ -65,7 +66,7 @@ struct CoordinatesIntroPopup: View {
                         
                         Text("After the game concludes, your total and average scores(from previous attempts) will be shown.")
                             .lineLimit(nil)
-                            .font(.footnote)
+                            .font(.subheadline)
 //                            .fixedSize(horizontal: false, vertical: true)
                     }
                 }
@@ -78,8 +79,8 @@ struct CoordinatesIntroPopup: View {
                 
 //                Divider()
                 
-                Toggle("Don't show this again", isOn: $showIntro)
-                    .font(.footnote)
+                Toggle("Don't show the intro again", isOn: $showIntro)
+                    .font(.callout)
                     .onChange(of: showIntro) { value, _ in
                         showIntroModal = !value // Close the modal when user chooses to not show it again
                     }
@@ -101,7 +102,7 @@ struct CoordinatesIntroPopup: View {
                 .padding(.vertical, 10)
                 
             } //VStack
-            .padding(25)
+            .padding(20)
             .background(.white)
             .foregroundColor(.black)
             .cornerRadius(15)
@@ -112,10 +113,10 @@ struct CoordinatesIntroPopup: View {
                 } label: {
                     Image(systemName: "xmark")
                         .resizable()
-                        .frame(width: 15, height: 15)
+                        .frame(width: 20, height: 20)
                         .foregroundColor(.red)
                 }
-                .padding([.top, .trailing], 10),
+                .padding([.top, .trailing], 15),
                 alignment: .topTrailing
             )
         } // ZStack
