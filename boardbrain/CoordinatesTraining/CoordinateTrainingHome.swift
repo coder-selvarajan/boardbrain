@@ -11,12 +11,13 @@ import PopupView
 struct CoordinateTrainingHome: View {
 //    @AppStorage("coordinateOptionsData") private var coordinateOptionsData: Data = Data()
     @AppStorage("showGameIntro") private var showIntro = true
-    @ObservedObject var scoreViewModel = ScoreViewModel(type: TrainingType.Coordinates)
-    
     @AppStorage("coordinatesShowPiece") private var showPiecesPosition = true
     @AppStorage("coordinatesShowRanks") private var showRanksandFiles = true
     @AppStorage("coordinatesShowCoordinates") private var showCoordinates = false
     @AppStorage("coordinatesWhiteSide")  private var whiteSide = true
+    
+    @ObservedObject var scoreViewModel = ScoreViewModel(type: TrainingType.Coordinates)
+    
     @State private var selectedColor = "White"
     @State private var targetIndex: Int = -1
     

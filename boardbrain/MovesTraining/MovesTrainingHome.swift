@@ -9,12 +9,12 @@ import SwiftUI
 
 struct MovesTrainingHome: View {
     @AppStorage("showGameIntro") private var showIntro = true
-    @ObservedObject var movesScoreViewModel = ScoreViewModel(type: TrainingType.Moves)
-    @Environment(\.presentationMode) var presentationMode
-    
     @AppStorage("movesShowCoordinates") private var showCoordinates = true
     @AppStorage("movesWhiteSide") private var whiteSide = true
     @AppStorage("movesHighlightMoves")  private var highlightPossibleMoves = true
+    
+    @ObservedObject var movesScoreViewModel = ScoreViewModel(type: TrainingType.Moves)
+    @Environment(\.presentationMode) var presentationMode
     
     @State private var selectedColor = "White"
     @State private var targetIndex: Int = -1

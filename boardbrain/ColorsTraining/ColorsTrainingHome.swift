@@ -1,5 +1,5 @@
 //
-//  MovesTrainingView.swift
+//  ColorsTrainingHome.swift
 //  boardbrain
 //
 //  Created by Selvarajan on 14/04/24.
@@ -9,7 +9,6 @@ import SwiftUI
 import PopupView
 
 struct ColorsTrainingHome: View {
-//    @AppStorage("showGameIntro") private var showIntro = true
     @ObservedObject var colorsScoreViewModel = ScoreViewModel(type: TrainingType.Colors)
     @EnvironmentObject var themeManager: ThemeManager
     

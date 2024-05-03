@@ -94,7 +94,7 @@ struct CoordinatesIntroPopup: View {
                         .frame(width: 25, height: 25)
                         .foregroundColor(.red)
                 }
-                .padding([.top, .trailing], 15),
+                .padding([.top, .trailing], 10),
                 alignment: .topTrailing
             )
         } // ZStack
