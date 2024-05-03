@@ -9,13 +9,14 @@ import SwiftUI
 import PopupView
 
 struct CoordinateTrainingHome: View {
-    @AppStorage("showCoordinatesIntro") private var showIntro = true
+//    @AppStorage("coordinateOptionsData") private var coordinateOptionsData: Data = Data()
+    @AppStorage("showGameIntro") private var showIntro = true
     @ObservedObject var scoreViewModel = ScoreViewModel(type: TrainingType.Coordinates)
     
-    @State private var showPiecesPosition = true
-    @State private var showRanksandFiles = true
-    @State private var showCoordinates = false
-    @State private var whiteSide = true
+    @AppStorage("coordinatesShowPiece") private var showPiecesPosition = true
+    @AppStorage("coordinatesShowRanks") private var showRanksandFiles = true
+    @AppStorage("coordinatesShowCoordinates") private var showCoordinates = false
+    @AppStorage("coordinatesWhiteSide")  private var whiteSide = true
     @State private var selectedColor = "White"
     @State private var targetIndex: Int = -1
     
@@ -31,6 +32,7 @@ struct CoordinateTrainingHome: View {
     @State var questionList: [GameIteration] = []
     
     @State private var showIntroModal = false
+    @State private var hideControlsinPopup = false
     
     let timerInterval = 0.1
     let totalTime = 30.0
@@ -230,15 +232,15 @@ struct CoordinateTrainingHome: View {
             .navigationTitle("Coordinates training")
             .navigationBarTitleDisplayMode(.inline)
             .popup(isPresented: $showIntroModal) {
-                CoordinatesIntroPopup(showIntroModal: $showIntroModal) {
-                    // 
+                CoordinatesIntroPopup(showIntroModal: $showIntroModal, hideControls: $hideControlsinPopup) {
+                    //
                 }
             } customize: {
                 $0
                     .type(.floater())
                     .position(.center)
                     .animation(.spring())
-                    .closeOnTapOutside(false)
+                    .closeOnTapOutside(true)
                     .closeOnTap(false)
                     .backgroundColor(.black.opacity(0.5))
                     .autohideIn(50)
@@ -323,9 +325,10 @@ struct CoordinateTrainingHome: View {
                 // Gear icon on the right
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: {
+                        hideControlsinPopup = true
                         showIntroModal = true
                     }) {
-                        Image(systemName: "info.circle")
+                        Image(systemName: "info.circle.fill")
                             .foregroundColor(.white)
                     }
                 }

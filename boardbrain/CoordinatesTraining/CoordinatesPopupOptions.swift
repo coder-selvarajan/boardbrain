@@ -1,5 +1,5 @@
 //
-//  BoardOptions.swift
+//  CoordinatesPopupOptions.swift
 //  boardbrain
 //
 //  Created by Selvarajan on 13/04/24.

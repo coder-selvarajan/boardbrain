@@ -8,13 +8,13 @@
 import SwiftUI
 
 struct MovesTrainingHome: View {
-    @AppStorage("showMovesIntro") private var showIntro = true
+    @AppStorage("showGameIntro") private var showIntro = true
     @ObservedObject var movesScoreViewModel = ScoreViewModel(type: TrainingType.Moves)
     @Environment(\.presentationMode) var presentationMode
     
-    @State private var showCoordinates = true
-    @State private var whiteSide = true
-    @State private var highlightPossibleMoves = true
+    @AppStorage("movesShowCoordinates") private var showCoordinates = true
+    @AppStorage("movesWhiteSide") private var whiteSide = true
+    @AppStorage("movesHighlightMoves")  private var highlightPossibleMoves = true
     
     @State private var selectedColor = "White"
     @State private var targetIndex: Int = -1
@@ -36,6 +36,7 @@ struct MovesTrainingHome: View {
     @State var gameState: GameState?
     
     @State private var showIntroModal = false
+    @State private var hideControlsinPopup = false
     
     let timerInterval = 0.1
     let totalTime = 30.0
@@ -229,7 +230,7 @@ struct MovesTrainingHome: View {
         .navigationBarTitleDisplayMode(.inline)
 //        .navigationPopGestureDisabled(gameStarted)
         .popup(isPresented: $showIntroModal) {
-            MovesIntroPopup(showIntroModal: $showIntroModal) {
+            MovesIntroPopup(showIntroModal: $showIntroModal, hideControls: $hideControlsinPopup) {
                 //
             }
         } customize: {
@@ -237,7 +238,7 @@ struct MovesTrainingHome: View {
                 .type(.floater())
                 .position(.center)
                 .animation(.spring())
-                .closeOnTapOutside(false)
+                .closeOnTapOutside(true)
                 .closeOnTap(false)
                 .backgroundColor(.black.opacity(0.5))
                 .autohideIn(50)
@@ -309,9 +310,10 @@ struct MovesTrainingHome: View {
             // Gear icon on the right
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button(action: {
+                    hideControlsinPopup = true
                     showIntroModal = true
                 }) {
-                    Image(systemName: "info.circle")
+                    Image(systemName: "info.circle.fill")
                         .foregroundColor(.white)
                 }
             }

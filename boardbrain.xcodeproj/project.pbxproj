@@ -20,6 +20,7 @@
 		70361EE22BDFCED7001F0859 /* ThemeBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70361EE12BDFCED7001F0859 /* ThemeBoard.swift */; };
 		7044D7532BCED7A700136FD6 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7044D7522BCED7A700136FD6 /* HomeView.swift */; };
 		705D07512BCA626E00AD5F22 /* ScoreModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705D07502BCA626E00AD5F22 /* ScoreModel.swift */; };
+		705E345D2BE5210B00654A24 /* OptionsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705E345C2BE5210B00654A24 /* OptionsModel.swift */; };
 		70614BAA2BC123460053DDAE /* ColorExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70614BA92BC123460053DDAE /* ColorExt.swift */; };
 		707E90942BD3906C00190753 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 707E90932BD3906C00190753 /* Launch Screen.storyboard */; };
 		709379A32BD24081004990BD /* MovesBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 709379A22BD24081004990BD /* MovesBoardView.swift */; };
@@ -53,6 +54,7 @@
 		70361EE12BDFCED7001F0859 /* ThemeBoard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeBoard.swift; sourceTree = "<group>"; };
 		7044D7522BCED7A700136FD6 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		705D07502BCA626E00AD5F22 /* ScoreModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreModel.swift; sourceTree = "<group>"; };
+		705E345C2BE5210B00654A24 /* OptionsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsModel.swift; sourceTree = "<group>"; };
 		70614BA92BC123460053DDAE /* ColorExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExt.swift; sourceTree = "<group>"; };
 		707E90932BD3906C00190753 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		709379A22BD24081004990BD /* MovesBoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovesBoardView.swift; sourceTree = "<group>"; };
@@ -93,6 +95,7 @@
 				705D07502BCA626E00AD5F22 /* ScoreModel.swift */,
 				70259A132BDBE82F003A0215 /* ScoreViewModel.swift */,
 				70203BA22BE0038B00AA241E /* ThemeManager.swift */,
+				705E345C2BE5210B00654A24 /* OptionsModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -300,6 +303,7 @@
 				701F2BFA2BE3DDCC00515FFD /* MovesIntroPopup.swift in Sources */,
 				70CA225A2BDE7A5800D0FDAB /* ColorsPopupOptions.swift in Sources */,
 				70082AF72BD7FF9000B013D9 /* Position.swift in Sources */,
+				705E345D2BE5210B00654A24 /* OptionsModel.swift in Sources */,
 				70C731322BC11AB6000FB2F9 /* BoardBrainApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

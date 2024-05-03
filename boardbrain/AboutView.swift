@@ -9,7 +9,7 @@ import SwiftUI
 
 struct AboutView: View {
     var body: some View {
-        ScrollView {
+        ScrollView(showsIndicators: false) {
             VStack(alignment: .leading, spacing: 15) {
                 HStack {
                     Image("logo-smooth-corners")

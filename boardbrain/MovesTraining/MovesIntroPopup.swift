@@ -9,7 +9,8 @@ import SwiftUI
 
 struct MovesIntroPopup: View {
     @Binding var showIntroModal: Bool
-    @AppStorage("showMovesIntro") private var showIntro: Bool = true
+    @Binding var hideControls: Bool
+    @AppStorage("showGameIntro") private var showIntro: Bool = true
     
     let closeCallBack: (() -> Void)?
     
@@ -31,66 +32,50 @@ struct MovesIntroPopup: View {
                         .fontWeight(.semibold)
                         .padding(.bottom, 10)
                     
-                    HStack(alignment: .top, spacing: 20) {
-                        Image(systemName: "hand.draw")
-                            .resizable()
-                            .frame(width: 25, height: 25)
-                        
-                        Text("Random targets will be set for a random piece on the board. Drag the piece to the right square and earn a point.")
-                            .font(.subheadline)
-//                            .fixedSize(horizontal: false, vertical: true)
-                    }
+                    processStepView(imageName: "hand.draw",
+                                    desc: "A random piece on the board will be assigned random targets; earn points by dragging the piece to the correct square.")
                     
                     Divider()
                     
-                    HStack(alignment: .top, spacing: 20) {
-                        Image(systemName: "stopwatch")
-                            .resizable()
-                            .frame(width: 25, height: 25)
-                        
-                        Text("The game continues for a duration of 30 seconds.")
-                            .font(.subheadline)
-//                            .fixedSize(horizontal: false, vertical: true)
-                    }
+                    processStepView(imageName: "stopwatch",
+                                    desc: "The game lasts 30 seconds.")
                     
                     Divider()
                     
-                    HStack(alignment: .top, spacing: 20) {
-                        Image(systemName: "chart.xyaxis.line")
-                            .resizable()
-                            .frame(width: 25, height: 25)
-                        
-                        Text("After the game concludes, your total and average scores(from previous attempts) will be shown.")
-                            .lineLimit(nil)
-                            .font(.subheadline)
-//                            .fixedSize(horizontal: false, vertical: true)
-                    }
+                    processStepView(imageName: "chart.xyaxis.line",
+                                    desc: "See your total and average scores at the end.")
                 }
                 .padding()
                 .background(.gray.opacity(0.25))
                 .cornerRadius(10.0)
+                .padding(.bottom, 5)
                 
-                Toggle("Don't show the intro again", isOn: $showIntro)
-                    .font(.callout)
-                    .onChange(of: showIntro) { value, _ in
-                        showIntroModal = !value // Close the modal when user chooses to not show it again
-                    }
-                    .padding(.vertical, 10)
-                
-                HStack {
-                    Spacer()
-                    Button("Get started") {
-                        showIntroModal = false // Close the modal when the user starts the training
-                    }
-                    .foregroundColor(.black)
-                    .padding(.horizontal)
-                    .padding(.vertical, 15)
-                    .background(Color.cyan.opacity(0.85))
-                    .cornerRadius(10)
+                if !hideControls {
+                    Toggle("Don't show the intros again", isOn: Binding(
+                        get: { !showIntro },
+                        set: { showIntro = !$0 }
+                    ))
+                        .font(.callout)
+                        .onChange(of: showIntro) { value, _ in
+                            showIntroModal = !value // Close the modal when user chooses to not show it again
+                        }
+                        .padding(.vertical, 10)
                     
-                    Spacer()
+//                    HStack {
+//                        Spacer()
+//                        Button("Get started") {
+//                            showIntroModal = false // Close the modal when the user starts the training
+//                        }
+//                        .foregroundColor(.black)
+//                        .padding(.horizontal)
+//                        .padding(.vertical, 15)
+//                        .background(Color.cyan.opacity(0.85))
+//                        .cornerRadius(10)
+//                        
+//                        Spacer()
+//                    }
+//                    .padding(.vertical, 10)
                 }
-                .padding(.vertical, 10)
                 
             } //VStack
             .padding(20)
@@ -102,9 +87,9 @@ struct MovesIntroPopup: View {
                 Button {
                     showIntroModal = false
                 } label: {
-                    Image(systemName: "xmark")
+                    Image(systemName: "xmark.circle")
                         .resizable()
-                        .frame(width: 20, height: 20)
+                        .frame(width: 25, height: 25)
                         .foregroundColor(.red)
                 }
                 .padding([.top, .trailing], 15),

@@ -7,9 +7,26 @@
 
 import SwiftUI
 
+struct processStepView: View {
+    let imageName: String
+    let desc: String
+    
+    var body: some View {
+        HStack(alignment: .top, spacing: 20) {
+            Image(systemName: imageName)
+                .resizable()
+                .frame(width: 20, height: 20)
+            
+            Text(desc)
+                .font(.subheadline)
+        }
+    }
+}
+
 struct CoordinatesIntroPopup: View {
     @Binding var showIntroModal: Bool
-    @AppStorage("showCoordinatesIntro") private var showIntro: Bool = true
+    @Binding var hideControls: Bool
+    @AppStorage("showGameIntro") private var showIntro: Bool = true
     
     let closeCallBack: (() -> Void)?
     
@@ -20,10 +37,6 @@ struct CoordinatesIntroPopup: View {
                 Text("Game Intro: ")
                     .font(.body)
                     .fontWeight(.bold)
-//                Text("Coordinates Training")
-//                    .font(.caption)
-                //                .fontWeight(.bold)
-                
                 
                 Text("Coordinates training module helps to quickly identify chessboard coordinates through interactive challenges.")
                     .font(.callout)
@@ -35,71 +48,36 @@ struct CoordinatesIntroPopup: View {
                         .fontWeight(.semibold)
                         .padding(.bottom, 10)
                     
-                    HStack(alignment: .top, spacing: 20) {
-                        Image(systemName: "rectangle.and.hand.point.up.left.filled")
-                            .resizable()
-                            .frame(width: 25, height: 25)
-                        
-                        Text("Random square coordinates will appear on the screen. Tap each square to earn a point.")
-                            .font(.subheadline)
-//                            .fixedSize(horizontal: false, vertical: true)
-                    }
+                    processStepView(imageName: "rectangle.and.hand.point.up.left.filled",
+                                    desc: "Random square coordinates will appear on the screen; tap each square to earn a point.")
                     
                     Divider()
                     
-                    HStack(alignment: .top, spacing: 20) {
-                        Image(systemName: "stopwatch")
-                            .resizable()
-                            .frame(width: 25, height: 25)
-                        
-                        Text("The game continues for a duration of 30 seconds.")
-                            .font(.subheadline)
-//                            .fixedSize(horizontal: false, vertical: true)
-                    }
+                    processStepView(imageName: "stopwatch",
+                                    desc: "The game lasts 30 seconds.")
                     
                     Divider()
                     
-                    HStack(alignment: .top, spacing: 20) {
-                        Image(systemName: "chart.xyaxis.line")
-                            .resizable()
-                            .frame(width: 25, height: 25)
-                        
-                        Text("After the game concludes, your total and average scores(from previous attempts) will be shown.")
-                            .lineLimit(nil)
-                            .font(.subheadline)
-//                            .fixedSize(horizontal: false, vertical: true)
-                    }
+                    processStepView(imageName: "chart.xyaxis.line",
+                                    desc: "See your total and average scores at the end.")
+                    
                 }
                 .padding()
                 .background(.gray.opacity(0.25))
                 .cornerRadius(10.0)
+                .padding(.bottom, 5)
                 
-                //            Text("You will be shown random square coordinates on the screen, you need to tap at the square to earn 1 point. Likewise the game goes for 30 seconds. At the end, the total score will be shown along with the average score which is calculated based on your previous scores. ")
-                //                .font(.footnote)
-                
-//                Divider()
-                
-                Toggle("Don't show the intro again", isOn: $showIntro)
-                    .font(.callout)
-                    .onChange(of: showIntro) { value, _ in
-                        showIntroModal = !value // Close the modal when user chooses to not show it again
-                    }
-                    .padding(.vertical, 10)
-                
-                HStack {
-                    Spacer()
-                    Button("Get started") {
-                        showIntroModal = false // Close the modal when the user starts the training
-                    }
-                    .foregroundColor(.black)
-                    .padding(.horizontal)
-                    .padding(.vertical, 15)
-                    .background(Color.cyan.opacity(0.85))
-                    .cornerRadius(10)
-                    
-                    Spacer()
+                if !hideControls {
+                    Toggle("Don't show the intros again", isOn: Binding(
+                        get: { !showIntro },
+                        set: { showIntro = !$0 }
+                    ))
+                        .font(.callout)
+                        .onChange(of: showIntro) { value, _ in
+                            showIntroModal = !value // Close the modal when user chooses to not show it again
+                        }
+                        .padding(.vertical, 10)
                 }
-                .padding(.vertical, 10)
                 
             } //VStack
             .padding(20)
@@ -111,9 +89,9 @@ struct CoordinatesIntroPopup: View {
                 Button {
                     showIntroModal = false
                 } label: {
-                    Image(systemName: "xmark")
+                    Image(systemName: "xmark.circle")
                         .resizable()
-                        .frame(width: 20, height: 20)
+                        .frame(width: 25, height: 25)
                         .foregroundColor(.red)
                 }
                 .padding([.top, .trailing], 15),
