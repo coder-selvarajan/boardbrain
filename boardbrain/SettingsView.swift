@@ -39,13 +39,8 @@ enum BoardTheme: String, Identifiable, CaseIterable, Codable {
 
 struct SettingsView: View {
     @EnvironmentObject var themeManager: ThemeManager
+    @EnvironmentObject var scoreViewModel: ScoreViewModel
     
-    @ObservedObject var coordinatesScoreVM = ScoreViewModel(type: TrainingType.Coordinates)
-    @ObservedObject var movesScoreVM = ScoreViewModel(type: TrainingType.Moves)
-    @ObservedObject var colorsScoreVM = ScoreViewModel(type: TrainingType.Colors)
-    
-    
-    //    @State private var selectedBoardTheme: BoardTheme = .gray
     @State private var selectedColor = Color.blue
     @State private var timerValue: Double = 30
     @State private var logoImage: Image = Image(systemName: "photo")
@@ -57,9 +52,10 @@ struct SettingsView: View {
         VStack {
             Form {
                 Section(header: Text("Theme Setting")) {
-                    VStack(alignment: .leading) {
+                    VStack(alignment: .center) {
                         Text("Choose Board theme :")
                         HStack (spacing: 25) {
+                            Spacer()
                             ForEach(BoardTheme.allCases, id:\.self) { theme in
                                 ThemeBoard(lightColor: theme.lightColor, darkColor: theme.darkColor)
                                     .frame(width: 45, height: 45)
@@ -78,94 +74,40 @@ struct SettingsView: View {
                                                                  theme: theme)
                                     }
                             }
+                            Spacer()
                         }.padding(.vertical, 10)
                     }
-                    
-                    //                    HStack(alignment: .center, spacing: 30) {
-                    //                        Text("Game Timer")
-                    //                        Spacer()
-                    //                        TextField("Game Timer", value: $timerValue, format: .number)
-                    //                            .textFieldStyle(.roundedBorder)
-                    //                            .frame(width: 100)
-                    //                    }
-                    //                    .padding(.vertical, 10)
                     
                 } // Section
                 
                 Section(header: Text("Score Reset")) {
                     VStack {
-                        Button {
-                            //
-                        } label: {
-                            HStack(alignment: .center, spacing: 10) {
-                                Image(systemName: "arrow.clockwise")
-                                    .font(.title3)
-                                    .foregroundColor(.black.opacity(0.75))
-                                
-                                Text("Reset scores")
-                                    .font(.body)
-                                    .foregroundColor(.black)
-                                
-                                Spacer()
-                            }
-                            .padding(20)
-                            .frame(height: 50)
-                            .background(.white.opacity(0.8))
-                            .cornerRadius(10.0)
-                            .onTapGesture {
+                        HStack {
+                            Spacer()
+                            
+                            Button {
                                 confirmBox = true
+                            } label: {
+                                HStack(spacing: 15) {
+                                    Image(systemName: "arrow.clockwise")
+                                    Text("Reset Scores")
+                                }
+                                .padding(.horizontal)
                             }
+                            .padding()
+                            .foregroundStyle(.white)
+                            .background(.red)
+                            .cornerRadius(10)
+                            
+                            Spacer()
                         }
-                        Text(showMessage ? "All scores reset successfully" : "")
-                            .font(.caption)
-                            .foregroundStyle(.yellow)
                         
-//                        Button {
-//                            //
-//                        } label: {
-//                            HStack(alignment: .center, spacing: 10) {
-//                                Image(systemName: "arrow.clockwise")
-//                                    .font(.title3)
-//                                    .foregroundColor(.black.opacity(0.75))
-//                                
-//                                Text("Reset - Moves score")
-//                                    .font(.body)
-//                                    .foregroundColor(.black)
-//                                
-//                                Spacer()
-//                            }
-//                            .padding(.horizontal, 20)
-//                            .frame(height: 40)
-//                            .background(.white.opacity(0.8))
-//                            .cornerRadius(10.0)
-//                            .onTapGesture {
-//                                confirmBoxForMovesScoreReset = true
-//                            }
-//                        }
-//                        .padding(.vertical)
-//                        
-//                        Button {
-//                            //
-//                        } label: {
-//                            HStack(alignment: .center, spacing: 10) {
-//                                Image(systemName: "arrow.clockwise")
-//                                    .font(.title3)
-//                                    .foregroundColor(.black.opacity(0.75))
-//                                
-//                                Text("Reset - Colors score")
-//                                    .font(.body)
-//                                    .foregroundColor(.black)
-//                                
-//                                Spacer()
-//                            }
-//                            .padding(.horizontal, 20)
-//                            .frame(height: 40)
-//                            .background(.white.opacity(0.8))
-//                            .cornerRadius(10.0)
-//                            .onTapGesture {
-//                                confirmBoxForColorsScoreReset = true
-//                            }
-//                        }
+                        if showMessage {
+                            Text("All scores have been reset successfully.")
+                                .font(.caption)
+                                .foregroundStyle(.yellow)
+                                
+                        }
                         
                     } // VStack
                     .padding(.vertical)
@@ -180,9 +122,10 @@ struct SettingsView: View {
         .confirmationDialog("Are you sure to reset score?",
                             isPresented: $confirmBox) {
             Button("Reset all scores?", role: .destructive) {
-                coordinatesScoreVM.resetScore()
-                movesScoreVM.resetScore()
-                colorsScoreVM.resetScore()
+                
+                scoreViewModel.resetScore(for: TrainingType.Coordinates)
+                scoreViewModel.resetScore(for: TrainingType.Moves)
+                scoreViewModel.resetScore(for: TrainingType.Colors)
                 
                 showMessage = true
             }

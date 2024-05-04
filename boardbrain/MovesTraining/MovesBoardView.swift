@@ -66,7 +66,7 @@ struct MovesBoardView: View {
                                         .frame(width: cellSize, height: cellSize, alignment: .topLeading)
                                         .position(x: CGFloat(column) * cellSize + cellSize / 2,
                                                   y: CGFloat(row) * cellSize + cellSize / 2)
-                                        .padding([.top, .leading], 1)
+                                        .padding([.top, .leading], 2)
                                 }
                                 // print 'a'
                                 if row == 7 {

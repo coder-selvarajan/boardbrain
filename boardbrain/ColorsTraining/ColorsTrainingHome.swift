@@ -9,7 +9,7 @@ import SwiftUI
 import PopupView
 
 struct ColorsTrainingHome: View {
-    @ObservedObject var colorsScoreViewModel = ScoreViewModel(type: TrainingType.Colors)
+    @EnvironmentObject var scoreViewModel : ScoreViewModel
     @EnvironmentObject var themeManager: ThemeManager
     
     @AppStorage("colorsShowCoordinates") private var showCoordinates = true
@@ -88,7 +88,8 @@ struct ColorsTrainingHome: View {
                 timer.invalidate()
                 
                 //update the scores and persist
-                colorsScoreViewModel.updateScore(for: whiteSide ? .white : .black,
+                scoreViewModel.updateScore(type: TrainingType.Colors,
+                                                 color: whiteSide ? .white : .black,
                                                  score: Score(correctAttempts: score,
                                                         totalAttempts: currentPlay))
                 
@@ -172,15 +173,15 @@ struct ColorsTrainingHome: View {
                                 answerQuestion(with: SquareColor.dark)
                             }
                     }
-                } else if (colorsScoreViewModel.scoreModel.totalPlayBlack > 0 || colorsScoreViewModel.scoreModel.totalPlayWhite > 0) {
+                } else if (scoreViewModel.colorsScoreModel.totalPlayBlack > 0 || scoreViewModel.colorsScoreModel.totalPlayWhite > 0) {
                         Text(String(format: "Last score (%@): %d/%d",
-                                    colorsScoreViewModel.scoreModel.lastScoreAs == .white ? "W" : "B",
-                                    colorsScoreViewModel.scoreModel.lastScore.correctAttempts,
-                                    colorsScoreViewModel.scoreModel.lastScore.totalAttempts))
+                                    scoreViewModel.colorsScoreModel.lastScoreAs == .white ? "W" : "B",
+                                    scoreViewModel.colorsScoreModel.lastScore.correctAttempts,
+                                    scoreViewModel.colorsScoreModel.lastScore.totalAttempts))
                         .font(.footnote)
-                        Text(String(format: "Average score as white: %.2f", colorsScoreViewModel.scoreModel.avgScoreWhite))
+                        Text(String(format: "Average score as white: %.2f", scoreViewModel.colorsScoreModel.avgScoreWhite))
                             .font(.footnote)
-                        Text(String(format: "Average score as black: %.2f", colorsScoreViewModel.scoreModel.avgScoreBlack))
+                        Text(String(format: "Average score as black: %.2f", scoreViewModel.colorsScoreModel.avgScoreBlack))
                             .font(.footnote)
                 }
             }
@@ -246,7 +247,7 @@ struct ColorsTrainingHome: View {
         } //VStack
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.white.opacity(0.20))
-        .navigationTitle("Colors training")
+//        .navigationTitle("Colors training")
         .navigationBarTitleDisplayMode(.inline)
         .popup(isPresented: $showIntroModal) {
             ColorsIntroPopup(showIntroModal: $showIntroModal, hideControls: $hideControlsinPopup) {
@@ -275,14 +276,14 @@ struct ColorsTrainingHome: View {
                 VStack(alignment: .leading) {
                     Text("Average Score: ")
                         .foregroundColor(.gray)
-                    Text(String(format: "as White:  %.2f \nas Black:  %.2f ", colorsScoreViewModel.scoreModel.avgScoreWhite, colorsScoreViewModel.scoreModel.avgScoreBlack))
+                    Text(String(format: "as White:  %.2f \nas Black:  %.2f ", scoreViewModel.colorsScoreModel.avgScoreWhite, scoreViewModel.colorsScoreModel.avgScoreBlack))
                         .font(.subheadline)
                         .foregroundColor(.black)
                         .padding(.bottom)
                     
                     Text("Best Score: ")
                         .foregroundColor(.gray)
-                    Text("as White:  \(colorsScoreViewModel.scoreModel.bestScoreWhite.correctAttempts) / \(colorsScoreViewModel.scoreModel.bestScoreWhite.totalAttempts) \nas Black:  \(colorsScoreViewModel.scoreModel.bestScoreBlack.correctAttempts) / \(colorsScoreViewModel.scoreModel.bestScoreBlack.totalAttempts)")
+                    Text("as White:  \(scoreViewModel.colorsScoreModel.bestScoreWhite.correctAttempts) / \(scoreViewModel.colorsScoreModel.bestScoreWhite.totalAttempts) \nas Black:  \(scoreViewModel.colorsScoreModel.bestScoreBlack.correctAttempts) / \(scoreViewModel.colorsScoreModel.bestScoreBlack.totalAttempts)")
                         .font(.subheadline)
                         .foregroundColor(.black)
                         .padding(.bottom)
@@ -325,6 +326,16 @@ struct ColorsTrainingHome: View {
                 .autohideIn(100)
         }
         .toolbar {
+            ToolbarItem(placement: .principal) {
+                HStack {
+                    Image(systemName: "square.righthalf.filled")
+                        .resizable()
+                        .frame(width: 20, height: 20)
+                    Text("Colors Training").font(.body)
+                        .padding(.horizontal, 5)
+                }
+            } //ToolbarItem
+            
             // Gear icon on the right
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button(action: {

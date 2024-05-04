@@ -110,16 +110,16 @@ struct ColorsBoardView: View {
                             if index % columns == 0 {
                                 Text("\(coordinate.rank)")
                                     .font(.caption2)
-                                    .foregroundColor(.black)
+                                    .foregroundColor((index / columns) % 2 == index % 2 ? themeManager.boardColors.1 : themeManager.boardColors.0)
                                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-                                    .padding([.top, .leading], 4)
+                                    .padding([.top, .leading], 2)
                             }
                             if index > 55 {
                                 Text("\(coordinate.file)")
                                     .font(.caption2)
-                                    .foregroundColor(.black)
+                                    .foregroundColor((index / columns) % 2 == index % 2 ? themeManager.boardColors.1 : themeManager.boardColors.0)
                                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
-                                    .padding([.bottom, .trailing], 4)
+                                    .padding([.bottom, .trailing], 2)
                             }
                         }
                     }

@@ -13,9 +13,9 @@ struct BoardBrainApp: App {
     var body: some Scene {
         WindowGroup {
             HomeView()
-//            XChessBoardHome()
                 .colorScheme(ColorScheme.dark)
                 .environmentObject(ThemeManager())
+                .environmentObject(ScoreViewModel())
         }
     }
 }

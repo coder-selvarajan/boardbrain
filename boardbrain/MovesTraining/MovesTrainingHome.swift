@@ -8,13 +8,13 @@
 import SwiftUI
 
 struct MovesTrainingHome: View {
+    @EnvironmentObject var scoreViewModel : ScoreViewModel
+    @Environment(\.presentationMode) var presentationMode
+    
     @AppStorage("showGameIntro") private var showIntro = true
     @AppStorage("movesShowCoordinates") private var showCoordinates = true
     @AppStorage("movesWhiteSide") private var whiteSide = true
     @AppStorage("movesHighlightMoves")  private var highlightPossibleMoves = true
-    
-    @ObservedObject var movesScoreViewModel = ScoreViewModel(type: TrainingType.Moves)
-    @Environment(\.presentationMode) var presentationMode
     
     @State private var selectedColor = "White"
     @State private var targetIndex: Int = -1
@@ -49,7 +49,8 @@ struct MovesTrainingHome: View {
                 timer.invalidate()
                 
                 //update the scores and persist
-                movesScoreViewModel.updateScore(for: whiteSide ? .white : .black,
+                scoreViewModel.updateScore(type: .Moves,
+                                                color: whiteSide ? .white : .black,
                                                 score: Score(correctAttempts: score, totalAttempts: currentPlay))
                 if gameState != nil {
                     gameState!.gameEnded = true
@@ -147,15 +148,15 @@ struct MovesTrainingHome: View {
                         .foregroundColor(.white)
                         .padding()
                 } else {
-                    if (movesScoreViewModel.scoreModel.totalPlayBlack > 0 || movesScoreViewModel.scoreModel.totalPlayWhite > 0) {
+                    if (scoreViewModel.movesScoreModel.totalPlayBlack > 0 || scoreViewModel.movesScoreModel.totalPlayWhite > 0) {
                         Text(String(format: "Last score (%@): %d/%d",
-                                    movesScoreViewModel.scoreModel.lastScoreAs == .white ? "w" : "b",
-                                    movesScoreViewModel.scoreModel.lastScore.correctAttempts,
-                                    movesScoreViewModel.scoreModel.lastScore.totalAttempts))
+                                    scoreViewModel.movesScoreModel.lastScoreAs == .white ? "w" : "b",
+                                    scoreViewModel.movesScoreModel.lastScore.correctAttempts,
+                                    scoreViewModel.movesScoreModel.lastScore.totalAttempts))
                         .font(.footnote)
-                        Text(String(format: "Average score as white: %.2f", movesScoreViewModel.scoreModel.avgScoreWhite))
+                        Text(String(format: "Average score as white: %.2f", scoreViewModel.movesScoreModel.avgScoreWhite))
                             .font(.footnote)
-                        Text(String(format: "Average score as black: %.2f", movesScoreViewModel.scoreModel.avgScoreBlack))
+                        Text(String(format: "Average score as black: %.2f", scoreViewModel.movesScoreModel.avgScoreBlack))
                             .font(.footnote)
                     }
                 }
@@ -224,7 +225,7 @@ struct MovesTrainingHome: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.white.opacity(0.20))
-        .navigationTitle("Moves training")
+//        .navigationTitle("Moves training")
         .navigationBarBackButtonHidden(gameStarted)
         .navigationBarItems(leading: !gameStarted ? nil : backButton)
         .navigationBarTitleDisplayMode(.inline)
@@ -256,14 +257,14 @@ struct MovesTrainingHome: View {
                 VStack(alignment: .leading) {
                     Text("Average Score: ")
                         .foregroundColor(.gray)
-                    Text(String(format: "as White:  %.2f \nas Black:  %.2f ", movesScoreViewModel.scoreModel.avgScoreWhite, movesScoreViewModel.scoreModel.avgScoreBlack))
+                    Text(String(format: "as White:  %.2f \nas Black:  %.2f ", scoreViewModel.movesScoreModel.avgScoreWhite, scoreViewModel.movesScoreModel.avgScoreBlack))
                         .font(.subheadline)
                         .foregroundColor(.black)
                         .padding(.bottom)
                     
                     Text("Best Score: ")
                         .foregroundColor(.gray)
-                    Text("as White:  \(movesScoreViewModel.scoreModel.bestScoreWhite.correctAttempts) / \(movesScoreViewModel.scoreModel.bestScoreWhite.totalAttempts) \nas Black:  \(movesScoreViewModel.scoreModel.bestScoreBlack.correctAttempts) / \(movesScoreViewModel.scoreModel.bestScoreBlack.totalAttempts)")
+                    Text("as White:  \(scoreViewModel.movesScoreModel.bestScoreWhite.correctAttempts) / \(scoreViewModel.movesScoreModel.bestScoreWhite.totalAttempts) \nas Black:  \(scoreViewModel.movesScoreModel.bestScoreBlack.correctAttempts) / \(scoreViewModel.movesScoreModel.bestScoreBlack.totalAttempts)")
                         .font(.subheadline)
                         .foregroundColor(.black)
                         .padding(.bottom)
@@ -307,6 +308,16 @@ struct MovesTrainingHome: View {
                 .autohideIn(100)
         }
         .toolbar {
+            ToolbarItem(placement: .principal) {
+                HStack {
+                    Image(systemName: "crown")
+                        .resizable()
+                        .frame(width: 20, height: 20)
+                    Text("Moves Training").font(.body)
+                        .padding(.horizontal, 5)
+                }
+            } //ToolbarItem
+            
             // Gear icon on the right
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button(action: {

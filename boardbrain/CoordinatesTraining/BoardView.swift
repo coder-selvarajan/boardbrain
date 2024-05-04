@@ -144,8 +144,8 @@ struct BoardView: View {
                                 
                             } else {
                                 Text("\(coordinate.file)\(coordinate.rank)")
-                                    .font(.subheadline)
-                                    .foregroundColor((index / columns) % 2 == index % 2 ? .black.opacity(0.25) : .white.opacity(0.25))
+                                    .font(.caption)
+                                    .foregroundColor((index / columns) % 2 == index % 2 ? .black.opacity(0.35) : .white.opacity(0.35))
                                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
                                 //                                .padding([.bottom, .trailing], 3)
                             }
@@ -167,17 +167,17 @@ struct BoardView: View {
                             if index % columns == 0 {
                                 Text("\(coordinate.rank)")
                                     .font(.caption2)
-                                    .foregroundColor((index / columns) % 2 == index % 2 ? .black : .white)
+                                    .foregroundColor((index / columns) % 2 == index % 2 ? themeManager.boardColors.1 : themeManager.boardColors.0)
                                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-                                    .padding([.top, .leading], 1)
+                                    .padding([.top, .leading], 2)
                             }
                             // print 'a'
                             if index > 55 {
                                 Text("\(coordinate.file)")
                                     .font(.caption2)
-                                    .foregroundColor((index / columns) % 2 == index % 2 ? .black : .white)
+                                    .foregroundColor((index / columns) % 2 == index % 2 ? themeManager.boardColors.1 : themeManager.boardColors.0)
                                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
-                                    .padding([.bottom, .trailing], 1)
+                                    .padding([.bottom, .trailing], 2)
                             }
                         }
                     }

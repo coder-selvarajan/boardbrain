@@ -19,27 +19,24 @@ enum TrainingType {
         case .Moves:
             return "movesTrainingScore"
         }
-        
     }
 }
 
 class ScoreViewModel: ObservableObject {
-    @Published var scoreModel: ScoreModel
-    var trainingType: TrainingType = .Coordinates
+    @Published var coordinatesScoreModel: ScoreModel
+    @Published var movesScoreModel: ScoreModel
+    @Published var colorsScoreModel: ScoreModel
     
-    init(type: TrainingType) {
-        self.trainingType = type
-        
+    static func loadScoreFromUserDefaults(type: TrainingType) -> ScoreModel {
         let decoder = JSONDecoder()
         if let data = UserDefaults.standard.data(forKey: type.getDBKey()) { //} "colorsTrainingScores") {
             if let loadedScores = try? decoder.decode(ScoreModel.self, from: data) {
-                scoreModel = loadedScores
-                return
+                return loadedScores
             }
         }
         
         //if no user defaults value then assign default values.
-        scoreModel = ScoreModel(lastScore: Score(correctAttempts: 0, totalAttempts: 0),
+        return ScoreModel(lastScore: Score(correctAttempts: 0, totalAttempts: 0),
                                 lastScoreAs: .white,
                                 bestScoreWhite: Score(correctAttempts: 0, totalAttempts: 0),
                                 bestScoreBlack: Score(correctAttempts: 0, totalAttempts: 0),
@@ -47,17 +44,51 @@ class ScoreViewModel: ObservableObject {
                                 avgScoreBlack: 0.0, totalPlayBlack: 0)
     }
     
-    func resetScore() {
-        scoreModel = ScoreModel(lastScore: Score(correctAttempts: 0, totalAttempts: 0),
+    init() {
+        coordinatesScoreModel = ScoreViewModel.loadScoreFromUserDefaults(type: TrainingType.Coordinates)
+        movesScoreModel = ScoreViewModel.loadScoreFromUserDefaults(type: TrainingType.Moves)
+        colorsScoreModel = ScoreViewModel.loadScoreFromUserDefaults(type: TrainingType.Colors)
+    }
+    
+    func resetScore(for type: TrainingType){
+        switch type {
+        case .Coordinates:
+            coordinatesScoreModel = getDefaultScore()
+            persistScore(type: type, scoreModel: coordinatesScoreModel)
+        case .Moves:
+            movesScoreModel = getDefaultScore()
+            persistScore(type: type, scoreModel: movesScoreModel)
+        case .Colors:
+            colorsScoreModel = getDefaultScore()
+            persistScore(type: type, scoreModel: colorsScoreModel)
+        }
+    }
+    
+    
+    func updateScore(type: TrainingType, color: COLOR, score: Score) {
+        switch type {
+        case .Coordinates:
+            calculateScore(for: color, score: score, scoreModel: &coordinatesScoreModel)
+            persistScore(type: type, scoreModel: coordinatesScoreModel)
+        case .Moves:
+            calculateScore(for: color, score: score, scoreModel: &movesScoreModel)
+            persistScore(type: type, scoreModel: movesScoreModel)
+        case .Colors:
+            calculateScore(for: color, score: score, scoreModel: &colorsScoreModel)
+            persistScore(type: type, scoreModel: colorsScoreModel)
+        }
+    }
+    
+    private func getDefaultScore() -> ScoreModel {
+        return ScoreModel(lastScore: Score(correctAttempts: 0, totalAttempts: 0),
                                 lastScoreAs: .white,
                                 bestScoreWhite: Score(correctAttempts: 0, totalAttempts: 0),
                                 bestScoreBlack: Score(correctAttempts: 0, totalAttempts: 0),
                                 avgScoreWhite: 0.0, totalPlayWhite: 0,
                                 avgScoreBlack: 0.0, totalPlayBlack: 0)
-        persistScore()
     }
     
-    func updateScore(for color: COLOR, score: Score) {
+    private func calculateScore(for color: COLOR, score: Score, scoreModel: inout ScoreModel) {
         scoreModel.lastScore = score
         scoreModel.lastScoreAs = color
         
@@ -90,14 +121,12 @@ class ScoreViewModel: ObservableObject {
             scoreModel.avgScoreBlack = newAvgScore
             scoreModel.totalPlayBlack = newTotalPlay
         }
-        
-        persistScore()
     }
     
-    func persistScore() {
+    private func persistScore(type: TrainingType, scoreModel: ScoreModel) {
         let encoder = JSONEncoder()
         if let encoded = try? encoder.encode(scoreModel) {
-            UserDefaults.standard.set(encoded, forKey: trainingType.getDBKey()) //"colorsTrainingScores")
+            UserDefaults.standard.set(encoded, forKey: type.getDBKey()) //"colorsTrainingScores"
             UserDefaults.standard.synchronize()
         }
     }

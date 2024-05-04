@@ -16,7 +16,7 @@ struct CoordinateTrainingHome: View {
     @AppStorage("coordinatesShowCoordinates") private var showCoordinates = false
     @AppStorage("coordinatesWhiteSide")  private var whiteSide = true
     
-    @ObservedObject var scoreViewModel = ScoreViewModel(type: TrainingType.Coordinates)
+    @EnvironmentObject var scoreViewModel: ScoreViewModel
     
     @State private var selectedColor = "White"
     @State private var targetIndex: Int = -1
@@ -72,7 +72,8 @@ struct CoordinateTrainingHome: View {
                 timer.invalidate()
                 
                 //update the scores and persist
-                scoreViewModel.updateScore(for: whiteSide ? .white : .black, 
+                scoreViewModel.updateScore(type: TrainingType.Coordinates,
+                                           color: whiteSide ? .white : .black, 
                                            score: Score(correctAttempts: score, totalAttempts: currentPlay))
                 
                 gameEnded = true
@@ -156,15 +157,15 @@ struct CoordinateTrainingHome: View {
                             .foregroundColor(.white)
                             .padding()
                     } else {
-                        if (scoreViewModel.scoreModel.totalPlayBlack > 0 || scoreViewModel.scoreModel.totalPlayWhite > 0) {
+                        if (scoreViewModel.coordinatesScoreModel.totalPlayBlack > 0 || scoreViewModel.coordinatesScoreModel.totalPlayWhite > 0) {
                             Text(String(format: "Last score (%@): %d/%d",
-                                        scoreViewModel.scoreModel.lastScoreAs == .white ? "W" : "B",
-                                        scoreViewModel.scoreModel.lastScore.correctAttempts,
-                                        scoreViewModel.scoreModel.lastScore.totalAttempts))
+                                        scoreViewModel.coordinatesScoreModel.lastScoreAs == .white ? "W" : "B",
+                                        scoreViewModel.coordinatesScoreModel.lastScore.correctAttempts,
+                                        scoreViewModel.coordinatesScoreModel.lastScore.totalAttempts))
                             .font(.footnote)
-                            Text(String(format: "Average score as White: %.2f", scoreViewModel.scoreModel.avgScoreWhite))
+                            Text(String(format: "Average score as White: %.2f", scoreViewModel.coordinatesScoreModel.avgScoreWhite))
                                 .font(.footnote)
-                            Text(String(format: "Average score as Black: %.2f", scoreViewModel.scoreModel.avgScoreBlack))
+                            Text(String(format: "Average score as Black: %.2f", scoreViewModel.coordinatesScoreModel.avgScoreBlack))
                                 .font(.footnote)
                         }
                     }
@@ -230,7 +231,7 @@ struct CoordinateTrainingHome: View {
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(Color.white.opacity(0.20))
-            .navigationTitle("Coordinates training")
+//            .navigationTitle("Coordinates training")
             .navigationBarTitleDisplayMode(.inline)
             .popup(isPresented: $showIntroModal) {
                 CoordinatesIntroPopup(showIntroModal: $showIntroModal, hideControls: $hideControlsinPopup) {
@@ -259,14 +260,14 @@ struct CoordinateTrainingHome: View {
                     VStack(alignment: .leading) {
                         Text("Average Score: ")
                             .foregroundColor(.gray)
-                        Text(String(format: "as White:  %.2f \nas Black:  %.2f ", scoreViewModel.scoreModel.avgScoreWhite, scoreViewModel.scoreModel.avgScoreBlack))
+                        Text(String(format: "as White:  %.2f \nas Black:  %.2f ", scoreViewModel.coordinatesScoreModel.avgScoreWhite, scoreViewModel.coordinatesScoreModel.avgScoreBlack))
                             .font(.subheadline)
                             .foregroundColor(.black)
                             .padding(.bottom)
                         
                         Text("Best Score: ")
                             .foregroundColor(.gray)
-                        Text("as White:  \(scoreViewModel.scoreModel.bestScoreWhite.correctAttempts) / \(scoreViewModel.scoreModel.bestScoreWhite.totalAttempts) \nas Black:  \(scoreViewModel.scoreModel.bestScoreBlack.correctAttempts) / \(scoreViewModel.scoreModel.bestScoreBlack.totalAttempts)")
+                        Text("as White:  \(scoreViewModel.coordinatesScoreModel.bestScoreWhite.correctAttempts) / \(scoreViewModel.coordinatesScoreModel.bestScoreWhite.totalAttempts) \nas Black:  \(scoreViewModel.coordinatesScoreModel.bestScoreBlack.correctAttempts) / \(scoreViewModel.coordinatesScoreModel.bestScoreBlack.totalAttempts)")
                             .font(.subheadline)
                             .foregroundColor(.black)
                             .padding(.bottom)
@@ -310,18 +311,15 @@ struct CoordinateTrainingHome: View {
                     .autohideIn(100)
             }
             .toolbar {
-                // Hamburger menu icon on the left
-//                ToolbarItem(placement: .navigationBarLeading) {
-//                    Menu {
-//                        Button("Introduction", action: {})
-//                        Button("Game: Coordinates", action: {})
-//                        Button("Game: Moves", action: {})
-//                        Button("Game: Light/Dark", action: {})
-//                    } label: {
-//                        Image(systemName: "line.horizontal.3")
-//                            .foregroundColor(.white)
-//                    }
-//                }
+                ToolbarItem(placement: .principal) {
+                    HStack {
+                        Image(systemName: "square.grid.2x2")
+                            .resizable()
+                            .frame(width: 20, height: 20)
+                        Text("Coordinates Training").font(.body)
+                            .padding(.horizontal, 5)
+                    }
+                } //ToolbarItem
                 
                 // Gear icon on the right
                 ToolbarItem(placement: .navigationBarTrailing) {
