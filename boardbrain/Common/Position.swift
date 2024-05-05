@@ -12,7 +12,7 @@ struct Position: Equatable {
     var column: Int
     
     static func kingMoves(from position: Position) -> [Position] {
-        print("Position ", position)
+//        print("Position ", position)
         
         let moves = [
             (-1, -1), (-1, 0), (0, -1), (1,0), (0,1), (1, 1), (1, -1), (-1, 1)
@@ -30,7 +30,7 @@ struct Position: Equatable {
     }
     
     static func pawnMoves(from position: Position) -> [Position] {
-        print("Position ", position)
+//        print("Position ", position)
         
         let moves = [
             (-1, 0)
@@ -48,7 +48,7 @@ struct Position: Equatable {
     }
     
     static func straightMoves(from position: Position) -> [Position] {
-        print("Position ", position)
+//        print("Position ", position)
         var moves = [Position]()
         // Horizontal and vertical moves
         for i in 0..<8 {
@@ -59,7 +59,7 @@ struct Position: Equatable {
     }
     
     static func diagonalMoves(from position: Position) -> [Position] {
-        print("Position ", position)
+//        print("Position ", position)
         var moves = [Position]()
         // Diagonal moves
         for i in 1..<8 {
@@ -76,7 +76,7 @@ struct Position: Equatable {
     }
     
     static func knightMoves(from position: Position) -> [Position] {
-        print("Position ", position)
+//        print("Position ", position)
         let moves = [
             (2, 1), (1, 2), (-1, 2), (-2, 1),
             (-2, -1), (-1, -2), (1, -2), (2, -1)

@@ -9,7 +9,6 @@ import SwiftUI
 import PopupView
 
 struct CoordinateTrainingHome: View {
-//    @AppStorage("coordinateOptionsData") private var coordinateOptionsData: Data = Data()
     @AppStorage("showGameIntro") private var showIntro = true
     @AppStorage("coordinatesShowPiece") private var showPiecesPosition = true
     @AppStorage("coordinatesShowRanks") private var showRanksandFiles = true

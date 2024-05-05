@@ -22,6 +22,9 @@ struct MovesBoardView: View {
     @State var highlightedCol: Int = -1
     @State var imageOffset: CGSize = .zero
     @State var gestureLocation: CGPoint = .zero
+    @State var movedPosition: Position = Position(row: -1, column: -1)
+    
+    @State var correctAnswer: Bool?
     
     let rank = ["a","b","c","d","e","f","g","h"]
 //    let blackRank = ["a","b","c","d","e","f","g","h"]
@@ -40,7 +43,7 @@ struct MovesBoardView: View {
                             Rectangle()
                                 .fill((row + column) % 2 == 0 ? themeManager.boardColors.0 : themeManager.boardColors.1)
                                 .fill(
-                                    (row == highlightedRow && column == highlightedCol) ? Color.green : Color.clear)
+                                    (row == highlightedRow && column == highlightedCol && correctAnswer != nil) ? (correctAnswer! ? Color.green : Color.red) : Color.clear)
                                 .frame(width: cellSize, height: cellSize)
                                 .position(x: CGFloat(column) * cellSize + cellSize / 2,
                                           y: CGFloat(row) * cellSize + cellSize / 2)
@@ -128,10 +131,12 @@ struct MovesBoardView: View {
                                 }
                                 .onEnded { gesture  in
                                     withAnimation {
+                                        correctAnswer = nil
                                         let newColumn = Int((gesture.location.x / cellSize)) //.rounded())
                                         let newRow = Int((gesture.location.y / cellSize)) //.rounded())
                                         
                                         let targetPosition = Position(row: newRow, column: newColumn)
+                                        
                                         
                                         imageOffset = .zero
                                         imageScale = CGSize(width: 1.0, height: 1.0)
@@ -139,9 +144,28 @@ struct MovesBoardView: View {
                                         highlightedCol = -1
                                         highlightedRow = -1
                                         
+                                        if targetPosition == gameState?.targetPosition {
+                                            correctAnswer = true
+                                        }
+                                        else {
+                                            correctAnswer = false
+                                        }
+                                        
+                                        print("----------------")
+                                        print("targetPosition: ", targetPosition)
+                                        print("gameState?.targetPosition: ", gameState?.targetPosition ?? "")
+                                        print("correctAnswer: ", correctAnswer ?? "")
+                                        print("----------------")
+                                        
                                         if gameState!.possibleMoves.contains(targetPosition) {
+                                            movedPosition = targetPosition
+                                            
+                                            
                                             gameState!.currentPiece.column = newColumn
                                             gameState!.currentPiece.row = newRow
+                                            
+                                            
+                                            
                                             
                                             //call back for piece movement
                                             pieceMovedTo!(targetPosition)
