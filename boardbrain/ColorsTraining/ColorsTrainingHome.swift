@@ -106,7 +106,7 @@ struct ColorsTrainingHome: View {
                 ScrollView(Axis.Set.horizontal, showsIndicators: false) {
                     HStack(alignment: .center, spacing: 15) {
                         if questionList.count > 0 {
-                            Text("Result: ")
+                            Text("Results: ")
                                 .font(.footnote)
                                 .foregroundColor(.white.opacity(0.9))
                                 .padding(0)

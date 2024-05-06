@@ -24,12 +24,11 @@ struct MovesBoardView: View {
     @State var gestureLocation: CGPoint = .zero
     @State var movedPosition: Position = Position(row: -1, column: -1)
     
-    @State var correctAnswer: Bool?
+    @State var highlightResult: Bool = false
+    @State var correctAnswer: Bool = false
+    
     
     let rank = ["a","b","c","d","e","f","g","h"]
-//    let blackRank = ["a","b","c","d","e","f","g","h"]
-    
-    //    let cellSize = UIScreen.main.bounds.size.width / 8.0
     
     let pieceMovedTo: ((Position) -> Void)?
     
@@ -43,7 +42,7 @@ struct MovesBoardView: View {
                             Rectangle()
                                 .fill((row + column) % 2 == 0 ? themeManager.boardColors.0 : themeManager.boardColors.1)
                                 .fill(
-                                    (row == highlightedRow && column == highlightedCol && correctAnswer != nil) ? (correctAnswer! ? Color.green : Color.red) : Color.clear)
+                                    (highlightResult && row == movedPosition.row && column == movedPosition.column) ? (correctAnswer ? .green : .red) : Color.clear)
                                 .frame(width: cellSize, height: cellSize)
                                 .position(x: CGFloat(column) * cellSize + cellSize / 2,
                                           y: CGFloat(row) * cellSize + cellSize / 2)
@@ -114,6 +113,7 @@ struct MovesBoardView: View {
                         .gesture(
                             DragGesture()
                                 .onChanged { gesture in
+                                    highlightResult = false
                                     gestureLocation = gesture.location
                                     let newColumn = Int((gesture.location.x / cellSize)) //.rounded())
                                     let newRow = Int((gesture.location.y / cellSize)) //.rounded())
@@ -131,19 +131,12 @@ struct MovesBoardView: View {
                                 }
                                 .onEnded { gesture  in
                                     withAnimation {
-                                        correctAnswer = nil
                                         let newColumn = Int((gesture.location.x / cellSize)) //.rounded())
                                         let newRow = Int((gesture.location.y / cellSize)) //.rounded())
                                         
                                         let targetPosition = Position(row: newRow, column: newColumn)
                                         
-                                        
-                                        imageOffset = .zero
-                                        imageScale = CGSize(width: 1.0, height: 1.0)
-                                        
-                                        highlightedCol = -1
-                                        highlightedRow = -1
-                                        
+                                        // review the answer and highlight it accordingly
                                         if targetPosition == gameState?.targetPosition {
                                             correctAnswer = true
                                         }
@@ -151,24 +144,26 @@ struct MovesBoardView: View {
                                             correctAnswer = false
                                         }
                                         
-                                        print("----------------")
-                                        print("targetPosition: ", targetPosition)
-                                        print("gameState?.targetPosition: ", gameState?.targetPosition ?? "")
-                                        print("correctAnswer: ", correctAnswer ?? "")
-                                        print("----------------")
+                                        imageOffset = .zero
+                                        imageScale = CGSize(width: 1.0, height: 1.0)
+                                        
+                                        highlightedCol = -1
+                                        highlightedRow = -1
                                         
                                         if gameState!.possibleMoves.contains(targetPosition) {
                                             movedPosition = targetPosition
                                             
-                                            
                                             gameState!.currentPiece.column = newColumn
                                             gameState!.currentPiece.row = newRow
                                             
-                                            
-                                            
-                                            
                                             //call back for piece movement
                                             pieceMovedTo!(targetPosition)
+                                            
+                                            //highlight for half a sec
+                                            highlightResult = true
+                                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                                                self.highlightResult = false
+                                            }
                                         }
                                     }
                                 }

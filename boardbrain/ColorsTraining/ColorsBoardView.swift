@@ -110,14 +110,18 @@ struct ColorsBoardView: View {
                             if index % columns == 0 {
                                 Text("\(coordinate.rank)")
                                     .font(.caption2)
-                                    .foregroundColor((index / columns) % 2 == index % 2 ? themeManager.boardColors.1 : themeManager.boardColors.0)
+                                    .foregroundColor(
+                                        (gameStarted ? .black.opacity(0.7) :
+                                        (index / columns) % 2 == index % 2 ? themeManager.boardColors.1 : themeManager.boardColors.0))
                                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
                                     .padding([.top, .leading], 2)
                             }
                             if index > 55 {
                                 Text("\(coordinate.file)")
                                     .font(.caption2)
-                                    .foregroundColor((index / columns) % 2 == index % 2 ? themeManager.boardColors.1 : themeManager.boardColors.0)
+                                    .foregroundColor(
+                                        (gameStarted ? .black.opacity(0.7) :
+                                        (index / columns) % 2 == index % 2 ? themeManager.boardColors.1 : themeManager.boardColors.0))
                                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
                                     .padding([.bottom, .trailing], 2)
                             }

@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		70082AF72BD7FF9000B013D9 /* Position.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70082AF62BD7FF9000B013D9 /* Position.swift */; };
 		700917B32BE3453F003C0DFF /* CoordinatesIntroPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 700917B22BE3453F003C0DFF /* CoordinatesIntroPopup.swift */; };
+		70124AA12BE9227900B188BB /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70124AA02BE9227900B188BB /* OnboardingView.swift */; };
+		70124AA32BE9323000B188BB /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70124AA22BE9323000B188BB /* MainView.swift */; };
 		7019350A2BC9858900ECDA51 /* PopupView in Frameworks */ = {isa = PBXBuildFile; productRef = 701935092BC9858900ECDA51 /* PopupView */; };
 		701F2BFA2BE3DDCC00515FFD /* MovesIntroPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701F2BF92BE3DDCC00515FFD /* MovesIntroPopup.swift */; };
 		701F2BFC2BE3DE0400515FFD /* ColorsIntroPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701F2BFB2BE3DE0400515FFD /* ColorsIntroPopup.swift */; };
@@ -44,6 +46,8 @@
 /* Begin PBXFileReference section */
 		70082AF62BD7FF9000B013D9 /* Position.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Position.swift; sourceTree = "<group>"; };
 		700917B22BE3453F003C0DFF /* CoordinatesIntroPopup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatesIntroPopup.swift; sourceTree = "<group>"; };
+		70124AA02BE9227900B188BB /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		70124AA22BE9323000B188BB /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		701F2BF92BE3DDCC00515FFD /* MovesIntroPopup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovesIntroPopup.swift; sourceTree = "<group>"; };
 		701F2BFB2BE3DE0400515FFD /* ColorsIntroPopup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorsIntroPopup.swift; sourceTree = "<group>"; };
 		70203BA22BE0038B00AA241E /* ThemeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeManager.swift; sourceTree = "<group>"; };
@@ -89,6 +93,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		70124A9F2BE9220F00B188BB /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				70124AA02BE9227900B188BB /* OnboardingView.swift */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
 		70259A152BDBFC4D003A0215 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -174,6 +186,7 @@
 		70C731302BC11AB6000FB2F9 /* boardbrain */ = {
 			isa = PBXGroup;
 			children = (
+				70124A9F2BE9220F00B188BB /* Onboarding */,
 				70259A152BDBFC4D003A0215 /* Models */,
 				7093799E2BD23BCA004990BD /* CoordinatesTraining */,
 				709379A12BD23CAE004990BD /* MovesTraining */,
@@ -188,6 +201,7 @@
 				70BED1D12BD3809100D5755F /* Info.plist */,
 				707E90932BD3906C00190753 /* Launch Screen.storyboard */,
 				70C731372BC11AB9000FB2F9 /* Assets.xcassets */,
+				70124AA22BE9323000B188BB /* MainView.swift */,
 			);
 			path = boardbrain;
 			sourceTree = "<group>";
@@ -277,6 +291,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				70124AA12BE9227900B188BB /* OnboardingView.swift in Sources */,
 				70203BA32BE0038B00AA241E /* ThemeManager.swift in Sources */,
 				705D07512BCA626E00AD5F22 /* ScoreModel.swift in Sources */,
 				709379A92BD240FF004990BD /* MovesTrainingHome.swift in Sources */,
@@ -289,6 +304,7 @@
 				70614BAA2BC123460053DDAE /* ColorExt.swift in Sources */,
 				709379A52BD240A3004990BD /* ChessPiece.swift in Sources */,
 				70FD21722BC6BA5E00F6D513 /* Styles.swift in Sources */,
+				70124AA32BE9323000B188BB /* MainView.swift in Sources */,
 				702A92D62BDCA31700E20420 /* NavigationDisabler.swift in Sources */,
 				70ACA3742BC280F00052713E /* Square.swift in Sources */,
 				7033FBEE2BD8AD2F00492508 /* MovesPopupOptions.swift in Sources */,
@@ -452,7 +468,7 @@
 				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleDarkContent;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -492,7 +508,7 @@
 				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleDarkContent;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct HomeView: View {
     var body: some View {
-        NavigationStack {
+//        NavigationStack {
             VStack {
                 Spacer()
                 
@@ -144,7 +144,7 @@ struct HomeView: View {
                     }
                 } //ToolbarItem
             } // toolbar
-        } // NavigationStack
+//        } // NavigationStack
     }
 }
 

@@ -12,7 +12,7 @@ import SwiftData
 struct BoardBrainApp: App {
     var body: some Scene {
         WindowGroup {
-            HomeView()
+            MainView()
                 .colorScheme(ColorScheme.dark)
                 .environmentObject(ThemeManager())
                 .environmentObject(ScoreViewModel())
