@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct HomeView: View {
+    let buttonHeight: CGFloat = UIScreen.main.bounds.size.height * 0.085
+    let logoSize: CGFloat = UIScreen.main.bounds.size.height * 0.045
+    
     var body: some View {
 //        NavigationStack {
             VStack {
@@ -17,22 +20,28 @@ struct HomeView: View {
                     HStack(alignment: .center) {
                         Image(systemName: "square.grid.2x2.fill") // "textformat.123")
                             .resizable()
-                            .frame(width: 35, height: 35, alignment: .center)
+                            .frame(maxWidth: 30, maxHeight: 30, alignment: .center)
                             .foregroundColor(.blue)
-                            .padding(.horizontal, 15)
+                            .padding(.trailing, 10)
+                            .padding(.leading, 5)
                         VStack(alignment: .leading) {
-                            Text("Coordinates")
-                                .font(.title3)
-                            Text("Training")
-                                .font(.subheadline)
+                            Text("Coordinates Training")
+                                .font(.headline)
+                            Text("Practice identifying coordinates")
+                                .font(.footnote)
                                 .foregroundColor(.gray)
-                        }
+                        }.padding(0)
                         Spacer()
+                        Image(systemName: "chevron.compact.right") // "textformat.123")
+//                            .font(.headline)
+                            .resizable()
+                            .frame(width: 5, height: 10, alignment: .center)
+                            .foregroundColor(.black.opacity(0.80))
                     }
                     .padding()
                     .foregroundColor(.black)
                     .frame(maxWidth: .infinity)
-                    .frame(height: 70)
+                    .frame(height: buttonHeight)
                     .background(Color.white.opacity(0.9))
                     .cornerRadius(10)
                     .padding(.horizontal)
@@ -44,24 +53,30 @@ struct HomeView: View {
                     HStack(alignment: .center) {
                         Image(systemName: "crown.fill")
                             .resizable()
-                            .frame(width: 35, height: 35, alignment: .center)
+                            .frame(maxWidth: 30, maxHeight: 30, alignment: .center)
                         //                            .font(.largeTitle)
                             .foregroundColor(.green)
-                            .padding(.horizontal, 15)
+                            .padding(.trailing, 10)
+                            .padding(.leading, 5)
                         VStack(alignment: .leading) {
-                            Text("Moves")
-                                .font(.title3)
-                            Text("Training")
-                                .font(.subheadline)
+                            Text("Moves Training")
+                                .font(.headline)
+                            Text("Enhance board vision")
+                                .font(.footnote)
                                 .foregroundColor(.gray)
                         }
                         
                         Spacer()
+                        Image(systemName: "chevron.compact.right") // "textformat.123")
+//                            .font(.headline)
+                            .resizable()
+                            .frame(width: 5, height: 10, alignment: .center)
+                            .foregroundColor(.black.opacity(0.80))
                     }
                     .padding()
                     .foregroundColor(.black)
                     .frame(maxWidth: .infinity)
-                    .frame(height: 70)
+                    .frame(height: buttonHeight)
                     .background(Color.white.opacity(0.9))
                     .cornerRadius(10)
                     .padding(.horizontal)
@@ -70,25 +85,31 @@ struct HomeView: View {
                 
                 NavigationLink(destination: ColorsTrainingHome()) {
                     HStack(alignment: .center) {
-                        Image(systemName: "square.righthalf.filled")
+                        Image(systemName: "square.lefthalf.filled")
                             .resizable()
-                            .frame(width: 35, height: 35, alignment: .center)
-                            .foregroundColor(.yellow.opacity(0.95))
-                            .padding(.horizontal, 15)
+                            .frame(maxWidth: 30, maxHeight: 30, alignment: .center)
+                            .foregroundColor(.yellow)
+                            .padding(.trailing, 10)
+                            .padding(.leading, 5)
                         VStack(alignment: .leading) {
-                            Text("Colors")
-                                .font(.title3)
-                            Text("Training")
-                                .font(.subheadline)
+                            Text("Colors Training")
+                                .font(.headline)
+                            Text("Recognize squares better")
+                                .font(.footnote)
                                 .foregroundColor(.gray)
                         }
                         
                         Spacer()
+                        Image(systemName: "chevron.compact.right") // "textformat.123")
+//                            .font(.headline)
+                            .resizable()
+                            .frame(width: 5, height: 10, alignment: .center)
+                            .foregroundColor(.black.opacity(0.80))
                     }
                     .padding()
                     .foregroundColor(.black)
                     .frame(maxWidth: .infinity)
-                    .frame(height: 70)
+                    .frame(height: buttonHeight)
                     .background(Color.white.opacity(0.9))
                     .cornerRadius(10)
                     .padding(.horizontal)
@@ -120,7 +141,7 @@ struct HomeView: View {
                     HStack {
                         Image("logo-smooth-corners")
                             .resizable()
-                            .frame(width: 35, height: 35)
+                            .frame(width: logoSize, height: logoSize)
                         //                            .padding(.leading, 10)
                         Text("Board Brain").font(.title3)
                             .foregroundColor(Color.white)

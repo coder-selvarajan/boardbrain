@@ -93,14 +93,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		70124A9F2BE9220F00B188BB /* Onboarding */ = {
-			isa = PBXGroup;
-			children = (
-				70124AA02BE9227900B188BB /* OnboardingView.swift */,
-			);
-			path = Onboarding;
-			sourceTree = "<group>";
-		};
 		70259A152BDBFC4D003A0215 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -186,7 +178,6 @@
 		70C731302BC11AB6000FB2F9 /* boardbrain */ = {
 			isa = PBXGroup;
 			children = (
-				70124A9F2BE9220F00B188BB /* Onboarding */,
 				70259A152BDBFC4D003A0215 /* Models */,
 				7093799E2BD23BCA004990BD /* CoordinatesTraining */,
 				709379A12BD23CAE004990BD /* MovesTraining */,
@@ -194,6 +185,8 @@
 				709379A02BD23C52004990BD /* Common */,
 				70614BA62BC1230E0053DDAE /* Extension */,
 				70C731312BC11AB6000FB2F9 /* BoardBrainApp.swift */,
+				70124AA02BE9227900B188BB /* OnboardingView.swift */,
+				70124AA22BE9323000B188BB /* MainView.swift */,
 				7044D7522BCED7A700136FD6 /* HomeView.swift */,
 				70259A0F2BDB6C08003A0215 /* SettingsView.swift */,
 				70E2B4CD2BE21D5B00C3F8A3 /* AboutView.swift */,
@@ -201,7 +194,6 @@
 				70BED1D12BD3809100D5755F /* Info.plist */,
 				707E90932BD3906C00190753 /* Launch Screen.storyboard */,
 				70C731372BC11AB9000FB2F9 /* Assets.xcassets */,
-				70124AA22BE9323000B188BB /* MainView.swift */,
 			);
 			path = boardbrain;
 			sourceTree = "<group>";

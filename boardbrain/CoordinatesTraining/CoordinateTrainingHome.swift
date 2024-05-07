@@ -37,6 +37,9 @@ struct CoordinateTrainingHome: View {
     let timerInterval = 0.1
     let totalTime = 30.0
     
+    let resultsPaneHeight = UIScreen.main.bounds.size.height * 0.06
+    let actionButtonHeight = UIScreen.main.bounds.size.height * 0.075
+    
     private func getCoordinate(forIndex index: Int) -> String {
         let filesWhite = ["a", "b", "c", "d", "e", "f", "g", "h"]
         let filesBlack = ["h", "g", "f", "e", "d", "c", "b", "a"]
@@ -111,7 +114,7 @@ struct CoordinateTrainingHome: View {
                         }
                     }
                 }
-                .frame(height: 50)
+                .frame(height: resultsPaneHeight)
                 
                 BoardView(showPiecesPosition: $showPiecesPosition,
                           showRanksandFiles: $showRanksandFiles,
@@ -150,10 +153,10 @@ struct CoordinateTrainingHome: View {
                 VStack(alignment: .center, spacing: 5) {
                     if gameStarted {
                         Text("Tap this square on the board: ")
-                            .font(.footnote)
+                            .font(.body)
                         Text(currentCoordinate)
-                            .font(.largeTitle)
-                            .foregroundColor(.white)
+                            .font(.system(size: 40))
+                            .foregroundColor(.yellow)
                             .padding()
                     } else {
                         if (scoreViewModel.coordinatesScoreModel.totalPlayBlack > 0 || scoreViewModel.coordinatesScoreModel.totalPlayWhite > 0) {
@@ -195,7 +198,7 @@ struct CoordinateTrainingHome: View {
                                     .foregroundColor(.black)
                             }
                             .padding(.horizontal, 20)
-                            .frame(height: 60)
+                            .frame(height: actionButtonHeight)
                             .background(.blue)
                             .cornerRadius(10.0)
                         }
@@ -209,7 +212,7 @@ struct CoordinateTrainingHome: View {
                                     .foregroundColor(.black.opacity(0.9))
                             }
                             .padding(.horizontal, 15)
-                            .frame(height: 60)
+                            .frame(height: actionButtonHeight)
                             .background(.white.opacity(0.75))
                             .cornerRadius(10.0)
                         }

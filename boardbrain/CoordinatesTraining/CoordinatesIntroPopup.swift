@@ -68,7 +68,7 @@ struct CoordinatesIntroPopup: View {
                 .padding(.bottom, 5)
                 
                 if !hideControls {
-                    Toggle("Don't show the intros again", isOn: Binding(
+                    Toggle("Don't show the intro again", isOn: Binding(
                         get: { !showIntro },
                         set: { showIntro = !$0 }
                     ))

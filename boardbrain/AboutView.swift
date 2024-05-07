@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import StoreKit
 
 struct AboutView: View {
     var body: some View {
@@ -64,6 +65,16 @@ struct AboutView: View {
                     }
                 }
                 
+                Divider()
+                
+                Button {
+                    if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+                        SKStoreReviewController.requestReview(in: windowScene)
+                    }
+                } label: {
+                    Text("Write a Review")
+                }
+                
                 Spacer()
             }
             .padding()
@@ -84,7 +95,7 @@ struct FeatureView: View {
         HStack {
             Image(systemName: icon)
                 .resizable()
-                .foregroundColor(.black)
+                .foregroundColor(.black.opacity(0.9))
                 .frame(width: 20, height: 20)
                 .padding()
                 .background(Circle().fill(Color.white.opacity(0.8)))

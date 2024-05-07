@@ -34,6 +34,9 @@ struct ColorsTrainingHome: View {
     @State private var showIntroModal = false
     @State private var hideControlsinPopup = false
     
+    let resultsPaneHeight = UIScreen.main.bounds.size.height * 0.065
+    let actionButtonHeight = UIScreen.main.bounds.size.height * 0.075
+    
     let timerInterval = 0.1
     let totalTime = 30.0
     let darkSquareIndexes = [1, 3, 5, 7, 8, 10, 12, 14, 17, 19, 21, 23, 24, 26, 28, 30, 33, 35, 37, 39, 40, 42, 44, 46, 49, 51, 53, 55, 56, 58, 60, 62]
@@ -129,7 +132,7 @@ struct ColorsTrainingHome: View {
                     }
                 }
             }
-            .frame(height: 50)
+            .frame(height: resultsPaneHeight)
             
             ColorsBoardView(showCoordinates: $showCoordinates,
                             whiteSide: $whiteSide,
@@ -150,13 +153,13 @@ struct ColorsTrainingHome: View {
                 if gameStarted {
                     Text("Choose the right color")
                         .font(.body)
-                    Text("for the above highlighted square ")
+                    Text("for the highlighted square ")
                         .font(.footnote)
                     
                     HStack(spacing: 40) {
                         
                         Rectangle()
-                            .frame(width: 60, height: 60)
+                            .frame(width: actionButtonHeight, height: actionButtonHeight)
                             .foregroundColor(themeManager.boardColors.0)
                             .cornerRadius(10.0)
                             .padding(.vertical)
@@ -165,7 +168,7 @@ struct ColorsTrainingHome: View {
                             }
                         
                         Rectangle()
-                            .frame(width: 60, height: 60)
+                            .frame(width: actionButtonHeight, height: actionButtonHeight)
                             .foregroundColor(themeManager.boardColors.1)
                             .cornerRadius(10.0)
                             .padding(.vertical)
@@ -218,7 +221,7 @@ struct ColorsTrainingHome: View {
                                 .foregroundColor(.black)
                         }
                         .padding(.horizontal, 20)
-                        .frame(height: 60)
+                        .frame(height: actionButtonHeight)
                         .background(.yellow)
                         .cornerRadius(10.0)
                     }
@@ -232,7 +235,7 @@ struct ColorsTrainingHome: View {
                                 .foregroundColor(.black.opacity(0.9))
                         }
                         .padding(.horizontal, 15)
-                        .frame(height: 60)
+                        .frame(height: actionButtonHeight)
                         .background(.white.opacity(0.95))
                         .cornerRadius(10.0)
                     }
@@ -328,7 +331,7 @@ struct ColorsTrainingHome: View {
         .toolbar {
             ToolbarItem(placement: .principal) {
                 HStack {
-                    Image(systemName: "square.righthalf.filled")
+                    Image(systemName: "square.lefthalf.filled")
                         .resizable()
                         .frame(width: 20, height: 20)
                     Text("Colors Training").font(.body)

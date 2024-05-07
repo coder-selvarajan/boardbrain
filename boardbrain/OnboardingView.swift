@@ -18,7 +18,8 @@ struct OnboardingView: View {
             // Navigation Buttons at the Top
             HStack {
                 // Back Button
-                Button(selectedIndex > 0 ? "Back" : " ") {
+                
+                Button(selectedIndex > 0 ? " ← Back" : " ") {
                     withAnimation {
                         selectedIndex -= 1
                     }
@@ -29,7 +30,7 @@ struct OnboardingView: View {
                 Spacer()
 
                 // Skip Button
-                Button("Skip") {
+                Button(selectedIndex < 3 ? "Skip": "Close") {
                     // Navigate to the Home View
                     hasCompletedOnboarding = true
                 }
@@ -44,25 +45,25 @@ struct OnboardingView: View {
             
             TabView(selection: $selectedIndex) {
                 OnboardingPage(title: "Welcome to BoardBrain",
-                               description: "Master the chess board with our intuitive training modules designed to enhance your skills.",
+                               description: "Master the chessboard with intuitive training modules designed to enhance your skills.",
                                imageName: "logo-smooth-corners",
                                systemImage: false)
                     .tag(0)
                 
-                OnboardingPage(title: "Learn Chess Coordinates",
-                               description: "Improve your board vision with our Coordinates Training. Learn to identify squares quickly and enhance your game analysis skills.",
+                OnboardingPage(title: "Learn Coordinates",
+                               description: "Learn and practice identifying the correct coordinates on the chessboard to improve your board vision.",
                                imageName: "square.grid.2x2")
                     .tag(1)
                 
                 OnboardingPage(title: "Master Chess Moves",
-                               description: "Boost your tactical skills with Moves Training. Practice key chess moves and strategies to outplay your opponents.",
+                               description: "Explore various piece movements in an interactive format to boost your tactical skills.",
                                imageName: "crown")
                                //imageName: "arrow.3.trianglepath")
                     .tag(2)
                 
-                OnboardingPage(title: "Understand Square Colors",
-                               description: "Strengthen your positional understanding with our Square Colors Training. Learn to recognize patterns and control critical squares.",
-                               imageName: "square.righthalf.filled")
+                OnboardingPage(title: "Recognize Colors",
+                               description: "Enhance your ability to quickly recognize the colors of different squares on the chessboard, a vital skill for strategic planning.",
+                               imageName: "square.lefthalf.filled")
                     .tag(3)
             }
             .tabViewStyle(PageTabViewStyle())
@@ -94,7 +95,7 @@ struct OnboardingView: View {
                     }, label: {
                         HStack {
                             Spacer()
-                            Text("Finish")
+                            Text("Get started")
                                 .fontWeight(Font.Weight.semibold)
                             Spacer()
                         }
@@ -109,7 +110,7 @@ struct OnboardingView: View {
             
         }
         .foregroundColor(.white)
-        .background(Color.black.opacity(0.80))
+        .background(Color.white.opacity(0.20))
     }
 }
 
@@ -118,6 +119,8 @@ struct OnboardingPage: View {
     let description: String
     let imageName: String
     var systemImage: Bool = true
+    let imageWidth: CGFloat = UIScreen.main.bounds.size.height * 0.125
+    let iconWidth: CGFloat = UIScreen.main.bounds.size.height * 0.1
     
     var body: some View {
         VStack {
@@ -126,14 +129,14 @@ struct OnboardingPage: View {
                 Image(systemName: imageName) // Replace 'systemName' with 'imageName' for custom images
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 80, height: 80)
+                    .frame(width: iconWidth)
                     .padding()
             }
             else {
                 Image(imageName) // Replace 'systemName' with 'imageName' for custom images
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 120, height: 120)
+                    .frame(width: imageWidth)
                     .padding()
             }
             Spacer()
@@ -155,49 +158,3 @@ struct OnboardingView_Previews: PreviewProvider {
             .colorScheme(ColorScheme.dark)
     }
 }
-
-
-//struct OnboardingView: View {
-//    var body: some View {
-//        VStack {
-//            HStack {
-//                Text("Hello Chess Lovers!")
-//                
-//                Button {
-//                    //
-//                } label: {
-//                    Text("Skip")
-//                }
-//            }
-//            Spacer()
-//            Text("Board Brain")
-//                .font(.title)
-//            Spacer()
-//            
-//            Image(systemName: "crown")
-//                .resizable()
-//                .frame(width: 100, height: 100)
-//            
-//            Spacer()
-//            
-//            Text("Talk about the app")
-//            
-//            Spacer()
-//            
-//            Button {
-//                //
-//            } label: {
-//                Text("Next")
-//            }
-//            .background(.cyan)
-//            
-//            Spacer()
-//        }
-//        .foregroundColor(.black)
-//        .background(.gray.opacity(0.35))
-//    }
-//}
-//
-//#Preview {
-//    OnboardingView()
-//}

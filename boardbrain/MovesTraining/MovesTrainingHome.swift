@@ -38,8 +38,12 @@ struct MovesTrainingHome: View {
     @State private var showIntroModal = false
     @State private var hideControlsinPopup = false
     
+    let resultsPaneHeight = UIScreen.main.bounds.size.height * 0.065
+    let actionButtonHeight = UIScreen.main.bounds.size.height * 0.075
+    
     let timerInterval = 0.1
     let totalTime = 30.0
+    
     
     private func startProgress() {
         progress = 0.0
@@ -108,7 +112,7 @@ struct MovesTrainingHome: View {
                     }
                 }
             }
-            .frame(height: 50)
+            .frame(height: resultsPaneHeight)
             
             MovesBoardView(showCoordinates: $showCoordinates,
                            highlightPossibleMoves: $highlightPossibleMoves,
@@ -141,11 +145,11 @@ struct MovesTrainingHome: View {
             Spacer()
             VStack(alignment: .center, spacing: 5) {
                 if gameStarted {
-                    Text("Tap this square on the board: ")
-                        .font(.footnote)
+                    Text("Drag the piece to the specified square.")
+                        .font(.body)
                     Text(currentCoordinate)
-                        .font(.largeTitle)
-                        .foregroundColor(.white)
+                        .font(.system(size: 40))
+                        .foregroundColor(.yellow)
                         .padding()
                 } else {
                     if (scoreViewModel.movesScoreModel.totalPlayBlack > 0 || scoreViewModel.movesScoreModel.totalPlayWhite > 0) {
@@ -191,7 +195,7 @@ struct MovesTrainingHome: View {
                                 .foregroundColor(.black)
                         }
                         .padding(.horizontal, 20)
-                        .frame(height: 60)
+                        .frame(height: actionButtonHeight)
                         .background(.green)
                         .cornerRadius(10.0)
                     }
@@ -206,7 +210,7 @@ struct MovesTrainingHome: View {
                                 .foregroundColor(.black.opacity(0.9))
                         }
                         .padding(.horizontal, 15)
-                        .frame(height: 60)
+                        .frame(height: actionButtonHeight)
                         .background(.white.opacity(0.75))
                         .cornerRadius(10.0)
                     }
