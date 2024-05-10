@@ -26,7 +26,7 @@ struct AboutView: View {
 //                    .font(.title)
 //                    .fontWeight(.bold)
                 
-                Text("BoardBrain is an app designed to help both novice and experienced chess players improve their skills. It offers interactive games and exercises that focus on mastering chessboard coordinates, understanding piece movements, and recognizing square colors.")
+                Text("BoardBrain is designed to help both novice and experienced chess players improve their skills. It offers interactive games and exercises that focus on mastering chessboard coordinates, understanding piece movements, and recognizing square colors.")
                     .font(.body)
                 
                 Divider()

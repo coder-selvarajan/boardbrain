@@ -11,6 +11,7 @@ struct GameIteration: Hashable {
     var id: UUID = UUID()
     var question : String
     var answer : Bool
+    var responseTime: TimeInterval = 0.0
 }
 
 //struct ColorGameIteration: Hashable {
