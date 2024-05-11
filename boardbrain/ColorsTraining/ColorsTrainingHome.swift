@@ -298,26 +298,35 @@ struct ColorsTrainingHome: View {
                 .cornerRadius(15)
                 .padding(.bottom)
                 
-                Button {
-                    gameEnded = false
-                } label: {
-                    HStack {
-                        Spacer()
-                        Text("Close")
-                            .font(.headline)
-                            .foregroundColor(.black)
-                            .padding(.vertical, 10)
-                        Spacer()
-                    }
-                }
-                .background(.cyan.opacity(0.80))
-                .frame(maxWidth: .infinity)
-                .cornerRadius(10)
+                ShareScoreButton(trainingType: TrainingType.Colors,
+                                 responseTime: "0.5",
+                                 scoreModel: scoreViewModel.colorsScoreModel)
+                
+//                Button {
+//                    gameEnded = false
+//                } label: {
+//                    HStack {
+//                        Spacer()
+//                        Text("Close")
+//                            .font(.headline)
+//                            .foregroundColor(.black)
+//                            .padding(.vertical, 10)
+//                        Spacer()
+//                    }
+//                }
+//                .background(.cyan.opacity(0.80))
+//                .frame(maxWidth: .infinity)
+//                .cornerRadius(10)
             }
             .padding(25)
             .background(.white)
             .cornerRadius(15)
             .frame(width: 250)
+            .overlay(
+                CloseButton() {
+                    gameEnded = false
+                }, alignment: .topTrailing
+            )
         } customize: {
             $0
                 .type(.floater())

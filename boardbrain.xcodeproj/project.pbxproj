@@ -41,6 +41,8 @@
 		70C731422BC11D5D000FB2F9 /* BoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C731412BC11D5D000FB2F9 /* BoardView.swift */; };
 		70CA225A2BDE7A5800D0FDAB /* ColorsPopupOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CA22592BDE7A5800D0FDAB /* ColorsPopupOptions.swift */; };
 		70E2B4CE2BE21D5B00C3F8A3 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E2B4CD2BE21D5B00C3F8A3 /* AboutView.swift */; };
+		70E5E57B2BEF899700FA6A9D /* CloseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E5E57A2BEF899700FA6A9D /* CloseButton.swift */; };
+		70E5E57D2BEF8C8800FA6A9D /* UtilityFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E5E57C2BEF8C8800FA6A9D /* UtilityFunctions.swift */; };
 		70FD21722BC6BA5E00F6D513 /* Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70FD21712BC6BA5E00F6D513 /* Styles.swift */; };
 /* End PBXBuildFile section */
 
@@ -80,6 +82,8 @@
 		70C731412BC11D5D000FB2F9 /* BoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardView.swift; sourceTree = "<group>"; };
 		70CA22592BDE7A5800D0FDAB /* ColorsPopupOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorsPopupOptions.swift; sourceTree = "<group>"; };
 		70E2B4CD2BE21D5B00C3F8A3 /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
+		70E5E57A2BEF899700FA6A9D /* CloseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloseButton.swift; sourceTree = "<group>"; };
+		70E5E57C2BEF8C8800FA6A9D /* UtilityFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilityFunctions.swift; sourceTree = "<group>"; };
 		70FD21712BC6BA5E00F6D513 /* Styles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Styles.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -147,6 +151,8 @@
 				702A92D52BDCA31700E20420 /* NavigationDisabler.swift */,
 				70361EE12BDFCED7001F0859 /* ThemeBoard.swift */,
 				706763EE2BEE3ABD009B07B3 /* ShareScore.swift */,
+				70E5E57A2BEF899700FA6A9D /* CloseButton.swift */,
+				70E5E57C2BEF8C8800FA6A9D /* UtilityFunctions.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -298,6 +304,7 @@
 				7095AB7C2BCC08AA003532CD /* ColorsTrainingHome.swift in Sources */,
 				70614BAA2BC123460053DDAE /* ColorExt.swift in Sources */,
 				709379A52BD240A3004990BD /* ChessPiece.swift in Sources */,
+				70E5E57D2BEF8C8800FA6A9D /* UtilityFunctions.swift in Sources */,
 				70FD21722BC6BA5E00F6D513 /* Styles.swift in Sources */,
 				70124AA32BE9323000B188BB /* MainView.swift in Sources */,
 				702A92D62BDCA31700E20420 /* NavigationDisabler.swift in Sources */,
@@ -316,6 +323,7 @@
 				70CA225A2BDE7A5800D0FDAB /* ColorsPopupOptions.swift in Sources */,
 				70082AF72BD7FF9000B013D9 /* Position.swift in Sources */,
 				705E345D2BE5210B00654A24 /* OptionsModel.swift in Sources */,
+				70E5E57B2BEF899700FA6A9D /* CloseButton.swift in Sources */,
 				70C731322BC11AB6000FB2F9 /* BoardBrainApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -84,16 +84,20 @@ struct MovesIntroPopup: View {
             .cornerRadius(15)
             .frame(width: UIScreen.main.bounds.size.width - 60)
             .overlay(
-                Button {
+                CloseButton() {
                     showIntroModal = false
-                } label: {
-                    Image(systemName: "xmark.circle")
-                        .resizable()
-                        .frame(width: 25, height: 25)
-                        .foregroundColor(.red)
-                }
-                .padding([.top, .trailing], 10),
-                alignment: .topTrailing
+                }, alignment: .topTrailing
+                
+//                Button {
+//                    showIntroModal = false
+//                } label: {
+//                    Image(systemName: "xmark.circle")
+//                        .resizable()
+//                        .frame(width: 25, height: 25)
+//                        .foregroundColor(.red)
+//                }
+//                .padding([.top, .trailing], 10),
+//                alignment: .topTrailing
             )
         } // ZStack
     }

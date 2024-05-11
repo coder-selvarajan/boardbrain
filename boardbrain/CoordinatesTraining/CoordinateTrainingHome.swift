@@ -39,7 +39,7 @@ struct CoordinateTrainingHome: View {
     
     
     let timerInterval = 0.1
-    let totalTime = 6.0
+    let totalTime = 30.0
     
     let resultsPaneHeight = UIScreen.main.bounds.size.height * 0.06
     let actionButtonHeight = UIScreen.main.bounds.size.height * 0.075
@@ -74,7 +74,7 @@ struct CoordinateTrainingHome: View {
         guard !questionList.isEmpty else { return "No data" }
         let totalResponseTime = questionList.reduce(0.0) { $0 + $1.responseTime }
         let average = totalResponseTime / Double(questionList.count)
-        return String(format: "%.2f sec", average)
+        return String(format: "%.2f", average)
     }
     
     private func startProgress() {
@@ -290,12 +290,15 @@ struct CoordinateTrainingHome: View {
                     .font(.title)
                     .foregroundColor(.green)
                 HStack {
-                    Text("Avg Resp Time:")
+                    Text("Avg Resp Time")
                         .font(.footnote)
-                        .foregroundColor(.blue)
+                        .foregroundColor(.black)
                     Text("\(averageResponseTime())")
-                        .font(.headline)
-                        .foregroundColor(.blue)
+                        .font(.title3)
+                        .foregroundColor(.black)
+                    Text("sec")
+                        .font(.footnote)
+                        .foregroundColor(.black)
                 }.padding(.bottom)
                 
                 VStack(alignment: .leading) {
@@ -320,28 +323,21 @@ struct CoordinateTrainingHome: View {
                 .cornerRadius(15)
                 .padding(.bottom)
                 
-                ShareScoreButton(score: score)
-                
-                Button {
-                    gameEnded = false
-                } label: {
-                    HStack {
-                        Spacer()
-                        Text("Close")
-                            .font(.headline)
-                            .foregroundColor(.black)
-                            .padding(.vertical, 10)
-                        Spacer()
-                    }
-                }
-                .background(.cyan.opacity(0.80))
-                .frame(maxWidth: .infinity)
-                .cornerRadius(10)
+                ShareScoreButton(trainingType: TrainingType.Coordinates,
+                                 responseTime: averageResponseTime(),
+                                 scoreModel: scoreViewModel.coordinatesScoreModel)
+
             }
             .padding(25)
             .background(.white)
             .cornerRadius(15)
             .frame(width: 250)
+            .overlay(
+                CloseButton() {
+                    gameEnded = false
+                }, alignment: .topTrailing
+            )
+            
         } customize: {
             $0
                 .type(.floater())

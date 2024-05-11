@@ -65,15 +65,20 @@ struct AboutView: View {
                     }
                 }
                 
-                Divider()
-                
-                Button {
-                    if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
-                        SKStoreReviewController.requestReview(in: windowScene)
-                    }
-                } label: {
-                    Text("Write a Review")
-                }
+//                Divider()
+//                
+//                Button {
+//                    if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+//                        SKStoreReviewController.requestReview(in: windowScene)
+//                    }
+//                } label: {
+//                    HStack {
+//                        Image(systemName: "heart.fill")
+//                            .font(.footnote)
+//                            .foregroundColor(.blue)
+//                        Text("Leave a review")
+//                    }
+//                }
                 
                 Spacer()
             }
@@ -83,6 +88,31 @@ struct AboutView: View {
         .background(Color.white.opacity(0.20))
         .navigationTitle("About")
         .navigationBarTitleDisplayMode(NavigationBarItem.TitleDisplayMode.inline)
+        .toolbar {
+            ToolbarItem(placement: .principal) {
+                HStack {
+                    Text("About").font(.title3)
+                        .foregroundColor(Color.white)
+                        .padding(.horizontal, 10)
+                    Spacer()
+                }
+            }
+            
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button(action: {
+                    if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+                        SKStoreReviewController.requestReview(in: windowScene)
+                    }
+                }) {
+                    HStack {
+                        Image(systemName: "heart.fill")
+                            .font(.subheadline)
+                            .foregroundColor(.blue)
+                        Text("Leave a Review")
+                    }
+                }
+            }
+        } //toolbar
     }
 }
 

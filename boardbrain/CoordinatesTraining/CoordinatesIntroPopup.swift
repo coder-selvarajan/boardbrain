@@ -86,16 +86,18 @@ struct CoordinatesIntroPopup: View {
             .cornerRadius(15)
             .frame(width: UIScreen.main.bounds.size.width - 60)
             .overlay(
-                Button {
+                CloseButton() {
                     showIntroModal = false
-                } label: {
-                    Image(systemName: "xmark.circle")
-                        .resizable()
-                        .frame(width: 25, height: 25)
-                        .foregroundColor(.red)
-                }
-                .padding([.top, .trailing], 10),
-                alignment: .topTrailing
+                }, alignment: .topTrailing
+//                Button {
+//                    
+//                } label: {
+//                    Image(systemName: "xmark.circle.fill")
+//                        .resizable()
+//                        .frame(width: 25, height: 25)
+//                        .foregroundColor(.red)
+//                }
+//                .padding([.top, .trailing], 10)
             )
         } // ZStack
     }

@@ -10,42 +10,46 @@
 import SwiftUI
 
 struct ShareScoreButton: View {
-    var score: Int
+    var trainingType: TrainingType
+    var responseTime: String
+    var scoreModel: ScoreModel
+    
     @State private var isSharing = false
-
+    
     var body: some View {
         Button {
             isSharing = true
         } label: {
-            HStack(spacing: 10) {
+            HStack(alignment: .center, spacing: 15) {
+                Spacer()
                 Image(systemName: "square.and.arrow.up")
-                Text("Share Score")
                     .font(.headline)
-                    .foregroundColor(.blue)
-                    .padding(.vertical, 10)
+                    .foregroundStyle(.black)
+                Text("Share Score")
+                    .font(.callout)
+                    .foregroundColor(.black)
+                    .padding(.vertical, 15)
+                Spacer()
             }
         }
-//        .background(.black.opacity(0.10))
+        .background(.cyan.opacity(0.80))
         .frame(maxWidth: .infinity)
         .cornerRadius(10)
-        .padding(.bottom)
         .sheet(isPresented: $isSharing, onDismiss: {
             print("Dismissed")
         }) {
             ActivityView(activityItems: [scoreText()])
         }
-        
     }
-
+    
     func scoreText() -> String {
         """
-        🎉 I scored 15/16 points on BoardBrain app!
-
-        🔹 Average score as White: 10.54
-        🔹 Average score as Black: 9.10
-
-        Can you beat my score? 🤔 Challenge yourself and download BoardBrain from the App Store:
-        https://apple.co/3UT2jaJ #BoardBrain #ChessChallenge #ChessboardTrainer
+        🎉 I scored \(scoreModel.lastScore.correctAttempts)/\(scoreModel.lastScore.totalAttempts) in \(trainingType) Training on the BoardBrain app with a 🕒 \(responseTime)s response time!
+        
+        🔹 Avg. score as White: \(twoDigitFormat(value: scoreModel.avgScoreWhite))
+        🔹 Avg. score as Black: \(twoDigitFormat(value: scoreModel.avgScoreBlack))
+        
+        Can you top my score? 🤔 Try it and download BoardBrain from the App Store: https://apple.co/3UT2jaJ #BoardBrain #ChessChallenge #Chessboard\(trainingType)Training
         """
     }
 }
@@ -54,13 +58,13 @@ struct ShareScoreButton: View {
 struct ActivityView: UIViewControllerRepresentable {
     var activityItems: [Any]
     var applicationActivities: [UIActivity]? = nil
-
+    
     func makeUIViewController(context: Context) -> UIActivityViewController {
         let controller = UIActivityViewController(activityItems: activityItems, applicationActivities: applicationActivities)
         return controller
     }
-
+    
     func updateUIViewController(_ uiViewController: UIActivityViewController, context: Context) {}
-
+    
     typealias UIViewControllerType = UIActivityViewController
 }
