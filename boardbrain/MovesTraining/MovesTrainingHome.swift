@@ -29,6 +29,7 @@ struct MovesTrainingHome: View {
     @State private var progress = 0.0
     @State private var showingOptionsPopup = false
     @State var questionList: [GameIteration] = []
+    @State private var moveCoordinateShownTime: Date? // to calculate response time
     
     @State var currentPiece: ChessPiece?
     @State var possibleMoves: [Position]?
@@ -86,19 +87,29 @@ struct MovesTrainingHome: View {
         VStack {
             ScrollViewReader { value in
                 ScrollView(Axis.Set.horizontal, showsIndicators: false) {
-                    HStack(alignment: .center, spacing: 15) {
+                    HStack(alignment: .center, spacing: 20) {
                         if questionList.count > 0 {
-                            Text("Results: ")
-                                .font(.footnote)
-                                .foregroundColor(.white.opacity(0.9))
-                                .padding(0)
+                            VStack(alignment: .leading) {
+                                Text("Results, ")
+                                    .font(.caption)
+                                    .foregroundColor(.white.opacity(0.9))
+                                    .padding(0)
+                                Text("Resp time:")
+                                    .font(.caption)
+                                    .foregroundColor(.white.opacity(0.9))
+                            }
                         }
                         
                         ForEach(questionList, id: \.id) { item in
-                            Text(item.question)
-                                .id(item.question)
-                                .font(.body)
-                                .foregroundColor(item.answer ? .green : .red)
+                            VStack(alignment: .center) {
+                                Text(item.question)
+                                    .id(item.question)
+                                    .font(.headline)
+                                    .foregroundColor(item.answer ? .green : .red)
+                                Text(String(format: "%.2f", item.responseTime) + "s")
+                                    .font(.caption2)
+                                    .foregroundColor(.white.opacity(0.8))
+                            }
                         }
                     }
                     .padding(.trailing)
@@ -120,19 +131,26 @@ struct MovesTrainingHome: View {
                            gameState: $gameState,
                            pieceMovedTo: { position in
                 
+                //response time calculation
+                var responseTime: TimeInterval = 0.0
+                if let shownTime = moveCoordinateShownTime {
+                    responseTime = Date().timeIntervalSince(shownTime)
+                }
+                
                 let isCorrectAnswer: Bool = (position == gameState!.targetPosition)
                 if isCorrectAnswer {
                     score += 1
                 }
                 questionList.append(GameIteration(question: currentCoordinate,
-                                                  answer: isCorrectAnswer))
+                                                  answer: isCorrectAnswer,
+                                                  responseTime: responseTime))
                 
                 // trigger the next question
                 gameState = GameState.nextState(whiteSide: whiteSide)
                 currentCoordinate = gameState!.question
                 
                 currentPlay += 1
-                
+                moveCoordinateShownTime = Date()
             })
             .frame(height: UIScreen.main.bounds.size.width)
             
@@ -175,13 +193,13 @@ struct MovesTrainingHome: View {
                         
                         questionList.removeAll()
                         
-                        //                        currentCoordinate = getRandomCoordinate()
                         currentPlay = 0
                         score = 0
                         
                         //pick random square and a piece
                         gameState = GameState.nextState(whiteSide: whiteSide)
                         currentCoordinate = gameState!.question
+                        moveCoordinateShownTime = Date()
                         
                         startProgress()
                     } label: {
@@ -251,12 +269,24 @@ struct MovesTrainingHome: View {
         .popup(isPresented: $gameEnded) {
             VStack {
                 Text("Game over!")
+                    .font(.footnote)
                     .foregroundColor(.black)
                     .padding(.bottom, 5)
                 
                 Text("Score: \(score)/\(currentPlay)")
                     .font(.title)
                     .foregroundColor(.green)
+                HStack {
+                    Text("Avg Resp Time")
+                        .font(.footnote)
+                        .foregroundColor(.black)
+                    Text("\(averageResponseTime(iterationList: questionList))")
+                        .font(.title3)
+                        .foregroundColor(.black)
+                    Text("sec")
+                        .font(.footnote)
+                        .foregroundColor(.black)
+                }.padding(.bottom)
                 
                 VStack(alignment: .leading) {
                     Text("Average Score: ")
@@ -281,7 +311,7 @@ struct MovesTrainingHome: View {
                 .padding(.bottom)
                 
                 ShareScoreButton(trainingType: TrainingType.Moves,
-                                 responseTime: "0.5",
+                                 responseTime:  averageResponseTime(iterationList: questionList),
                                  scoreModel: scoreViewModel.movesScoreModel)
                 
 //                Button {

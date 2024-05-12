@@ -32,14 +32,14 @@ struct CoordinateTrainingHome: View {
     @State var questionList: [GameIteration] = []
     
     @State private var coordinateShownTime: Date?
-    @State private var averageRespTime: TimeInterval = 0.0
+//    @State private var averageRespTime: TimeInterval = 0.0
     
     @State private var showIntroModal = false
     @State private var hideControlsinPopup = false
     
     
     let timerInterval = 0.1
-    let totalTime = 30.0
+    let totalTime = 3.0
     
     let resultsPaneHeight = UIScreen.main.bounds.size.height * 0.06
     let actionButtonHeight = UIScreen.main.bounds.size.height * 0.075
@@ -68,13 +68,6 @@ struct CoordinateTrainingHome: View {
         let rndIndex = Int.random(in: 0..<64)
         targetIndex = rndIndex
         return getCoordinate(forIndex: rndIndex)
-    }
-    
-    func averageResponseTime() -> String {
-        guard !questionList.isEmpty else { return "No data" }
-        let totalResponseTime = questionList.reduce(0.0) { $0 + $1.responseTime }
-        let average = totalResponseTime / Double(questionList.count)
-        return String(format: "%.2f", average)
     }
     
     private func startProgress() {
@@ -150,11 +143,9 @@ struct CoordinateTrainingHome: View {
                 }
                 
                 //response time calculation
-//                var formattedResponseTime: String = ""
                 var responseTime: TimeInterval = 0.0
                 if let shownTime = coordinateShownTime {
                     responseTime = Date().timeIntervalSince(shownTime)
-//                    formattedResponseTime = String(format: "%.2f", responseTime) + "s"
                 }
                 
                 let clickedCoordinate = getCoordinate(forIndex: value)
@@ -293,7 +284,7 @@ struct CoordinateTrainingHome: View {
                     Text("Avg Resp Time")
                         .font(.footnote)
                         .foregroundColor(.black)
-                    Text("\(averageResponseTime())")
+                    Text("\(averageResponseTime(iterationList: questionList))")
                         .font(.title3)
                         .foregroundColor(.black)
                     Text("sec")
@@ -324,7 +315,7 @@ struct CoordinateTrainingHome: View {
                 .padding(.bottom)
                 
                 ShareScoreButton(trainingType: TrainingType.Coordinates,
-                                 responseTime: averageResponseTime(),
+                                 responseTime: averageResponseTime(iterationList: questionList),
                                  scoreModel: scoreViewModel.coordinatesScoreModel)
 
             }

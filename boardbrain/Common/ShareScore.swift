@@ -44,12 +44,12 @@ struct ShareScoreButton: View {
     
     func scoreText() -> String {
         """
-        🎉 I scored \(scoreModel.lastScore.correctAttempts)/\(scoreModel.lastScore.totalAttempts) in \(trainingType) Training on the BoardBrain app with a 🕒 \(responseTime)s response time!
-        
+        🎉 Scored \(scoreModel.lastScore.correctAttempts)/\(scoreModel.lastScore.totalAttempts) in \(trainingType) Training on BoardBrain app! 🕒 \(responseTime)s response time!
+
         🔹 Avg. score as White: \(twoDigitFormat(value: scoreModel.avgScoreWhite))
         🔹 Avg. score as Black: \(twoDigitFormat(value: scoreModel.avgScoreBlack))
-        
-        Can you top my score? 🤔 Try it and download BoardBrain from the App Store: https://apple.co/3UT2jaJ #BoardBrain #ChessChallenge #Chessboard\(trainingType)Training
+
+        Can you beat this? 🤔 Download and try: https://apple.co/3UT2jaJ #BoardBrain #ChessChallenge #Chess\(trainingType)Training
         """
     }
 }

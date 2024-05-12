@@ -30,6 +30,7 @@ struct ColorsTrainingHome: View {
     @State private var progress: Float = 0.0
     @State private var showingOptionsPopup = false
     @State var questionList: [GameIteration] = []
+    @State private var colorCoordinateShownTime: Date? // to calculate response time
     
     @State private var showIntroModal = false
     @State private var hideControlsinPopup = false
@@ -68,10 +69,18 @@ struct ColorsTrainingHome: View {
     }
     
     func answerQuestion(with answerColor: SquareColor) {
+        //response time calculation
+        var responseTime: TimeInterval = 0.0
+        if let shownTime = colorCoordinateShownTime {
+            responseTime = Date().timeIntervalSince(shownTime)
+        }
+        
         if answerColor == currentSquareColor {
             score += 1
         }
-        questionList.append(GameIteration(question: currentCoordinate, answer: answerColor == currentSquareColor))
+        questionList.append(GameIteration(question: currentCoordinate, 
+                                          answer: answerColor == currentSquareColor,
+                                          responseTime: responseTime))
         
         let tupleRandomCoordinates = getRandomCoordinate()
         let rndIndex = tupleRandomCoordinates.0
@@ -81,6 +90,7 @@ struct ColorsTrainingHome: View {
         currentSquareColor = darkSquareIndexes.contains(rndIndex) ? .dark : .light
         
         currentPlay += 1
+        colorCoordinateShownTime = Date()
     }
     
     private func startProgress() {
@@ -107,18 +117,29 @@ struct ColorsTrainingHome: View {
         VStack {
             ScrollViewReader { value in
                 ScrollView(Axis.Set.horizontal, showsIndicators: false) {
-                    HStack(alignment: .center, spacing: 15) {
+                    HStack(alignment: .center, spacing: 20) {
                         if questionList.count > 0 {
-                            Text("Results: ")
-                                .font(.footnote)
-                                .foregroundColor(.white.opacity(0.9))
-                                .padding(0)
+                            VStack(alignment: .leading) {
+                                Text("Results, ")
+                                    .font(.caption)
+                                    .foregroundColor(.white.opacity(0.9))
+                                    .padding(0)
+                                Text("Resp time:")
+                                    .font(.caption)
+                                    .foregroundColor(.white.opacity(0.9))
+                            }
                         }
+                        
                         ForEach(questionList, id: \.id) { item in
-                            Text(item.question)
-                                .id(item.question)
-                                .font(.body)
-                                .foregroundColor(item.answer ? .green : .red)
+                            VStack(alignment: .center) {
+                                Text(item.question)
+                                    .id(item.question)
+                                    .font(.headline)
+                                    .foregroundColor(item.answer ? .green : .red)
+                                Text(String(format: "%.2f", item.responseTime) + "s")
+                                    .font(.caption2)
+                                    .foregroundColor(.white.opacity(0.8))
+                            }
                         }
                     }
                     .padding(.trailing)
@@ -208,6 +229,7 @@ struct ColorsTrainingHome: View {
                         
                         currentPlay = 0
                         score = 0
+                        colorCoordinateShownTime = Date()
                         
                         startProgress()
                     } label: {
@@ -269,12 +291,24 @@ struct ColorsTrainingHome: View {
         .popup(isPresented: $gameEnded) {
             VStack {
                 Text("Game over!")
+                    .font(.footnote)
                     .foregroundColor(.black)
                     .padding(.bottom, 5)
                 
                 Text("Score: \(score)/\(currentPlay)")
                     .font(.title)
                     .foregroundColor(.green)
+                HStack {
+                    Text("Avg Resp Time")
+                        .font(.footnote)
+                        .foregroundColor(.black)
+                    Text("\(averageResponseTime(iterationList: questionList))")
+                        .font(.title3)
+                        .foregroundColor(.black)
+                    Text("sec")
+                        .font(.footnote)
+                        .foregroundColor(.black)
+                }.padding(.bottom)
                 
                 VStack(alignment: .leading) {
                     Text("Average Score: ")
@@ -299,7 +333,7 @@ struct ColorsTrainingHome: View {
                 .padding(.bottom)
                 
                 ShareScoreButton(trainingType: TrainingType.Colors,
-                                 responseTime: "0.5",
+                                 responseTime: averageResponseTime(iterationList: questionList),
                                  scoreModel: scoreViewModel.colorsScoreModel)
                 
 //                Button {
