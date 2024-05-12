@@ -41,6 +41,9 @@ struct ColorsTrainingHome: View {
     let timerInterval = 0.1
     let totalTime = 30.0
     let darkSquareIndexes = [1, 3, 5, 7, 8, 10, 12, 14, 17, 19, 21, 23, 24, 26, 28, 30, 33, 35, 37, 39, 40, 42, 44, 46, 49, 51, 53, 55, 56, 58, 60, 62]
+    var avgResponseTime: String {
+        return averageResponseTime(iterationList: questionList)
+    }
     
     private func getCoordinate(forIndex index: Int) -> String {
         let filesWhite = ["a", "b", "c", "d", "e", "f", "g", "h"]
@@ -104,7 +107,8 @@ struct ColorsTrainingHome: View {
                 scoreViewModel.updateScore(type: TrainingType.Colors,
                                                  color: whiteSide ? .white : .black,
                                                  score: Score(correctAttempts: score,
-                                                        totalAttempts: currentPlay))
+                                                              totalAttempts: currentPlay,
+                                                              avgResponseTime: avgResponseTime))
                 
                 gameEnded = true
                 gameStarted = false
@@ -120,13 +124,13 @@ struct ColorsTrainingHome: View {
                     HStack(alignment: .center, spacing: 20) {
                         if questionList.count > 0 {
                             VStack(alignment: .leading) {
-                                Text("Results, ")
+                                Text("Results & ")
                                     .font(.caption)
-                                    .foregroundColor(.white.opacity(0.9))
+                                    .foregroundColor(.white.opacity(0.95))
                                     .padding(0)
-                                Text("Resp time:")
+                                Text("Resp. time:")
                                     .font(.caption)
-                                    .foregroundColor(.white.opacity(0.9))
+                                    .foregroundColor(.white.opacity(0.95))
                             }
                         }
                         
@@ -197,19 +201,11 @@ struct ColorsTrainingHome: View {
                                 answerQuestion(with: SquareColor.dark)
                             }
                     }
-                } else if (scoreViewModel.colorsScoreModel.totalPlayBlack > 0 || scoreViewModel.colorsScoreModel.totalPlayWhite > 0) {
-                        Text(String(format: "Last score (%@): %d/%d",
-                                    scoreViewModel.colorsScoreModel.lastScoreAs == .white ? "W" : "B",
-                                    scoreViewModel.colorsScoreModel.lastScore.correctAttempts,
-                                    scoreViewModel.colorsScoreModel.lastScore.totalAttempts))
-                        .font(.footnote)
-                        Text(String(format: "Average score as white: %.2f", scoreViewModel.colorsScoreModel.avgScoreWhite))
-                            .font(.footnote)
-                        Text(String(format: "Average score as black: %.2f", scoreViewModel.colorsScoreModel.avgScoreBlack))
-                            .font(.footnote)
+                } else {
+                    // Show last score and average scores
+                    DisplayScoreView(scoreModel: scoreViewModel.colorsScoreModel)
                 }
             }
-//            .padding(.top, -40)
             
             Spacer()
             HStack(spacing: 15) {
@@ -289,78 +285,12 @@ struct ColorsTrainingHome: View {
                 .autohideIn(50)
         }
         .popup(isPresented: $gameEnded) {
-            VStack {
-                Text("Game over!")
-                    .font(.footnote)
-                    .foregroundColor(.black)
-                    .padding(.bottom, 5)
-                
-                Text("Score: \(score)/\(currentPlay)")
-                    .font(.title)
-                    .foregroundColor(.green)
-                HStack {
-                    Text("Avg Resp Time")
-                        .font(.footnote)
-                        .foregroundColor(.black)
-                    Text("\(averageResponseTime(iterationList: questionList))")
-                        .font(.title3)
-                        .foregroundColor(.black)
-                    Text("sec")
-                        .font(.footnote)
-                        .foregroundColor(.black)
-                }.padding(.bottom)
-                
-                VStack(alignment: .leading) {
-                    Text("Average Score: ")
-                        .foregroundColor(.gray)
-                    Text(String(format: "as White:  %.2f \nas Black:  %.2f ", scoreViewModel.colorsScoreModel.avgScoreWhite, scoreViewModel.colorsScoreModel.avgScoreBlack))
-                        .font(.subheadline)
-                        .foregroundColor(.black)
-                        .padding(.bottom)
-                    
-                    Text("Best Score: ")
-                        .foregroundColor(.gray)
-                    Text("as White:  \(scoreViewModel.colorsScoreModel.bestScoreWhite.correctAttempts) / \(scoreViewModel.colorsScoreModel.bestScoreWhite.totalAttempts) \nas Black:  \(scoreViewModel.colorsScoreModel.bestScoreBlack.correctAttempts) / \(scoreViewModel.colorsScoreModel.bestScoreBlack.totalAttempts)")
-                        .font(.subheadline)
-                        .foregroundColor(.black)
-                        .padding(.bottom)
-                    
-                }
-                .padding(20)
-                .frame(maxWidth: .infinity)
-                .background(.gray.opacity(0.25))
-                .cornerRadius(15)
-                .padding(.bottom)
-                
-                ShareScoreButton(trainingType: TrainingType.Colors,
-                                 responseTime: averageResponseTime(iterationList: questionList),
-                                 scoreModel: scoreViewModel.colorsScoreModel)
-                
-//                Button {
-//                    gameEnded = false
-//                } label: {
-//                    HStack {
-//                        Spacer()
-//                        Text("Close")
-//                            .font(.headline)
-//                            .foregroundColor(.black)
-//                            .padding(.vertical, 10)
-//                        Spacer()
-//                    }
-//                }
-//                .background(.cyan.opacity(0.80))
-//                .frame(maxWidth: .infinity)
-//                .cornerRadius(10)
-            }
-            .padding(25)
-            .background(.white)
-            .cornerRadius(15)
-            .frame(width: 250)
-            .overlay(
-                CloseButton() {
-                    gameEnded = false
-                }, alignment: .topTrailing
-            )
+            ScorePopup(trainingType: TrainingType.Colors,
+                       correctAttempts: score,
+                       totalAttempts: currentPlay,
+                       questionList: questionList,
+                       scoreModel: scoreViewModel.colorsScoreModel,
+                       gameEnded: $gameEnded)
         } customize: {
             $0
                 .type(.floater())

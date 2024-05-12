@@ -16,6 +16,7 @@ struct AboutView: View {
                     Image("logo-smooth-corners")
                         .resizable()
                         .frame(width: 35, height: 35)
+//                        .clipShape(RoundedRectangle(cornerRadius: 15))
                     
                     Text("Board Brain").font(.title)
                         .foregroundColor(Color.white)

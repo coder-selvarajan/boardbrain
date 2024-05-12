@@ -132,7 +132,6 @@ struct ColorsBoardView: View {
             }.padding(0) // LazyGrid
             
             HStack(alignment: .center) {
-                Spacer()
                 VStack {
                     Image(systemName: "chevron.compact.up")
                         .resizable()
@@ -144,10 +143,13 @@ struct ColorsBoardView: View {
                         .frame(width: 25, height: 25)
                         .padding(0)
                 }
+                Spacer()
             }
-            .frame(maxWidth: UIScreen.main.bounds.size.width, maxHeight: UIScreen.main.bounds.size.width, alignment: .bottomTrailing)
-            .padding(.bottom, -120)
-            .padding(.trailing, 10)
+            .frame(maxWidth: UIScreen.main.bounds.size.width,
+                   maxHeight: UIScreen.main.bounds.size.width,
+                   alignment: .bottomLeading)
+            .padding(.bottom, -110)
+            .padding(.leading, 5)
             
         }
 //        .frame(width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.width)

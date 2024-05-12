@@ -39,10 +39,14 @@ struct CoordinateTrainingHome: View {
     
     
     let timerInterval = 0.1
-    let totalTime = 3.0
+    let totalTime = 30.0
     
     let resultsPaneHeight = UIScreen.main.bounds.size.height * 0.06
     let actionButtonHeight = UIScreen.main.bounds.size.height * 0.075
+    
+    var avgResponseTime: String {
+        return averageResponseTime(iterationList: questionList)
+    }
     
     private func getCoordinate(forIndex index: Int) -> String {
         let filesWhite = ["a", "b", "c", "d", "e", "f", "g", "h"]
@@ -64,6 +68,8 @@ struct CoordinateTrainingHome: View {
         return square.getCoordinate()
     }
     
+    
+    
     func getRandomCoordinate() -> String {
         let rndIndex = Int.random(in: 0..<64)
         targetIndex = rndIndex
@@ -80,7 +86,9 @@ struct CoordinateTrainingHome: View {
                 //update the scores and persist
                 scoreViewModel.updateScore(type: TrainingType.Coordinates,
                                            color: whiteSide ? .white : .black,
-                                           score: Score(correctAttempts: score, totalAttempts: currentPlay))
+                                           score: Score(correctAttempts: score, 
+                                                        totalAttempts: currentPlay,
+                                                        avgResponseTime: avgResponseTime))
                 
                 gameEnded = true
                 gameStarted = false
@@ -95,13 +103,13 @@ struct CoordinateTrainingHome: View {
                     HStack(alignment: .center, spacing: 20) {
                         if questionList.count > 0 {
                             VStack(alignment: .leading) {
-                                Text("Results, ")
+                                Text("Results & ")
                                     .font(.caption)
-                                    .foregroundColor(.white.opacity(0.9))
+                                    .foregroundColor(.white.opacity(0.95))
                                     .padding(0)
-                                Text("Resp time:")
+                                Text("Resp. time:")
                                     .font(.caption)
-                                    .foregroundColor(.white.opacity(0.9))
+                                    .foregroundColor(.white.opacity(0.95))
                             }
                         }
                         
@@ -179,17 +187,8 @@ struct CoordinateTrainingHome: View {
                         .foregroundColor(.yellow)
                         .padding()
                 } else {
-                    if (scoreViewModel.coordinatesScoreModel.totalPlayBlack > 0 || scoreViewModel.coordinatesScoreModel.totalPlayWhite > 0) {
-                        Text(String(format: "Last score (%@): %d/%d",
-                                    scoreViewModel.coordinatesScoreModel.lastScoreAs == .white ? "W" : "B",
-                                    scoreViewModel.coordinatesScoreModel.lastScore.correctAttempts,
-                                    scoreViewModel.coordinatesScoreModel.lastScore.totalAttempts))
-                        .font(.footnote)
-                        Text(String(format: "Average score as White: %.2f", scoreViewModel.coordinatesScoreModel.avgScoreWhite))
-                            .font(.footnote)
-                        Text(String(format: "Average score as Black: %.2f", scoreViewModel.coordinatesScoreModel.avgScoreBlack))
-                            .font(.footnote)
-                    }
+                    // Show last score and average scores
+                    DisplayScoreView(scoreModel: scoreViewModel.coordinatesScoreModel)
                 }
             }
             
@@ -271,64 +270,12 @@ struct CoordinateTrainingHome: View {
                 .autohideIn(50)
         }
         .popup(isPresented: $gameEnded) {
-            VStack {
-                Text("Game over!")
-                    .font(.footnote)
-                    .foregroundColor(.black)
-                    .padding(.bottom, 5)
-                
-                Text("Score: \(score)/\(currentPlay)")
-                    .font(.title)
-                    .foregroundColor(.green)
-                HStack {
-                    Text("Avg Resp Time")
-                        .font(.footnote)
-                        .foregroundColor(.black)
-                    Text("\(averageResponseTime(iterationList: questionList))")
-                        .font(.title3)
-                        .foregroundColor(.black)
-                    Text("sec")
-                        .font(.footnote)
-                        .foregroundColor(.black)
-                }.padding(.bottom)
-                
-                VStack(alignment: .leading) {
-                    Text("Average Score: ")
-                        .foregroundColor(.gray)
-                    Text(String(format: "as White:  %.2f \nas Black:  %.2f ", scoreViewModel.coordinatesScoreModel.avgScoreWhite, scoreViewModel.coordinatesScoreModel.avgScoreBlack))
-                        .font(.subheadline)
-                        .foregroundColor(.black)
-                        .padding(.bottom)
-                    
-                    Text("Best Score: ")
-                        .foregroundColor(.gray)
-                    Text("as White:  \(scoreViewModel.coordinatesScoreModel.bestScoreWhite.correctAttempts) / \(scoreViewModel.coordinatesScoreModel.bestScoreWhite.totalAttempts) \nas Black:  \(scoreViewModel.coordinatesScoreModel.bestScoreBlack.correctAttempts) / \(scoreViewModel.coordinatesScoreModel.bestScoreBlack.totalAttempts)")
-                        .font(.subheadline)
-                        .foregroundColor(.black)
-                        .padding(.bottom)
-                    
-                }
-                .padding(20)
-                .frame(maxWidth: .infinity)
-                .background(.gray.opacity(0.25))
-                .cornerRadius(15)
-                .padding(.bottom)
-                
-                ShareScoreButton(trainingType: TrainingType.Coordinates,
-                                 responseTime: averageResponseTime(iterationList: questionList),
-                                 scoreModel: scoreViewModel.coordinatesScoreModel)
-
-            }
-            .padding(25)
-            .background(.white)
-            .cornerRadius(15)
-            .frame(width: 250)
-            .overlay(
-                CloseButton() {
-                    gameEnded = false
-                }, alignment: .topTrailing
-            )
-            
+            ScorePopup(trainingType: TrainingType.Coordinates,
+                       correctAttempts: score,
+                       totalAttempts: currentPlay,
+                       questionList: questionList,
+                       scoreModel: scoreViewModel.coordinatesScoreModel,
+                       gameEnded: $gameEnded)
         } customize: {
             $0
                 .type(.floater())

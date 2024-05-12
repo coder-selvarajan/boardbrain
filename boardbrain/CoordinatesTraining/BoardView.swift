@@ -187,7 +187,6 @@ struct BoardView: View {
             
             if !showPiecesPosition {
                 HStack(alignment: .center) {
-                    Spacer()
                     VStack {
                         Image(systemName: "chevron.compact.up")
                             .resizable()
@@ -199,11 +198,13 @@ struct BoardView: View {
                             .frame(width: 25, height: 25)
                             .padding(0)
                     }
+                    Spacer()
                 }
                 .frame(maxWidth: UIScreen.main.bounds.size.width,
-                       maxHeight: UIScreen.main.bounds.size.width, alignment: .bottomTrailing)
-                .padding(.bottom, -120)
-                .padding(.trailing, 10)
+                       maxHeight: UIScreen.main.bounds.size.width, 
+                       alignment: .bottomLeading)
+                .padding(.bottom, -110)
+                .padding(.leading, 5)
             }
         }
     }

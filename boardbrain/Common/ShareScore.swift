@@ -23,7 +23,7 @@ struct ShareScoreButton: View {
             HStack(alignment: .center, spacing: 15) {
                 Spacer()
                 Image(systemName: "square.and.arrow.up")
-                    .font(.headline)
+                    .font(.callout)
                     .foregroundStyle(.black)
                 Text("Share Score")
                     .font(.callout)
@@ -44,7 +44,7 @@ struct ShareScoreButton: View {
     
     func scoreText() -> String {
         """
-        🎉 Scored \(scoreModel.lastScore.correctAttempts)/\(scoreModel.lastScore.totalAttempts) in \(trainingType) Training on BoardBrain app! 🕒 \(responseTime)s response time!
+        🎉 Scored \(scoreModel.lastScore.correctAttempts)/\(scoreModel.lastScore.totalAttempts) in Chessboard \(trainingType) Training on BoardBrain app! 🕒 \(responseTime)s response time!
 
         🔹 Avg. score as White: \(twoDigitFormat(value: scoreModel.avgScoreWhite))
         🔹 Avg. score as Black: \(twoDigitFormat(value: scoreModel.avgScoreBlack))

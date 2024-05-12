@@ -142,6 +142,7 @@ struct HomeView: View {
                         Image("logo-smooth-corners")
                             .resizable()
                             .frame(width: logoSize, height: logoSize)
+//                            .clipShape(RoundedRectangle(cornerRadius: 15))
                         //                            .padding(.leading, 10)
                         Text("Board Brain").font(.title3)
                             .foregroundColor(Color.white)

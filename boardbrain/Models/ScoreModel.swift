@@ -21,11 +21,13 @@ enum SquareColor: Codable {
 struct Score: Codable {
     var correctAttempts: Int = 0
     var totalAttempts: Int = 0
+    var avgResponseTime: String? = "-1"
 }
 
 struct ScoreModel: Codable {
     var lastScore: Score
     var lastScoreAs: COLOR
+    
     var bestScoreWhite: Score
     var bestScoreBlack: Score
     

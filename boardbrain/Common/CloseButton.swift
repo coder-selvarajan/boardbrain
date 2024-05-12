@@ -19,7 +19,7 @@ struct CloseButton: View {
                 .frame(width: 30, height: 30)
                 .foregroundColor(.red.opacity(0.8))
         }
-        .padding([.top, .trailing], 7)
+        .padding([.top, .trailing], 10)
     }
 }
 

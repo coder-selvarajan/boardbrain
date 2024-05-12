@@ -44,7 +44,9 @@ struct MovesTrainingHome: View {
     
     let timerInterval = 0.1
     let totalTime = 30.0
-    
+    var avgResponseTime: String {
+        return averageResponseTime(iterationList: questionList)
+    }
     
     private func startProgress() {
         progress = 0.0
@@ -56,7 +58,9 @@ struct MovesTrainingHome: View {
                 //update the scores and persist
                 scoreViewModel.updateScore(type: .Moves,
                                                 color: whiteSide ? .white : .black,
-                                                score: Score(correctAttempts: score, totalAttempts: currentPlay))
+                                                score: Score(correctAttempts: score, 
+                                                             totalAttempts: currentPlay,
+                                                             avgResponseTime: avgResponseTime))
                 if gameState != nil {
                     gameState!.gameEnded = true
                 }
@@ -90,13 +94,13 @@ struct MovesTrainingHome: View {
                     HStack(alignment: .center, spacing: 20) {
                         if questionList.count > 0 {
                             VStack(alignment: .leading) {
-                                Text("Results, ")
+                                Text("Results & ")
                                     .font(.caption)
-                                    .foregroundColor(.white.opacity(0.9))
+                                    .foregroundColor(.white.opacity(0.95))
                                     .padding(0)
-                                Text("Resp time:")
+                                Text("Resp. time:")
                                     .font(.caption)
-                                    .foregroundColor(.white.opacity(0.9))
+                                    .foregroundColor(.white.opacity(0.95))
                             }
                         }
                         
@@ -170,17 +174,8 @@ struct MovesTrainingHome: View {
                         .foregroundColor(.yellow)
                         .padding()
                 } else {
-                    if (scoreViewModel.movesScoreModel.totalPlayBlack > 0 || scoreViewModel.movesScoreModel.totalPlayWhite > 0) {
-                        Text(String(format: "Last score (%@): %d/%d",
-                                    scoreViewModel.movesScoreModel.lastScoreAs == .white ? "w" : "b",
-                                    scoreViewModel.movesScoreModel.lastScore.correctAttempts,
-                                    scoreViewModel.movesScoreModel.lastScore.totalAttempts))
-                        .font(.footnote)
-                        Text(String(format: "Average score as white: %.2f", scoreViewModel.movesScoreModel.avgScoreWhite))
-                            .font(.footnote)
-                        Text(String(format: "Average score as black: %.2f", scoreViewModel.movesScoreModel.avgScoreBlack))
-                            .font(.footnote)
-                    }
+                    // Show last score and average scores
+                    DisplayScoreView(scoreModel: scoreViewModel.movesScoreModel)
                 }
             }
             
@@ -267,78 +262,13 @@ struct MovesTrainingHome: View {
                 .autohideIn(50)
         }
         .popup(isPresented: $gameEnded) {
-            VStack {
-                Text("Game over!")
-                    .font(.footnote)
-                    .foregroundColor(.black)
-                    .padding(.bottom, 5)
-                
-                Text("Score: \(score)/\(currentPlay)")
-                    .font(.title)
-                    .foregroundColor(.green)
-                HStack {
-                    Text("Avg Resp Time")
-                        .font(.footnote)
-                        .foregroundColor(.black)
-                    Text("\(averageResponseTime(iterationList: questionList))")
-                        .font(.title3)
-                        .foregroundColor(.black)
-                    Text("sec")
-                        .font(.footnote)
-                        .foregroundColor(.black)
-                }.padding(.bottom)
-                
-                VStack(alignment: .leading) {
-                    Text("Average Score: ")
-                        .foregroundColor(.gray)
-                    Text(String(format: "as White:  %.2f \nas Black:  %.2f ", scoreViewModel.movesScoreModel.avgScoreWhite, scoreViewModel.movesScoreModel.avgScoreBlack))
-                        .font(.subheadline)
-                        .foregroundColor(.black)
-                        .padding(.bottom)
-                    
-                    Text("Best Score: ")
-                        .foregroundColor(.gray)
-                    Text("as White:  \(scoreViewModel.movesScoreModel.bestScoreWhite.correctAttempts) / \(scoreViewModel.movesScoreModel.bestScoreWhite.totalAttempts) \nas Black:  \(scoreViewModel.movesScoreModel.bestScoreBlack.correctAttempts) / \(scoreViewModel.movesScoreModel.bestScoreBlack.totalAttempts)")
-                        .font(.subheadline)
-                        .foregroundColor(.black)
-                        .padding(.bottom)
-                    
-                }
-                .padding(20)
-                .frame(maxWidth: .infinity)
-                .background(.gray.opacity(0.25))
-                .cornerRadius(15)
-                .padding(.bottom)
-                
-                ShareScoreButton(trainingType: TrainingType.Moves,
-                                 responseTime:  averageResponseTime(iterationList: questionList),
-                                 scoreModel: scoreViewModel.movesScoreModel)
-                
-//                Button {
-//                    gameEnded = false
-//                } label: {
-//                    HStack {
-//                        Spacer()
-//                        Text("Close")
-//                            .font(.headline)
-//                            .foregroundColor(.black)
-//                            .padding(.vertical, 10)
-//                        Spacer()
-//                    }
-//                }
-//                .background(.cyan.opacity(0.80))
-//                .frame(maxWidth: .infinity)
-//                .cornerRadius(10)
-            }
-            .padding(25)
-            .background(.white)
-            .cornerRadius(15)
-            .frame(width: 250)
-            .overlay(
-                CloseButton() {
-                    gameEnded = false
-                }, alignment: .topTrailing
-            )
+            ScorePopup(trainingType: TrainingType.Moves,
+                       correctAttempts: score,
+                       totalAttempts: currentPlay,
+                       questionList: questionList,
+                       scoreModel: scoreViewModel.movesScoreModel,
+                       gameEnded: $gameEnded)
+
         } customize: {
             $0
                 .type(.floater())

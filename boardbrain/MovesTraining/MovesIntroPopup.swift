@@ -60,21 +60,6 @@ struct MovesIntroPopup: View {
                             showIntroModal = !value // Close the modal when user chooses to not show it again
                         }
                         .padding(.vertical, 10)
-                    
-//                    HStack {
-//                        Spacer()
-//                        Button("Get started") {
-//                            showIntroModal = false // Close the modal when the user starts the training
-//                        }
-//                        .foregroundColor(.black)
-//                        .padding(.horizontal)
-//                        .padding(.vertical, 15)
-//                        .background(Color.cyan.opacity(0.85))
-//                        .cornerRadius(10)
-//                        
-//                        Spacer()
-//                    }
-//                    .padding(.vertical, 10)
                 }
                 
             } //VStack
@@ -87,17 +72,6 @@ struct MovesIntroPopup: View {
                 CloseButton() {
                     showIntroModal = false
                 }, alignment: .topTrailing
-                
-//                Button {
-//                    showIntroModal = false
-//                } label: {
-//                    Image(systemName: "xmark.circle")
-//                        .resizable()
-//                        .frame(width: 25, height: 25)
-//                        .foregroundColor(.red)
-//                }
-//                .padding([.top, .trailing], 10),
-//                alignment: .topTrailing
             )
         } // ZStack
     }

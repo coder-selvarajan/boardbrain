@@ -44,7 +44,6 @@ struct CoordinatesPopupOptions: View {
                             .clipShape(RoundedCorner(radius: 5, corners: [.topLeft, .bottomLeft]))
                             .padding(0)
                         
-                        
                         Image("king-w")
                             .resizable()
                             .frame(width: 45, height: 45)

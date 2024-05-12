@@ -36,12 +36,12 @@ class ScoreViewModel: ObservableObject {
         }
         
         //if no user defaults value then assign default values.
-        return ScoreModel(lastScore: Score(correctAttempts: 0, totalAttempts: 0),
-                                lastScoreAs: .white,
-                                bestScoreWhite: Score(correctAttempts: 0, totalAttempts: 0),
-                                bestScoreBlack: Score(correctAttempts: 0, totalAttempts: 0),
-                                avgScoreWhite: 0.0, totalPlayWhite: 0,
-                                avgScoreBlack: 0.0, totalPlayBlack: 0)
+        return ScoreModel(lastScore: Score(),
+                          lastScoreAs: .white,
+                          bestScoreWhite: Score(),
+                          bestScoreBlack: Score(),
+                          avgScoreWhite: 0.0, totalPlayWhite: 0,
+                          avgScoreBlack: 0.0, totalPlayBlack: 0)
     }
     
     init() {
@@ -80,10 +80,10 @@ class ScoreViewModel: ObservableObject {
     }
     
     private func getDefaultScore() -> ScoreModel {
-        return ScoreModel(lastScore: Score(correctAttempts: 0, totalAttempts: 0),
+        return ScoreModel(lastScore: Score(),
                                 lastScoreAs: .white,
-                                bestScoreWhite: Score(correctAttempts: 0, totalAttempts: 0),
-                                bestScoreBlack: Score(correctAttempts: 0, totalAttempts: 0),
+                                bestScoreWhite: Score(),
+                                bestScoreBlack: Score(),
                                 avgScoreWhite: 0.0, totalPlayWhite: 0,
                                 avgScoreBlack: 0.0, totalPlayBlack: 0)
     }
