@@ -30,7 +30,7 @@ struct MainView: View {
     }
     
     private func checkAndPromptForReview() {
-        if launchCount == 5 {
+        if launchCount == 5 || launchCount == 20 {
             if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
                 SKStoreReviewController.requestReview(in: windowScene)
             }

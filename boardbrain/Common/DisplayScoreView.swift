@@ -12,37 +12,36 @@ struct DisplayScoreView: View {
     
     var body: some View {
         if (scoreModel.totalPlayBlack > 0 || scoreModel.totalPlayWhite > 0) {
-            VStack {
-                HStack {
-                    Text(String(format: "🏁 Last Score (%@): %d / %d",
+            VStack(spacing: 5) {
+                HStack(spacing: 2) {
+                    Text(String(format: "Last Score (%@): %d / %d",
                                 scoreModel.lastScoreAs == .white ? "W" : "B",
                                 scoreModel.lastScore.correctAttempts,
                                 scoreModel.lastScore.totalAttempts))
                     if let avgTime = scoreModel.lastScore.avgResponseTime {
                         Text("⏱️")
                             .font(.subheadline)
+                            .padding(.leading, 10)
+                            .padding(.trailing, 5)
                         Text(avgTime)
+                        Text("s")
                     }
                 }
                 .font(.footnote)
                 
-                HStack(alignment: .center) {
-//                    Text(String(format: "Avg. Score : ◽️ %.2f  ◼️ %.2f", scoreModel.avgScoreWhite, scoreModel.avgScoreBlack))
-//                        .font(.footnote)
-                    Text("Avg. Score:")
+                HStack(alignment: .bottom) {
+                    Text("Average Score:")
                     
                     Image("king-w")
                         .resizable()
                         .scaledToFit()
                         .frame(width: 25)
                     
-                    
                     Text(String(format: "%.2f  ", scoreModel.avgScoreWhite))
                     Image("king-b")
                         .resizable()
                         .scaledToFit()
                         .frame(width: 25)
-                    
                     
                     Text(String(format: "%.2f", scoreModel.avgScoreBlack))
                 }

@@ -39,6 +39,8 @@ struct MovesTrainingHome: View {
     @State private var showIntroModal = false
     @State private var hideControlsinPopup = false
     
+    @State private var timer: Timer?
+    
     let resultsPaneHeight = UIScreen.main.bounds.size.height * 0.065
     let actionButtonHeight = UIScreen.main.bounds.size.height * 0.075
     
@@ -50,7 +52,8 @@ struct MovesTrainingHome: View {
     
     private func startProgress() {
         progress = 0.0
-        Timer.scheduledTimer(withTimeInterval: timerInterval, repeats: true) { timer in
+        // store the timer here, so that we can invalidate it when the user navigates back to another view.
+        timer = Timer.scheduledTimer(withTimeInterval: timerInterval, repeats: true) { timer in
             self.progress += Double(timerInterval / totalTime)
             if self.progress >= 1.0 {
                 timer.invalidate()
@@ -239,6 +242,9 @@ struct MovesTrainingHome: View {
             if showIntro {
                 showIntroModal = true
             }
+        }
+        .onDisappear() {
+            timer?.invalidate()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.white.opacity(0.20))

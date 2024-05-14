@@ -37,6 +37,7 @@ struct CoordinateTrainingHome: View {
     @State private var showIntroModal = false
     @State private var hideControlsinPopup = false
     
+    @State private var timer: Timer?
     
     let timerInterval = 0.1
     let totalTime = 30.0
@@ -68,8 +69,6 @@ struct CoordinateTrainingHome: View {
         return square.getCoordinate()
     }
     
-    
-    
     func getRandomCoordinate() -> String {
         let rndIndex = Int.random(in: 0..<64)
         targetIndex = rndIndex
@@ -78,7 +77,8 @@ struct CoordinateTrainingHome: View {
     
     private func startProgress() {
         progress = 0.0
-        Timer.scheduledTimer(withTimeInterval: timerInterval, repeats: true) { timer in
+        // store the timer here, so that we can invalidate it when the user navigates back to another view.
+        timer = Timer.scheduledTimer(withTimeInterval: timerInterval, repeats: true) { timer in
             self.progress += Float(timerInterval / totalTime)
             if self.progress >= 1.0 {
                 timer.invalidate()
@@ -250,6 +250,9 @@ struct CoordinateTrainingHome: View {
             if showIntro {
                 showIntroModal = true
             }
+        }
+        .onDisappear() {
+            timer?.invalidate()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.white.opacity(0.20))
