@@ -9,6 +9,7 @@ import SwiftUI
 
 struct MovesBoardView: View {
     @EnvironmentObject var themeManager: ThemeManager
+    @AppStorage("hapticFeedback") private var hapticFeedbackEnabled = true
     
     let rows = 8
     let columns = 8
@@ -163,6 +164,11 @@ struct MovesBoardView: View {
                                             highlightResult = true
                                             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                                                 self.highlightResult = false
+                                            }
+                                            
+                                            // generate a mild haptic feedback
+                                            if hapticFeedbackEnabled {
+                                                performRigidHapticFeedback()
                                             }
                                         }
                                     }

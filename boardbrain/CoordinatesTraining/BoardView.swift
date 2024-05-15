@@ -9,6 +9,7 @@ import SwiftUI
 
 struct BoardView: View {
     @EnvironmentObject var themeManager: ThemeManager
+    @AppStorage("hapticFeedback") private var hapticFeedbackEnabled = true
     
     @Binding var showPiecesPosition: Bool
     @Binding var showRanksandFiles: Bool
@@ -85,6 +86,11 @@ struct BoardView: View {
     func squareTapped(index: Int) {
         if !gameStarted {
             return
+        }
+        
+        // generate a mild haptic feedback
+        if hapticFeedbackEnabled {
+            performSoftHapticFeedback()
         }
         
         self.highlightResult = true

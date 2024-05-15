@@ -14,6 +14,7 @@ struct ColorsTrainingHome: View {
     
     @AppStorage("colorsShowCoordinates") private var showCoordinates = true
     @AppStorage("colorsWhiteSide") private var whiteSide = true
+    @AppStorage("hapticFeedback") private var hapticFeedbackEnabled = true
     
     @State private var selectedColor = "White"
     @State private var targetIndex: Int = -1
@@ -74,6 +75,11 @@ struct ColorsTrainingHome: View {
     }
     
     func answerQuestion(with answerColor: SquareColor) {
+        // generate a mild haptic feedback
+        if hapticFeedbackEnabled {
+            performSoftHapticFeedback()
+        }
+        
         //response time calculation
         var responseTime: TimeInterval = 0.0
         if let shownTime = colorCoordinateShownTime {

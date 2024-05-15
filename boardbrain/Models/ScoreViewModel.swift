@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum TrainingType {
+enum TrainingType : String {
     case Coordinates, Moves, Colors
     
     func getDBKey() -> String {
