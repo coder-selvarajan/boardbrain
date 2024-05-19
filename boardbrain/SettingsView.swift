@@ -64,7 +64,7 @@ struct SettingsView: View {
     var body: some View {
         VStack {
             Form {
-                Section {
+                Section(header: Text(" ")) {
                     VStack(alignment: .leading) {
                         Text("Choose Board theme :")
                         HStack (spacing: 25) {
@@ -91,9 +91,11 @@ struct SettingsView: View {
                         
                     }
                     .padding()
+                    
                 } // Section
                 
                 Section {
+                    
                     VStack {
                         Toggle(isOn: $hapticFeedbackEnabled) {
                             VStack(alignment: .leading) {
@@ -107,6 +109,7 @@ struct SettingsView: View {
                     } // VStack
                     .padding()
                 } //Section
+                
                 
                 //                Section(header: Text("Score Reset")) {
                 Section {

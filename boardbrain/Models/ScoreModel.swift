@@ -35,4 +35,9 @@ struct ScoreModel: Codable {
     var totalPlayWhite: Int
     var avgScoreBlack: Float
     var totalPlayBlack: Int
+    
+    var lastScoreCrossedBestScore: Bool? = false
+    
+    var whiteAvgScoreCrossedAt: Int? = 0 //represents the attempt the user crossed the common avg ascore as white piece
+    var blackAvgScoreCrossedAt: Int? = 0 //... as black
 }

@@ -20,6 +20,17 @@ enum TrainingType : String {
             return "movesTrainingScore"
         }
     }
+    
+    var commonAverageScore: Int {
+        switch self {
+        case .Coordinates:
+            return 10
+        case .Moves:
+            return 8
+        case .Colors:
+            return 10
+        }
+    }
 }
 
 class ScoreViewModel: ObservableObject {
@@ -41,7 +52,9 @@ class ScoreViewModel: ObservableObject {
                           bestScoreWhite: Score(),
                           bestScoreBlack: Score(),
                           avgScoreWhite: 0.0, totalPlayWhite: 0,
-                          avgScoreBlack: 0.0, totalPlayBlack: 0)
+                          avgScoreBlack: 0.0, totalPlayBlack: 0,
+                          lastScoreCrossedBestScore: false,
+                          whiteAvgScoreCrossedAt: 0, blackAvgScoreCrossedAt: 0)
     }
     
     init() {
@@ -64,39 +77,42 @@ class ScoreViewModel: ObservableObject {
         }
     }
     
-    
     func updateScore(type: TrainingType, color: COLOR, score: Score) {
         switch type {
         case .Coordinates:
-            calculateScore(for: color, score: score, scoreModel: &coordinatesScoreModel)
+            calculateScore(for: type, color: color, score: score, scoreModel: &coordinatesScoreModel)
             persistScore(type: type, scoreModel: coordinatesScoreModel)
         case .Moves:
-            calculateScore(for: color, score: score, scoreModel: &movesScoreModel)
+            calculateScore(for: type, color: color, score: score, scoreModel: &movesScoreModel)
             persistScore(type: type, scoreModel: movesScoreModel)
         case .Colors:
-            calculateScore(for: color, score: score, scoreModel: &colorsScoreModel)
+            calculateScore(for: type, color: color, score: score, scoreModel: &colorsScoreModel)
             persistScore(type: type, scoreModel: colorsScoreModel)
         }
     }
     
     private func getDefaultScore() -> ScoreModel {
         return ScoreModel(lastScore: Score(),
-                                lastScoreAs: .white,
-                                bestScoreWhite: Score(),
-                                bestScoreBlack: Score(),
-                                avgScoreWhite: 0.0, totalPlayWhite: 0,
-                                avgScoreBlack: 0.0, totalPlayBlack: 0)
+                          lastScoreAs: .white,
+                          bestScoreWhite: Score(),
+                          bestScoreBlack: Score(),
+                          avgScoreWhite: 0.0, totalPlayWhite: 0,
+                          avgScoreBlack: 0.0, totalPlayBlack: 0,
+                          lastScoreCrossedBestScore: false,
+                          whiteAvgScoreCrossedAt: 0, blackAvgScoreCrossedAt: 0)
     }
     
-    private func calculateScore(for color: COLOR, score: Score, scoreModel: inout ScoreModel) {
+    private func calculateScore(for type: TrainingType, color: COLOR, score: Score, scoreModel: inout ScoreModel) {
         scoreModel.lastScore = score
         scoreModel.lastScoreAs = color
+        scoreModel.lastScoreCrossedBestScore = false
         
         if color == .white {
             // check and update best score
             if  (score.correctAttempts > scoreModel.bestScoreWhite.correctAttempts) ||
                 (score.correctAttempts == scoreModel.bestScoreWhite.correctAttempts
                  && score.totalAttempts < scoreModel.bestScoreWhite.totalAttempts) {
+                scoreModel.lastScoreCrossedBestScore = true //recording that the user has crossed his last best score
                 scoreModel.bestScoreWhite = score
             }
             
@@ -107,10 +123,17 @@ class ScoreViewModel: ObservableObject {
             scoreModel.avgScoreWhite = newAvgScore
             scoreModel.totalPlayWhite = newTotalPlay
             
+            // updating whether the user crossed the common average score..
+            if score.correctAttempts >= type.commonAverageScore
+                && (scoreModel.whiteAvgScoreCrossedAt == nil || scoreModel.whiteAvgScoreCrossedAt! == 0) {
+                scoreModel.whiteAvgScoreCrossedAt = newTotalPlay
+            }
+            
         } else { //black
             if  (score.correctAttempts > scoreModel.bestScoreBlack.correctAttempts) ||
                 (score.correctAttempts == scoreModel.bestScoreBlack.correctAttempts
                  && score.totalAttempts < scoreModel.bestScoreBlack.totalAttempts) {
+                scoreModel.lastScoreCrossedBestScore = true //recording that the user has crossed his last best score
                 scoreModel.bestScoreBlack = score
             }
             
@@ -120,6 +143,12 @@ class ScoreViewModel: ObservableObject {
             newAvgScore = (( scoreModel.avgScoreBlack * Float(scoreModel.totalPlayBlack)) + Float(score.correctAttempts)) / Float(newTotalPlay)
             scoreModel.avgScoreBlack = newAvgScore
             scoreModel.totalPlayBlack = newTotalPlay
+            
+            // updating whether the user crossed the common average score..
+            if score.correctAttempts >= type.commonAverageScore 
+                && (scoreModel.blackAvgScoreCrossedAt == nil || scoreModel.blackAvgScoreCrossedAt! == 0) {
+                scoreModel.blackAvgScoreCrossedAt = newTotalPlay
+            }
         }
     }
     

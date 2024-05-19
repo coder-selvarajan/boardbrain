@@ -42,7 +42,7 @@ struct ColorsTrainingHome: View {
     let actionButtonHeight = UIScreen.main.bounds.size.height * 0.075
     
     let timerInterval = 0.1
-    let totalTime = 30.0
+    
     let darkSquareIndexes = [1, 3, 5, 7, 8, 10, 12, 14, 17, 19, 21, 23, 24, 26, 28, 30, 33, 35, 37, 39, 40, 42, 44, 46, 49, 51, 53, 55, 56, 58, 60, 62]
     var avgResponseTime: String {
         return averageResponseTime(iterationList: questionList)
@@ -108,7 +108,7 @@ struct ColorsTrainingHome: View {
         progress = 0.0
         // store the timer here, so that we can invalidate it when the user navigates back to another view.
         timer = Timer.scheduledTimer(withTimeInterval: timerInterval, repeats: true) { timer in
-            self.progress += Float(timerInterval / totalTime)
+            self.progress += Float(timerInterval / GAME_TIMER_SECONDS)
             if self.progress >= 1.0 {
                 timer.invalidate()
                 

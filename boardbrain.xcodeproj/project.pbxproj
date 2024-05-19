@@ -21,6 +21,7 @@
 		7033FBEE2BD8AD2F00492508 /* MovesPopupOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7033FBED2BD8AD2F00492508 /* MovesPopupOptions.swift */; };
 		70361EE22BDFCED7001F0859 /* ThemeBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70361EE12BDFCED7001F0859 /* ThemeBoard.swift */; };
 		7044D7532BCED7A700136FD6 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7044D7522BCED7A700136FD6 /* HomeView.swift */; };
+		705694422BF846FE0090A713 /* ConfettiSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 705694412BF846FE0090A713 /* ConfettiSwiftUI */; };
 		705D07512BCA626E00AD5F22 /* ScoreModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705D07502BCA626E00AD5F22 /* ScoreModel.swift */; };
 		705E345D2BE5210B00654A24 /* OptionsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705E345C2BE5210B00654A24 /* OptionsModel.swift */; };
 		70614BAA2BC123460053DDAE /* ColorExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70614BA92BC123460053DDAE /* ColorExt.swift */; };
@@ -96,6 +97,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				705694422BF846FE0090A713 /* ConfettiSwiftUI in Frameworks */,
 				7019350A2BC9858900ECDA51 /* PopupView in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -239,6 +241,7 @@
 			name = boardbrain;
 			packageProductDependencies = (
 				701935092BC9858900ECDA51 /* PopupView */,
+				705694412BF846FE0090A713 /* ConfettiSwiftUI */,
 			);
 			productName = boardbrain;
 			productReference = 70C7312E2BC11AB6000FB2F9 /* boardbrain.app */;
@@ -270,6 +273,7 @@
 			mainGroup = 70C731252BC11AB6000FB2F9;
 			packageReferences = (
 				701935082BC9858900ECDA51 /* XCRemoteSwiftPackageReference "PopupView" */,
+				705694402BF846FE0090A713 /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */,
 			);
 			productRefGroup = 70C7312F2BC11AB6000FB2F9 /* Products */;
 			projectDirPath = "";
@@ -570,6 +574,14 @@
 				minimumVersion = 2.9.1;
 			};
 		};
+		705694402BF846FE0090A713 /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/simibac/ConfettiSwiftUI";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.1.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -577,6 +589,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 701935082BC9858900ECDA51 /* XCRemoteSwiftPackageReference "PopupView" */;
 			productName = PopupView;
+		};
+		705694412BF846FE0090A713 /* ConfettiSwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 705694402BF846FE0090A713 /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */;
+			productName = ConfettiSwiftUI;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

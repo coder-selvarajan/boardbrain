@@ -8,6 +8,8 @@
 import Foundation
 import UIKit
 
+var GAME_TIMER_SECONDS = 30.0
+
 func twoDigitFormat(value: Float) -> String {
     return String(format: "%.2f", value)
 }
