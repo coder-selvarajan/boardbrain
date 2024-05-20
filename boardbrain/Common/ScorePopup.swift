@@ -22,7 +22,7 @@ struct ScorePopup: View {
     func eligible4ConfettiAnimation() -> Bool {
         if scoreModel.lastScoreAs == .white {
             if scoreModel.totalPlayWhite == scoreModel.whiteAvgScoreCrossedAt {
-                congratsMessage = "Congratulations! 👏🏻 \nYou have achieved the common average score!"
+                congratsMessage = "Congratulations! 👏🏻 \nYou have achieved a common high score!"
                 return true
             }
             
@@ -32,7 +32,7 @@ struct ScorePopup: View {
             }
         } else { //black
             if scoreModel.totalPlayBlack == scoreModel.blackAvgScoreCrossedAt {
-                congratsMessage = "Congratulations! 👏🏻 \nYou have achieved the common average score!"
+                congratsMessage = "Congratulations! 👏🏻 \nYou have achieved a common high score!"
                 return true
             }
             
@@ -56,12 +56,11 @@ struct ScorePopup: View {
                 } else {
                     Text(congratsMessage)
                         .font(.footnote)
-                        .foregroundColor(.indigo)
+                        .foregroundColor(.blue)
                         .padding(.bottom, 5)
                     
                     Divider()
                 }
-                
                 
                 Text("Score: \(correctAttempts)/\(totalAttempts)")
                     .font(.title)
@@ -78,21 +77,58 @@ struct ScorePopup: View {
                         .foregroundColor(.black)
                 }.padding(.bottom)
                 
-                VStack(alignment: .leading) {
+                VStack(alignment: .leading, spacing: 2) {
                     Text("Average Score: ")
-                        .foregroundColor(.gray)
-                    Text(String(format: "as White:  %.2f \nas Black:  %.2f ",
-                                scoreModel.avgScoreWhite, scoreModel.avgScoreBlack))
-                    .font(.subheadline)
-                    .foregroundColor(.black)
-                    .padding(.bottom)
+                        .foregroundColor(.black.opacity(0.45))
+                        .padding(.vertical, 0)
                     
+                    HStack(alignment: .bottom) {
+                        Image("king-w")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 20, height: 20)
+                        
+                        Text(String(format: "%.2f  ", scoreModel.avgScoreWhite))
+                            .font(.footnote)
+                            .foregroundColor(.black.opacity(0.90))
+                        
+                        Image("king-b")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 20, height: 20)
+                        
+                        Text(String(format: "%.2f", scoreModel.avgScoreBlack))
+                            .font(.footnote)
+                            .foregroundColor(.black.opacity(0.90))
+                    }
+                    .padding(.top, 0)
+                    .padding(.bottom)
+                                        
                     Text("Best Score: ")
-                        .foregroundColor(.gray)
-                    Text("as White:  \(scoreModel.bestScoreWhite.correctAttempts) / \(scoreModel.bestScoreWhite.totalAttempts) \nas Black:  \(scoreModel.bestScoreBlack.correctAttempts) / \(scoreModel.bestScoreBlack.totalAttempts)")
-                        .font(.subheadline)
-                        .foregroundColor(.black)
-                        .padding(.bottom)
+                        .foregroundColor(.black.opacity(0.45))
+                        .padding(.vertical, 0)
+                    
+                    HStack(alignment: .bottom) {
+                        Image("king-w")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 20, height: 20)
+                        
+                        Text("\(scoreModel.bestScoreWhite.correctAttempts)/\(scoreModel.bestScoreWhite.totalAttempts)  ")
+                            .font(.footnote)
+                            .foregroundColor(.black.opacity(0.90))
+                        
+                        Image("king-b")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 20, height: 20)
+                        
+                        Text("\(scoreModel.bestScoreBlack.correctAttempts)/\(scoreModel.bestScoreBlack.totalAttempts)")
+                            .font(.footnote)
+                            .foregroundColor(.black.opacity(0.90))
+                    }
+                    .padding(.top, 0)
+                    .padding(.bottom, 10)
                     
                 }
                 .padding(20)
@@ -110,7 +146,6 @@ struct ScorePopup: View {
                                  responseTime: averageResponseTime(iterationList: questionList),
                                  scoreModel: scoreModel)
                 
-                
             }
             .padding(25)
             .background(.white)
@@ -126,7 +161,6 @@ struct ScorePopup: View {
                                colors: [.red, .green, .blue, .yellow],
                                confettiSize: 10.0, rainHeight: 600.0, radius: 400.0)
             }
-            
         }
     }
 }

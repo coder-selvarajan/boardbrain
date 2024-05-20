@@ -109,10 +109,11 @@ struct MovesTrainingHome: View {
                         
                         ForEach(questionList, id: \.id) { item in
                             VStack(alignment: .center) {
-                                Text(item.question)
-                                    .id(item.question)
-                                    .font(.headline)
-                                    .foregroundColor(item.answer ? .green : .red)
+                                    Text(item.question)
+                                        .id(item.id)
+                                        .font(.headline)
+                                        .foregroundColor(item.answer ? .green : .red)
+                                
                                 Text(String(format: "%.2f", item.responseTime) + "s")
                                     .font(.caption2)
                                     .foregroundColor(.white.opacity(0.8))
@@ -125,7 +126,7 @@ struct MovesTrainingHome: View {
                 .onChange(of: questionList) {
                     guard !questionList.isEmpty else { return }
                     withAnimation {
-                        value.scrollTo(questionList.last?.question,
+                        value.scrollTo(questionList.last?.id,
                                        anchor: .trailing)
                     }
                 }

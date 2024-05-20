@@ -18,7 +18,7 @@ struct AboutView: View {
                         .frame(width: 35, height: 35)
 //                        .clipShape(RoundedRectangle(cornerRadius: 15))
                     
-                    Text("Board Brain").font(.title)
+                    Text("Board Brain").font(.title2)
                         .foregroundColor(Color.white)
                         .padding(.horizontal, 10)
                     Spacer()

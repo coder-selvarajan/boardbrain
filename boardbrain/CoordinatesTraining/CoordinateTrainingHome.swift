@@ -122,7 +122,7 @@ struct CoordinateTrainingHome: View {
                             ForEach(questionList, id: \.id) { item in
                                 VStack(alignment: .center) {
                                     Text(item.question)
-                                        .id(item.question)
+                                        .id(item.id)
                                         .font(.headline)
                                         .foregroundColor(item.answer ? .green : .red)
                                     Text(String(format: "%.2f", item.responseTime) + "s")
@@ -137,7 +137,7 @@ struct CoordinateTrainingHome: View {
                     .onChange(of: questionList) {
                         guard !questionList.isEmpty else { return }
                         withAnimation {
-                            value.scrollTo(questionList.last?.question,
+                            value.scrollTo(questionList.last?.id,
                                            anchor: .trailing)
                         }
                     }
