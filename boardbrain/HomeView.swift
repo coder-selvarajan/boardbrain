@@ -11,8 +11,9 @@ struct HomeView: View {
     let buttonHeight: CGFloat = UIScreen.main.bounds.size.height * 0.085
     let logoSize: CGFloat = UIScreen.main.bounds.size.height * 0.045
     
+    @State private var activeDestination: String?
+    
     var body: some View {
-//        NavigationStack {
             VStack {
                 Spacer()
                 
@@ -128,13 +129,19 @@ struct HomeView: View {
                            maxHeight:  UIScreen.main.bounds.size.width - 60)
                     .padding(.horizontal, 30)
                 }
-                //                .frame(width: 200, height: 200)
+                
+                // Below navigation strategy is there to support iOS15, where there is an issue
+                // in putting the NavigationLink under Menu
+                NavigationLink(destination: SettingsView(), tag: "Settings", selection: $activeDestination) {
+                    EmptyView()
+                }
+                NavigationLink(destination: AboutView(), tag: "About", selection: $activeDestination) {
+                    EmptyView()
+                }
                 
                 Spacer()
             } // VStack
-//            .navigationPopGestureDisabled(false)
             .background(Color.white.opacity(0.20))
-            //            .navigationTitle("Board Brain")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .principal) {
@@ -142,21 +149,32 @@ struct HomeView: View {
                         Image("logo-smooth-corners")
                             .resizable()
                             .frame(width: logoSize, height: logoSize)
-//                            .clipShape(RoundedRectangle(cornerRadius: 15))
-                        //                            .padding(.leading, 10)
+
                         Text("Board Brain").font(.title3)
                             .foregroundColor(Color.white)
                             .padding(.horizontal, 10)
                         Spacer()
                     }
+                    .padding(.leading, 10)
                 } //ToolbarItem
                 // Gear icon on the right
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Menu {
-                        NavigationLink(destination: SettingsView()) {
+//                        NavigationLink(destination: SettingsView()) {
+//                            Label("Settings", systemImage: "gearshape")
+//                        }
+//                        NavigationLink(destination: AboutView()) {
+//                            Label("About", systemImage: "info")
+//                        }
+                        
+                        Button(action: {
+                            activeDestination = "Settings"
+                        }) {
                             Label("Settings", systemImage: "gearshape")
                         }
-                        NavigationLink(destination: AboutView()) {
+                        Button(action: {
+                            activeDestination = "About"
+                        }) {
                             Label("About", systemImage: "info")
                         }
                         
@@ -166,7 +184,6 @@ struct HomeView: View {
                     }
                 } //ToolbarItem
             } // toolbar
-//        } // NavigationStack
     }
 }
 

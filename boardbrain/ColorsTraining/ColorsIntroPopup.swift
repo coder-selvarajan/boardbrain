@@ -21,9 +21,9 @@ struct ColorsIntroPopup: View {
                 Text("Game Intro: ")
                     .font(.body)
                     .fontWeight(.bold)
-//                Text("Coordinates Training")
-//                    .font(.caption)
-                                
+                //                Text("Coordinates Training")
+                //                    .font(.caption)
+                
                 Text("Colors training module helps to enhance your ability to quickly recognize the colors of different squares on the chessboard, a vital skill for strategic planning.")
                     .font(.callout)
                     .padding(.vertical, 10)
@@ -57,26 +57,11 @@ struct ColorsIntroPopup: View {
                         get: { !showIntro },
                         set: { showIntro = !$0 }
                     ))
-                        .font(.callout)
-                        .onChange(of: showIntro) { value, _ in
-                            showIntroModal = !value // Close the modal when user chooses to not show it again
-                        }
-                        .padding(.vertical, 10)
-                    
-//                    HStack {
-//                        Spacer()
-//                        Button("Get started") {
-//                            showIntroModal = false // Close the modal when the user starts the training
-//                        }
-//                        .foregroundColor(.black)
-//                        .padding(.horizontal)
-//                        .padding(.vertical, 15)
-//                        .background(Color.cyan.opacity(0.85))
-//                        .cornerRadius(10)
-//                        
-//                        Spacer()
-//                    }
-//                    .padding(.vertical, 10)
+                    .font(.callout)
+                    .onChange(of: showIntro) { value in
+                        showIntroModal = !value // Close the modal when user chooses to not show it again
+                    }
+                    .padding(.vertical, 10)
                 }
                 
             } //VStack
@@ -89,17 +74,6 @@ struct ColorsIntroPopup: View {
                 CloseButton() {
                     showIntroModal = false
                 }, alignment: .topTrailing
-                
-//                Button {
-//                    showIntroModal = false
-//                } label: {
-//                    Image(systemName: "xmark.circle")
-//                        .resizable()
-//                        .frame(width: 25, height: 25)
-//                        .foregroundColor(.red)
-//                }
-//                .padding([.top, .trailing], 10),
-//                alignment: .topTrailing
             )
         } // ZStack
     }

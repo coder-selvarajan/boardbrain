@@ -79,8 +79,7 @@ struct SettingsView: View {
                                         (theme == themeManager.boardTheme) ? RoundedRectangle(cornerRadius: 5).stroke(.red, lineWidth: 5)
                                         : nil
                                     )
-                                    .onTapGesture { loc in
-                                        //                                        selectedBoardTheme = theme
+                                    .onTapGesture {
                                         themeManager.updateTheme(primary: theme.lightColor,
                                                                  secondary: theme.darkColor,
                                                                  theme: theme)

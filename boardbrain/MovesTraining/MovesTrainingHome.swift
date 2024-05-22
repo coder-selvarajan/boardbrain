@@ -90,77 +90,146 @@ struct MovesTrainingHome: View {
         }
     }
     
-    var body: some View {
-        VStack {
-            ScrollViewReader { value in
-                ScrollView(Axis.Set.horizontal, showsIndicators: false) {
-                    HStack(alignment: .center, spacing: 20) {
-                        if questionList.count > 0 {
-                            VStack(alignment: .leading) {
-                                Text("Results & ")
-                                    .font(.caption)
-                                    .foregroundColor(.white.opacity(0.95))
-                                    .padding(0)
-                                Text("Resp. time:")
-                                    .font(.caption)
-                                    .foregroundColor(.white.opacity(0.95))
-                            }
-                        }
-                        
-                        ForEach(questionList, id: \.id) { item in
-                            VStack(alignment: .center) {
-                                    Text(item.question)
-                                        .id(item.id)
-                                        .font(.headline)
-                                        .foregroundColor(item.answer ? .green : .red)
-                                
-                                Text(String(format: "%.2f", item.responseTime) + "s")
-                                    .font(.caption2)
-                                    .foregroundColor(.white.opacity(0.8))
-                            }
+    private var resultsScrollView: some View {
+        ScrollViewReader { value in
+            ScrollView(Axis.Set.horizontal, showsIndicators: false) {
+                HStack(alignment: .center, spacing: 20) {
+                    if questionList.count > 0 {
+                        VStack(alignment: .leading) {
+                            Text("Results & ")
+                                .font(.caption)
+                                .foregroundColor(.white.opacity(0.95))
+                                .padding(0)
+                            Text("Resp. time:")
+                                .font(.caption)
+                                .foregroundColor(.white.opacity(0.95))
                         }
                     }
-                    .padding(.trailing)
+                    
+                    ForEach(questionList, id: \.id) { item in
+                        VStack(alignment: .center) {
+                                Text(item.question)
+                                    .id(item.id)
+                                    .font(.headline)
+                                    .foregroundColor(item.answer ? .green : .red)
+                            
+                            Text(String(format: "%.2f", item.responseTime) + "s")
+                                .font(.caption2)
+                                .foregroundColor(.white.opacity(0.8))
+                        }
+                    }
                 }
-                .padding(.horizontal)
-                .onChange(of: questionList) {
-                    guard !questionList.isEmpty else { return }
-                    withAnimation {
-                        value.scrollTo(questionList.last?.id,
-                                       anchor: .trailing)
-                    }
+                .padding(.trailing)
+            }
+            .padding(.horizontal)
+            .onChange(of: questionList) { _ in 
+                guard !questionList.isEmpty else { return }
+                withAnimation {
+                    value.scrollTo(questionList.last?.id,
+                                   anchor: .trailing)
                 }
             }
-            .frame(height: resultsPaneHeight)
+        }
+        .frame(height: resultsPaneHeight)
+    }
+    
+    private var gameBoardView: some View {
+        MovesBoardView(showCoordinates: $showCoordinates,
+                       highlightPossibleMoves: $highlightPossibleMoves,
+                       whiteSide: $whiteSide,
+                       gameState: $gameState,
+                       pieceMovedTo: { position in
             
-            MovesBoardView(showCoordinates: $showCoordinates,
-                           highlightPossibleMoves: $highlightPossibleMoves,
-                           whiteSide: $whiteSide,
-                           gameState: $gameState,
-                           pieceMovedTo: { position in
-                
-                //response time calculation
-                var responseTime: TimeInterval = 0.0
-                if let shownTime = moveCoordinateShownTime {
-                    responseTime = Date().timeIntervalSince(shownTime)
+            //response time calculation
+            var responseTime: TimeInterval = 0.0
+            if let shownTime = moveCoordinateShownTime {
+                responseTime = Date().timeIntervalSince(shownTime)
+            }
+            
+            let isCorrectAnswer: Bool = (position == gameState!.targetPosition)
+            if isCorrectAnswer {
+                score += 1
+            }
+            questionList.append(GameIteration(question: currentCoordinate,
+                                              answer: isCorrectAnswer,
+                                              responseTime: responseTime))
+            
+            // trigger the next question
+            gameState = GameState.nextState(whiteSide: whiteSide)
+            currentCoordinate = gameState!.question
+            
+            currentPlay += 1
+            moveCoordinateShownTime = Date()
+        })
+        .frame(height: UIScreen.main.bounds.size.width)
+    }
+    
+    private var actionButton: some View {
+        HStack(spacing: 15) {
+            if !gameStarted {
+                Button {
+                    gameStarted = true
+                    gameEnded = false
+                    
+                    questionList.removeAll()
+                    
+                    currentPlay = 0
+                    score = 0
+                    
+                    //pick random square and a piece
+                    gameState = GameState.nextState(whiteSide: whiteSide)
+                    currentCoordinate = gameState!.question
+                    moveCoordinateShownTime = Date()
+                    
+                    startProgress()
+                } label: {
+                    HStack(alignment: .center, spacing: 10) {
+                        Image(systemName: "play.circle")
+                            .font(.title3)
+                            .foregroundColor(.black.opacity(0.75))
+                    
+                        Text("Start Training")
+                            .font(.title3)
+                            .foregroundColor(.black)
+                    }
+                    .padding(.horizontal, 20)
+                    .frame(height: actionButtonHeight)
+                    .background(.green)
+                    .cornerRadius(10.0)
                 }
                 
-                let isCorrectAnswer: Bool = (position == gameState!.targetPosition)
-                if isCorrectAnswer {
-                    score += 1
+                
+                Button {
+                    showingOptionsPopup = true
+                } label: {
+                    HStack {
+                        Image(systemName: "checklist")
+                            .font(.title2)
+                            .foregroundColor(.black.opacity(0.9))
+                    }
+                    .padding(.horizontal, 15)
+                    .frame(height: actionButtonHeight)
+                    .background(.white.opacity(0.75))
+                    .cornerRadius(10.0)
                 }
-                questionList.append(GameIteration(question: currentCoordinate,
-                                                  answer: isCorrectAnswer,
-                                                  responseTime: responseTime))
-                
-                // trigger the next question
-                gameState = GameState.nextState(whiteSide: whiteSide)
-                currentCoordinate = gameState!.question
-                
-                currentPlay += 1
-                moveCoordinateShownTime = Date()
-            })
-            .frame(height: UIScreen.main.bounds.size.width)
+                .popover(isPresented: $showingOptionsPopup, content: {
+                    if #available(iOS 16.0, *) {
+                        MovesPopupOptions(showCoordinates: $showCoordinates, whiteSide: $whiteSide, highlightPossibleMoves: $highlightPossibleMoves)
+                            .presentationDetents([.medium])
+                    } else {
+                        // Fallback on earlier versions
+                        MovesPopupOptions(showCoordinates: $showCoordinates, whiteSide: $whiteSide, highlightPossibleMoves: $highlightPossibleMoves)
+                    }
+                })
+            }
+        }
+    }
+    
+    var body: some View {
+        VStack {
+            resultsScrollView
+            
+            gameBoardView
             
             ProgressView(value: progress, total: 1.0)
                 .progressViewStyle(LinearProgressViewStyle(tint: Color.green))
@@ -184,59 +253,7 @@ struct MovesTrainingHome: View {
             }
             
             Spacer()
-            HStack(spacing: 15) {
-                if !gameStarted {
-                    Button {
-                        gameStarted = true
-                        gameEnded = false
-                        
-                        questionList.removeAll()
-                        
-                        currentPlay = 0
-                        score = 0
-                        
-                        //pick random square and a piece
-                        gameState = GameState.nextState(whiteSide: whiteSide)
-                        currentCoordinate = gameState!.question
-                        moveCoordinateShownTime = Date()
-                        
-                        startProgress()
-                    } label: {
-                        HStack(alignment: .center, spacing: 10) {
-                            Image(systemName: "play.circle")
-                                .font(.title3)
-                                .foregroundColor(.black.opacity(0.75))
-                        
-                            Text("Start Training")
-                                .font(.title3)
-                                .foregroundColor(.black)
-                        }
-                        .padding(.horizontal, 20)
-                        .frame(height: actionButtonHeight)
-                        .background(.green)
-                        .cornerRadius(10.0)
-                    }
-                    
-                    
-                    Button {
-                        showingOptionsPopup = true
-                    } label: {
-                        HStack {
-                            Image(systemName: "checklist")
-                                .font(.title2)
-                                .foregroundColor(.black.opacity(0.9))
-                        }
-                        .padding(.horizontal, 15)
-                        .frame(height: actionButtonHeight)
-                        .background(.white.opacity(0.75))
-                        .cornerRadius(10.0)
-                    }
-                    .popover(isPresented: $showingOptionsPopup, content: {
-                        MovesPopupOptions(showCoordinates: $showCoordinates, whiteSide: $whiteSide, highlightPossibleMoves: $highlightPossibleMoves)
-                            .presentationDetents([.medium])
-                    })
-                }
-            }
+            actionButton
             Spacer()
         } //scrollview
         .onAppear {

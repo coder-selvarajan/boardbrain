@@ -124,57 +124,158 @@ struct ColorsTrainingHome: View {
             }
         }
     }
+    private var resultScrollView: some View {
+        ScrollViewReader { value in
+            ScrollView(Axis.Set.horizontal, showsIndicators: false) {
+                HStack(alignment: .center, spacing: 20) {
+                    if questionList.count > 0 {
+                        VStack(alignment: .leading) {
+                            Text("Results & ")
+                                .font(.caption)
+                                .foregroundColor(.white.opacity(0.95))
+                                .padding(0)
+                            Text("Resp. time:")
+                                .font(.caption)
+                                .foregroundColor(.white.opacity(0.95))
+                        }
+                    }
+                    
+                    ForEach(questionList, id: \.id) { item in
+                        VStack(alignment: .center) {
+                            Text(item.question)
+                                .id(item.id)
+                                .font(.headline)
+                                .foregroundColor(item.answer ? .green : .red)
+                            Text(String(format: "%.2f", item.responseTime) + "s")
+                                .font(.caption2)
+                                .foregroundColor(.white.opacity(0.8))
+                        }
+                    }
+                }
+                .padding(.trailing)
+            }
+            .padding(.horizontal)
+            .onChange(of: questionList) { _ in
+                guard !questionList.isEmpty else { return }
+                withAnimation {
+                    value.scrollTo(questionList.last?.id,
+                                   anchor: .trailing)
+                }
+            }
+        }
+        .frame(height: resultsPaneHeight)
+    }
+    
+    var gameActionOptions: some View {
+        VStack(alignment: .center, spacing: 5) {
+            if gameStarted {
+                Text("Choose the right color")
+                    .font(.body)
+                Text("for the highlighted square ")
+                    .font(.footnote)
+                
+                HStack(spacing: 40) {
+                    
+                    Rectangle()
+                        .frame(width: actionButtonHeight, height: actionButtonHeight)
+                        .foregroundColor(themeManager.boardColors.0)
+                        .cornerRadius(10.0)
+                        .padding(.vertical)
+                        .onTapGesture {
+                            answerQuestion(with: SquareColor.light)
+                        }
+                    
+                    Rectangle()
+                        .frame(width: actionButtonHeight, height: actionButtonHeight)
+                        .foregroundColor(themeManager.boardColors.1)
+                        .cornerRadius(10.0)
+                        .padding(.vertical)
+                        .onTapGesture {
+                            answerQuestion(with: SquareColor.dark)
+                        }
+                }
+            } else {
+                // Show last score and average scores
+                DisplayScoreView(scoreModel: scoreViewModel.colorsScoreModel)
+            }
+        }
+    }
+    
+    var actionButtons: some View {
+        HStack(spacing: 15) {
+            if !gameStarted {
+                Button {
+                    gameStarted = true
+                    gameEnded = false
+                    
+                    questionList.removeAll()
+                    
+                    let tupleRandomCoordinates = getRandomCoordinate()
+                    let rndIndex = tupleRandomCoordinates.0
+                    let rndLabel = tupleRandomCoordinates.1
+                    targetIndex = rndIndex
+                    currentCoordinate = rndLabel
+                    currentSquareColor = darkSquareIndexes.contains(rndIndex) ? .dark : .light
+                    
+                    currentPlay = 0
+                    score = 0
+                    colorCoordinateShownTime = Date()
+                    
+                    startProgress()
+                } label: {
+                    HStack(alignment: .center, spacing: 10) {
+                        Image(systemName: "play.circle")
+                            .font(.title3)
+                            .foregroundColor(.black.opacity(0.75))
+                    
+                        Text("Start Training")
+                            .font(.title3)
+                            .foregroundColor(.black)
+                    }
+                    .padding(.horizontal, 20)
+                    .frame(height: actionButtonHeight)
+                    .background(.yellow)
+                    .cornerRadius(10.0)
+                }
+                
+                Button {
+                    showingOptionsPopup = true
+                } label: {
+                    HStack {
+                        Image(systemName: "checklist") //gearshape.fill")
+                            .font(.title2)
+                            .foregroundColor(.black.opacity(0.9))
+                    }
+                    .padding(.horizontal, 15)
+                    .frame(height: actionButtonHeight)
+                    .background(.white.opacity(0.95))
+                    .cornerRadius(10.0)
+                }
+                .popover(isPresented: $showingOptionsPopup, content: {
+                    if #available(iOS 16.0, *) {
+                        ColorsPopupOptions(showCoordinates: $showCoordinates,
+                                           whiteSide: $whiteSide)
+                        .presentationDetents([.medium])
+                    } else {
+                        // Fallback on earlier versions
+                        ColorsPopupOptions(showCoordinates: $showCoordinates,
+                                           whiteSide: $whiteSide)
+                    }
+                })
+            }
+        }
+    }
     
     var body: some View {
         
         VStack {
-            ScrollViewReader { value in
-                ScrollView(Axis.Set.horizontal, showsIndicators: false) {
-                    HStack(alignment: .center, spacing: 20) {
-                        if questionList.count > 0 {
-                            VStack(alignment: .leading) {
-                                Text("Results & ")
-                                    .font(.caption)
-                                    .foregroundColor(.white.opacity(0.95))
-                                    .padding(0)
-                                Text("Resp. time:")
-                                    .font(.caption)
-                                    .foregroundColor(.white.opacity(0.95))
-                            }
-                        }
-                        
-                        ForEach(questionList, id: \.id) { item in
-                            VStack(alignment: .center) {
-                                Text(item.question)
-                                    .id(item.id)
-                                    .font(.headline)
-                                    .foregroundColor(item.answer ? .green : .red)
-                                Text(String(format: "%.2f", item.responseTime) + "s")
-                                    .font(.caption2)
-                                    .foregroundColor(.white.opacity(0.8))
-                            }
-                        }
-                    }
-                    .padding(.trailing)
-                }
-                .padding(.horizontal)
-                .onChange(of: questionList) {
-                    guard !questionList.isEmpty else { return }
-                    withAnimation {
-                        value.scrollTo(questionList.last?.id,
-                                       anchor: .trailing)
-                    }
-                }
-            }
-            .frame(height: resultsPaneHeight)
-            
+            resultScrollView
             ColorsBoardView(showCoordinates: $showCoordinates,
                             whiteSide: $whiteSide,
                             highlightIndex: $targetIndex,
                             gameEnded: $gameEnded,
                             gameStarted: $gameStarted,
                             squareClicked: nil)
-            
             ProgressView(value: progress, total: 1.0)
                 .progressViewStyle(LinearProgressViewStyle(tint: Color.green))
                 .scaleEffect(x: 1, y: 3, anchor: .center)
@@ -182,97 +283,9 @@ struct ColorsTrainingHome: View {
                 .padding(.top, -5)
             
             Spacer()
-            
-            VStack(alignment: .center, spacing: 5) {
-                if gameStarted {
-                    Text("Choose the right color")
-                        .font(.body)
-                    Text("for the highlighted square ")
-                        .font(.footnote)
-                    
-                    HStack(spacing: 40) {
-                        
-                        Rectangle()
-                            .frame(width: actionButtonHeight, height: actionButtonHeight)
-                            .foregroundColor(themeManager.boardColors.0)
-                            .cornerRadius(10.0)
-                            .padding(.vertical)
-                            .onTapGesture {
-                                answerQuestion(with: SquareColor.light)
-                            }
-                        
-                        Rectangle()
-                            .frame(width: actionButtonHeight, height: actionButtonHeight)
-                            .foregroundColor(themeManager.boardColors.1)
-                            .cornerRadius(10.0)
-                            .padding(.vertical)
-                            .onTapGesture {
-                                answerQuestion(with: SquareColor.dark)
-                            }
-                    }
-                } else {
-                    // Show last score and average scores
-                    DisplayScoreView(scoreModel: scoreViewModel.colorsScoreModel)
-                }
-            }
-            
+            gameActionOptions
             Spacer()
-            HStack(spacing: 15) {
-                if !gameStarted {
-                    Button {
-                        gameStarted = true
-                        gameEnded = false
-                        
-                        questionList.removeAll()
-                        
-                        let tupleRandomCoordinates = getRandomCoordinate()
-                        let rndIndex = tupleRandomCoordinates.0
-                        let rndLabel = tupleRandomCoordinates.1
-                        targetIndex = rndIndex
-                        currentCoordinate = rndLabel
-                        currentSquareColor = darkSquareIndexes.contains(rndIndex) ? .dark : .light
-                        
-                        currentPlay = 0
-                        score = 0
-                        colorCoordinateShownTime = Date()
-                        
-                        startProgress()
-                    } label: {
-                        HStack(alignment: .center, spacing: 10) {
-                            Image(systemName: "play.circle")
-                                .font(.title3)
-                                .foregroundColor(.black.opacity(0.75))
-                        
-                            Text("Start Training")
-                                .font(.title3)
-                                .foregroundColor(.black)
-                        }
-                        .padding(.horizontal, 20)
-                        .frame(height: actionButtonHeight)
-                        .background(.yellow)
-                        .cornerRadius(10.0)
-                    }
-                    
-                    Button {
-                        showingOptionsPopup = true
-                    } label: {
-                        HStack {
-                            Image(systemName: "checklist") //gearshape.fill")
-                                .font(.title2)
-                                .foregroundColor(.black.opacity(0.9))
-                        }
-                        .padding(.horizontal, 15)
-                        .frame(height: actionButtonHeight)
-                        .background(.white.opacity(0.95))
-                        .cornerRadius(10.0)
-                    }
-                    .popover(isPresented: $showingOptionsPopup, content: {
-                        ColorsPopupOptions(showCoordinates: $showCoordinates, 
-                                           whiteSide: $whiteSide)
-                            .presentationDetents([.medium])
-                    })
-                }
-            }
+            actionButtons
             Spacer()
         } //VStack
         .onDisappear() {

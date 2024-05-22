@@ -41,8 +41,8 @@ struct MovesBoardView: View {
                     ForEach(0..<columns, id: \.self) { column in
                         ZStack {
                             Rectangle()
-                                .fill((row + column) % 2 == 0 ? themeManager.boardColors.0 : themeManager.boardColors.1)
-                                .fill(
+                                .foregroundStyle((row + column) % 2 == 0 ? themeManager.boardColors.0 : themeManager.boardColors.1)
+                                .foregroundStyle(
                                     (highlightResult && row == movedPosition.row && column == movedPosition.column) ? (correctAnswer ? .green : .red) : Color.clear)
                                 .frame(width: cellSize, height: cellSize)
                                 .position(x: CGFloat(column) * cellSize + cellSize / 2,

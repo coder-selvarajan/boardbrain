@@ -34,7 +34,8 @@ struct OnboardingView: View {
                     // Navigate to the Home View
                     hasCompletedOnboarding = true
                 }
-                .fontWeight(Font.Weight.semibold)
+                .font(Font.headline.weight(.semibold))
+//                .fontWeight(Font.Weight.semibold)
                 .padding()
                 .frame(width: 100, height: 40)
                 .background(Color.white)

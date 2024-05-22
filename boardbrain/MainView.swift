@@ -13,19 +13,37 @@ struct MainView: View {
     @AppStorage("launchCount") var launchCount: Int = 0
     
     var body: some View {
-        NavigationStack {
-            if hasCompletedOnboarding {
-                HomeView()
-            } else {
-                OnboardingView(hasCompletedOnboarding: $hasCompletedOnboarding)
+        if #available(iOS 16.0, *) {
+            NavigationStack {
+                if hasCompletedOnboarding {
+                    HomeView()
+                } else {
+                    OnboardingView(hasCompletedOnboarding: $hasCompletedOnboarding)
+                }
             }
-        }
-        .onAppear(){
-            //            hasCompletedOnboarding = false
-        }
-        .onAppear {
-            launchCount += 1  // Incrementing the launch count
-            checkAndPromptForReview()
+            .onAppear(){
+                //            hasCompletedOnboarding = false
+            }
+            .onAppear {
+                launchCount += 1  // Incrementing the launch count
+                checkAndPromptForReview()
+            }
+        } else {
+            // Fallback on earlier versions
+            NavigationView {
+                if hasCompletedOnboarding {
+                    HomeView()
+                } else {
+                    OnboardingView(hasCompletedOnboarding: $hasCompletedOnboarding)
+                }
+            }
+            .onAppear(){
+                //            hasCompletedOnboarding = false
+            }
+            .onAppear {
+                launchCount += 1  // Incrementing the launch count
+                checkAndPromptForReview()
+            }
         }
     }
     

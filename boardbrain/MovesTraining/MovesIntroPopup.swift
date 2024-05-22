@@ -21,7 +21,7 @@ struct MovesIntroPopup: View {
                 Text("Game Intro: ")
                     .font(.body)
                     .fontWeight(.bold)
-
+                
                 Text("Moves training module helps to explore various piece movements in an interactive format.")
                     .font(.callout)
                     .padding(.vertical, 10)
@@ -55,13 +55,13 @@ struct MovesIntroPopup: View {
                         get: { !showIntro },
                         set: { showIntro = !$0 }
                     ))
-                        .font(.callout)
-                        .onChange(of: showIntro) { value, _ in
-                            showIntroModal = !value // Close the modal when user chooses to not show it again
-                        }
-                        .padding(.vertical, 10)
+                    .font(.callout)
+                    .onChange(of: showIntro) { value in
+                        showIntroModal = !value // Close the modal when user chooses to not show it again
+                    }
+                    .padding(.vertical, 10)
+                    //                    }
                 }
-                
             } //VStack
             .padding(20)
             .background(.white)

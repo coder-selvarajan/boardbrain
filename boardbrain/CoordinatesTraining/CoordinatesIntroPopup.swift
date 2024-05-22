@@ -68,15 +68,17 @@ struct CoordinatesIntroPopup: View {
                 .padding(.bottom, 5)
                 
                 if !hideControls {
+                    
                     Toggle("Don't show the intro again", isOn: Binding(
                         get: { !showIntro },
                         set: { showIntro = !$0 }
                     ))
-                        .font(.callout)
-                        .onChange(of: showIntro) { value, _ in
-                            showIntroModal = !value // Close the modal when user chooses to not show it again
-                        }
-                        .padding(.vertical, 10)
+                    .font(.callout)
+                    .onChange(of: showIntro) { value in
+                        showIntroModal = !value // Close the modal when user chooses to not show it again
+                    }
+                    .padding(.vertical, 10)
+                    //                    }
                 }
                 
             } //VStack
@@ -89,15 +91,6 @@ struct CoordinatesIntroPopup: View {
                 CloseButton() {
                     showIntroModal = false
                 }, alignment: .topTrailing
-//                Button {
-//                    
-//                } label: {
-//                    Image(systemName: "xmark.circle.fill")
-//                        .resizable()
-//                        .frame(width: 25, height: 25)
-//                        .foregroundColor(.red)
-//                }
-//                .padding([.top, .trailing], 10)
             )
         } // ZStack
     }
