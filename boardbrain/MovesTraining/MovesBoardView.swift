@@ -28,10 +28,59 @@ struct MovesBoardView: View {
     @State var highlightResult: Bool = false
     @State var correctAnswer: Bool = false
     
-    
     let rank = ["a","b","c","d","e","f","g","h"]
     
     let pieceMovedTo: ((Position) -> Void)?
+    
+    func validateUserAnswer(row: Int, column: Int) {
+        if (gameState == nil || gameState!.gameEnded) {
+            return
+        }
+        
+        let targetPosition = Position(row: row, column: column)
+        
+        // review the answer and highlight it accordingly
+        if targetPosition == gameState?.targetPosition {
+            correctAnswer = true
+        }
+        else {
+            correctAnswer = false
+        }
+        
+        imageOffset = .zero
+        imageScale = CGSize(width: 1.0, height: 1.0)
+        
+        highlightedCol = -1
+        highlightedRow = -1
+        
+        if gameState!.possibleMoves.contains(targetPosition) {
+            // dont highlight the piece initial position
+            gameState!.highlightInititalPieceSquare = false
+            
+            movedPosition = targetPosition
+            
+            gameState!.currentPiece.column = column
+            gameState!.currentPiece.row = row
+            
+            // generate a mild haptic feedback
+            if hapticFeedbackEnabled {
+                performRigidHapticFeedback()
+            }
+
+            //call back for piece movement
+            pieceMovedTo!(targetPosition)
+            
+            //highlight for half a sec
+            triggerResultHighlight()
+        }
+    }
+    
+    func triggerResultHighlight() {
+        highlightResult = true
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.highlightResult = false
+        }
+    }
     
     var body: some View {
         GeometryReader { geometry in
@@ -42,12 +91,14 @@ struct MovesBoardView: View {
                         ZStack {
                             Rectangle()
                                 .foregroundStyle((row + column) % 2 == 0 ? themeManager.boardColors.0 : themeManager.boardColors.1)
-                                .foregroundStyle(
-                                    (highlightResult && row == movedPosition.row && column == movedPosition.column) ? (correctAnswer ? .green : .red) : Color.clear)
                                 .frame(width: cellSize, height: cellSize)
                                 .position(x: CGFloat(column) * cellSize + cellSize / 2,
                                           y: CGFloat(row) * cellSize + cellSize / 2)
-                            
+                                .onTapGesture {
+                                    withAnimation(.easeInOut(duration: 0.25)) {
+                                        validateUserAnswer(row: row, column: column)
+                                    }
+                                }
                             
                             if gameState != nil && !gameState!.gameEnded {
                                 if highlightPossibleMoves {
@@ -86,6 +137,29 @@ struct MovesBoardView: View {
                     }
                 }
                 
+                //Highlighting the square with green or red
+                if highlightResult && gameState != nil && !gameState!.gameEnded {
+                    ZStack {
+                        Rectangle()
+                            .fill(correctAnswer ? .green : .red)
+                            .frame(width: cellSize, height: cellSize)
+                            .position(x: CGFloat(gameState!.currentPiece.column) * cellSize + cellSize / 2,
+                                      y: CGFloat(gameState!.currentPiece.row) * cellSize + cellSize / 2)
+                    }
+                }
+                
+                //Highlighting the initial piece position
+                if gameState != nil && gameState!.highlightInititalPieceSquare && !gameState!.gameEnded {
+                    ZStack {
+                        Rectangle()
+                            .fill(Color.init(hex: "FEF474"))
+                            .frame(width: cellSize, height: cellSize)
+                            .position(x: CGFloat(gameState!.currentPiece.column) * cellSize + cellSize / 2,
+                                      y: CGFloat(gameState!.currentPiece.row) * cellSize + cellSize / 2)
+                    }
+                }
+                
+                // Highlighting the square while moving the piece
                 if gameState != nil && !gameState!.gameEnded {
                     if (highlightedRow > -1 && highlightedCol > -1) {
                         ZStack {
@@ -112,6 +186,15 @@ struct MovesBoardView: View {
                         .position(x: CGFloat(gameState!.currentPiece.column) * cellSize + cellSize / 2, y: CGFloat(gameState!.currentPiece.row) * cellSize + cellSize / 2)
                         .offset(imageOffset)
                         .gesture(
+                            TapGesture()
+                                .onEnded {
+                                    // lock
+                                    // Handle tap gesture
+                                    print("Image tapped")
+                                    // Add your tap gesture handling code here
+                                }
+                        )
+                        .gesture(
                             DragGesture()
                                 .onChanged { gesture in
                                     highlightResult = false
@@ -131,46 +214,11 @@ struct MovesBoardView: View {
                                     imageScale = CGSize(width: 2, height: 2)
                                 }
                                 .onEnded { gesture  in
-                                    withAnimation {
+                                    withAnimation(.easeInOut(duration: 0.2)) {
                                         let newColumn = Int((gesture.location.x / cellSize)) //.rounded())
                                         let newRow = Int((gesture.location.y / cellSize)) //.rounded())
                                         
-                                        let targetPosition = Position(row: newRow, column: newColumn)
-                                        
-                                        // review the answer and highlight it accordingly
-                                        if targetPosition == gameState?.targetPosition {
-                                            correctAnswer = true
-                                        }
-                                        else {
-                                            correctAnswer = false
-                                        }
-                                        
-                                        imageOffset = .zero
-                                        imageScale = CGSize(width: 1.0, height: 1.0)
-                                        
-                                        highlightedCol = -1
-                                        highlightedRow = -1
-                                        
-                                        if gameState!.possibleMoves.contains(targetPosition) {
-                                            movedPosition = targetPosition
-                                            
-                                            gameState!.currentPiece.column = newColumn
-                                            gameState!.currentPiece.row = newRow
-                                            
-                                            //call back for piece movement
-                                            pieceMovedTo!(targetPosition)
-                                            
-                                            //highlight for half a sec
-                                            highlightResult = true
-                                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                                                self.highlightResult = false
-                                            }
-                                            
-                                            // generate a mild haptic feedback
-                                            if hapticFeedbackEnabled {
-                                                performRigidHapticFeedback()
-                                            }
-                                        }
+                                        validateUserAnswer(row: newRow, column: newColumn)
                                     }
                                 }
                         ) //gesture

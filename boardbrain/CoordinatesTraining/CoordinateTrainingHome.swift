@@ -223,6 +223,7 @@ struct CoordinateTrainingHome: View {
                     .cornerRadius(10.0)
                 }
                 .popover(isPresented: $showingOptionsPopup, content: {
+                    
                     if #available(iOS 16.0, *) {
                         CoordinatesPopupOptions(showPiecesPosition: $showPiecesPosition,
                                                 showRanksandFiles: $showRanksandFiles,

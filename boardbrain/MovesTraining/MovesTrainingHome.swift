@@ -154,12 +154,15 @@ struct MovesTrainingHome: View {
                                               answer: isCorrectAnswer,
                                               responseTime: responseTime))
             
-            // trigger the next question
-            gameState = GameState.nextState(whiteSide: whiteSide)
-            currentCoordinate = gameState!.question
-            
-            currentPlay += 1
-            moveCoordinateShownTime = Date()
+            // delay it for the animation to work..
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+                // trigger the next question
+                gameState = GameState.nextState(whiteSide: whiteSide)
+                currentCoordinate = gameState!.question
+                
+                currentPlay += 1
+                moveCoordinateShownTime = Date()
+            }
         })
         .frame(height: UIScreen.main.bounds.size.width)
     }
@@ -240,7 +243,7 @@ struct MovesTrainingHome: View {
             Spacer()
             VStack(alignment: .center, spacing: 5) {
                 if gameStarted {
-                    Text("Drag the piece to the specified square.")
+                    Text("Tap the target square OR drag the piece to it.")
                         .font(.body)
                     Text(currentCoordinate)
                         .font(.system(size: 40))
@@ -341,6 +344,7 @@ struct GameState {
     var targetPosition: Position
     var question: String
     var gameEnded: Bool = false
+    var highlightInititalPieceSquare: Bool = true
     
     static func nextState(whiteSide: Bool) -> GameState {
         let rank = ["a","b","c","d","e","f","g","h"]
@@ -371,7 +375,8 @@ struct GameState {
                          initialPosition: randomPosition,
                          possibleMoves: allowedMoves,
                          targetPosition: targetPosition,
-                         question: question)
+                         question: question,
+                         highlightInititalPieceSquare: true)
     }
     
     static func getMoves(for type: ChessPieceType, from position: Position) -> [Position] {
