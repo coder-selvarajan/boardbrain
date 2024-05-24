@@ -60,10 +60,10 @@ struct MovesTrainingHome: View {
                 
                 //update the scores and persist
                 scoreViewModel.updateScore(type: .Moves,
-                                                color: whiteSide ? .white : .black,
-                                                score: Score(correctAttempts: score, 
-                                                             totalAttempts: currentPlay,
-                                                             avgResponseTime: avgResponseTime))
+                                           color: whiteSide ? .white : .black,
+                                           score: Score(correctAttempts: score,
+                                                        totalAttempts: currentPlay,
+                                                        avgResponseTime: avgResponseTime))
                 if gameState != nil {
                     gameState!.gameEnded = true
                 }
@@ -156,12 +156,14 @@ struct MovesTrainingHome: View {
             
             // delay it for the animation to work..
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
-                // trigger the next question
-                gameState = GameState.nextState(whiteSide: whiteSide)
-                currentCoordinate = gameState!.question
-                
-                currentPlay += 1
-                moveCoordinateShownTime = Date()
+                if !gameState!.gameEnded { //to prevent the bug linked with 0.4s time gap
+                    // trigger the next question
+                    gameState = GameState.nextState(whiteSide: whiteSide)
+                    currentCoordinate = gameState!.question
+                    
+                    currentPlay += 1
+                    moveCoordinateShownTime = Date()
+                }
             }
         })
         .frame(height: UIScreen.main.bounds.size.width)
@@ -230,11 +232,14 @@ struct MovesTrainingHome: View {
     
     var body: some View {
         VStack {
+            //Horizontal scroll view displaying the results & response time
             resultsScrollView
             
+            //actual game board for the play
             gameBoardView
             
-            ProgressView(value: progress, total: 1.0)
+            //Indicates the timer
+            ProgressView(value: progress)
                 .progressViewStyle(LinearProgressViewStyle(tint: Color.green))
                 .scaleEffect(x: 1, y: 3, anchor: .center)
                 .padding(.bottom, 10)
@@ -243,8 +248,8 @@ struct MovesTrainingHome: View {
             Spacer()
             VStack(alignment: .center, spacing: 5) {
                 if gameStarted {
-                    Text("Tap the target square OR drag the piece to it.")
-                        .font(.body)
+                    Text("Tap the target square OR drag the piece")
+                        .font(.subheadline)
                     Text(currentCoordinate)
                         .font(.system(size: 40))
                         .foregroundColor(.yellow)

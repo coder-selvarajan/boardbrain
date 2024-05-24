@@ -246,7 +246,7 @@ struct CoordinateTrainingHome: View {
             VStack {
                 resultsScrollView
                 gameBoardView
-                ProgressView(value: progress, total: 1.0)
+                ProgressView(value: progress)
                     .progressViewStyle(LinearProgressViewStyle(tint: Color.green))
                     .scaleEffect(x: 1, y: 3, anchor: .center)
                     .padding(.bottom, 10)

@@ -76,8 +76,10 @@ struct MovesBoardView: View {
     }
     
     func triggerResultHighlight() {
-        highlightResult = true
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            self.highlightResult = true
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
             self.highlightResult = false
         }
     }
@@ -237,6 +239,7 @@ struct MovesBoardView: View {
                             .frame(width: 25, height: 25)
                             .padding(0)
                     }
+                    
                     Spacer()
                 }
                 .frame(maxWidth: UIScreen.main.bounds.size.width,

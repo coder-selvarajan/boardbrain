@@ -21,22 +21,26 @@ struct ScorePopup: View {
     
     func eligible4ConfettiAnimation() -> Bool {
         if scoreModel.lastScoreAs == .white {
-            if scoreModel.totalPlayWhite == scoreModel.whiteAvgScoreCrossedAt {
+            if let whiteAvgScoreCrossedAt = scoreModel.whiteAvgScoreCrossedAt,
+               scoreModel.totalPlayWhite == whiteAvgScoreCrossedAt {
                 congratsMessage = "Congratulations! 👏🏻 \nYou have achieved a common high score!"
                 return true
             }
-            
-            if scoreModel.whiteAvgScoreCrossedAt! > 0 && scoreModel.lastScoreCrossedBestScore! {
+
+            if (scoreModel.whiteAvgScoreCrossedAt ?? 0) > 0
+                && (scoreModel.lastScoreCrossedBestScore ?? false) {
                 congratsMessage = "Congratulations! 🎉 \nYou have beaten your best score. Keep going!"
                 return true
             }
         } else { //black
-            if scoreModel.totalPlayBlack == scoreModel.blackAvgScoreCrossedAt {
+            if let blackAvgScoreCrossedAt = scoreModel.blackAvgScoreCrossedAt,
+                scoreModel.totalPlayBlack == blackAvgScoreCrossedAt {
                 congratsMessage = "Congratulations! 👏🏻 \nYou have achieved a common high score!"
                 return true
             }
             
-            if scoreModel.blackAvgScoreCrossedAt! > 0 && scoreModel.lastScoreCrossedBestScore! {
+            if (scoreModel.blackAvgScoreCrossedAt ?? 0) > 0
+                && (scoreModel.lastScoreCrossedBestScore ?? false) {
                 congratsMessage = "Congratulations! 🎉 \nYou have beaten your best score. Keep going!"
                 return true
             }

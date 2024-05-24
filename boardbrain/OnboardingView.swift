@@ -44,6 +44,8 @@ struct OnboardingView: View {
                 .padding(.horizontal)
             }
             
+            Spacer()
+            
             TabView(selection: $selectedIndex) {
                 OnboardingPage(title: "Welcome to BoardBrain",
                                description: "Master the chessboard with intuitive training modules designed to enhance your skills.",
@@ -70,6 +72,8 @@ struct OnboardingView: View {
             .tabViewStyle(PageTabViewStyle())
             .padding()
 
+            Spacer()
+            
             // Next and Finish Buttons
             HStack {
                 Spacer()
@@ -108,10 +112,12 @@ struct OnboardingView: View {
                     
                 }
             }.padding()
-            
+            Spacer()
         }
         .foregroundColor(.white)
         .background(Color.white.opacity(0.20))
+        .navigationTitle(Text(""))
+        .navigationBarTitleDisplayMode(NavigationBarItem.TitleDisplayMode.inline)
     }
 }
 
