@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import TelemetryDeck
 
 struct MovesTrainingHome: View {
     @EnvironmentObject var scoreViewModel : ScoreViewModel
@@ -268,6 +269,16 @@ struct MovesTrainingHome: View {
             if showIntro {
                 showIntroModal = true
             }
+            
+            TelemetryDeck.signal(
+                "Moves Training Page Load",
+                parameters: [
+                    "app": "BoardBrain",
+                    "event": "page load",
+                    "identifier":"moves-training-home",
+                    "viewName":"Moves Training Home View"
+                ]
+            )
         }
         .onDisappear() {
             timer?.invalidate()
@@ -365,7 +376,7 @@ struct GameState {
         //pick one target position
         let targetPosition = allowedMoves.randomElement()!
         
-        print("targetPosition: ", targetPosition)
+//        print("targetPosition: ", targetPosition)
         // form the question
         var question = ""
         if whiteSide {
@@ -400,5 +411,4 @@ struct GameState {
             return []
         }
     }
-    
 }
