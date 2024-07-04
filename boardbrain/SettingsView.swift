@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import TelemetryDeck
 
 enum BoardTheme: String, Identifiable, CaseIterable, Codable {
     var id: Self { self }
@@ -148,6 +149,17 @@ struct SettingsView: View {
 //            .background(Color.white.opacity(20.0))
             
         } // VStack
+        .onAppear() {
+            TelemetryDeck.signal(
+                "Settings Page Load",
+                parameters: [
+                    "app": "BoardBrain",
+                    "event": "page load",
+                    "identifier":"settings-view",
+                    "viewName":"Settings View"
+                ]
+            )
+        }
         .background(Color.white.opacity(0.20))
         .navigationTitle("Settings")
         .navigationBarTitleDisplayMode(NavigationBarItem.TitleDisplayMode.inline)
