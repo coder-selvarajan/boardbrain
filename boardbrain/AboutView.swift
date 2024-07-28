@@ -88,7 +88,7 @@ struct AboutView: View {
         }
         .onAppear() {
             TelemetryDeck.signal(
-                "About Page Load",
+                "Page Load",
                 parameters: [
                     "app": "BoardBrain",
                     "event": "page load",

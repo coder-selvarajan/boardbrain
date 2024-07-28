@@ -151,7 +151,7 @@ struct SettingsView: View {
         } // VStack
         .onAppear() {
             TelemetryDeck.signal(
-                "Settings Page Load",
+                "Page Load",
                 parameters: [
                     "app": "BoardBrain",
                     "event": "page load",
@@ -201,18 +201,6 @@ struct SettingsView: View {
                 secondaryButton: .cancel()
             )
         }
-        
-        //        .confirmationDialog("Are you sure to reset score?",
-        //                            isPresented: $confirmBox) {
-        //            Button("Reset all scores?", role: .destructive) {
-        //
-        //                scoreViewModel.resetScore(for: TrainingType.Coordinates)
-        //                scoreViewModel.resetScore(for: TrainingType.Moves)
-        //                scoreViewModel.resetScore(for: TrainingType.Colors)
-        //
-        //                showMessage = true
-        //            }
-        //        }
     }
 }
 

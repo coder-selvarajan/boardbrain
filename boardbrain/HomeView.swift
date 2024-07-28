@@ -172,13 +172,6 @@ struct HomeView: View {
                 // Gear icon on the right
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Menu {
-//                        NavigationLink(destination: SettingsView()) {
-//                            Label("Settings", systemImage: "gearshape")
-//                        }
-//                        NavigationLink(destination: AboutView()) {
-//                            Label("About", systemImage: "info")
-//                        }
-                        
                         Button(action: {
                             activeDestination = "Settings"
                         }) {

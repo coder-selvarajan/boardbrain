@@ -8,7 +8,6 @@
 import SwiftUI
 import SwiftData
 import TelemetryDeck
-//import FirebaseCore
 
 @main
 struct BoardBrainApp: App {
@@ -17,17 +16,13 @@ struct BoardBrainApp: App {
         TelemetryDeck.initialize(config: config)
         
         TelemetryDeck.signal(
-            "BoardBrain App Launched",
+            "App Launched",
             parameters: [
                 "app": "BoardBrain",
                 "colorTheme": "dark mode",
                 "event": "app_load"
-            ],
-            customUserID: "me@selvarajan.in"
+            ]
         )
-        
-//        FirebaseApp.configure()
-        
     }
     
     var body: some Scene {
