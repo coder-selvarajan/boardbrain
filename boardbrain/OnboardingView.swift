@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import TelemetryDeck
 
 struct OnboardingView: View {
     @Binding var hasCompletedOnboarding: Bool
@@ -113,6 +114,17 @@ struct OnboardingView: View {
                 }
             }.padding()
             Spacer()
+        }
+        .onAppear() {
+            TelemetryDeck.signal(
+                "Page Load",
+                parameters: [
+                    "app": "BoardBrain",
+                    "event": "page load",
+                    "identifier":"onboarding-view",
+                    "viewName":"Onboarding View"
+                ]
+            )
         }
         .foregroundColor(.white)
         .background(Color.white.opacity(0.20))

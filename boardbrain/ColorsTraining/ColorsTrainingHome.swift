@@ -291,7 +291,7 @@ struct ColorsTrainingHome: View {
         } //VStack
         .onAppear(){
             TelemetryDeck.signal(
-                "Colors Training Page Load",
+                "Page Load",
                 parameters: [
                     "app": "BoardBrain",
                     "event": "page load",

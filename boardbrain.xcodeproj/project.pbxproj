@@ -22,7 +22,6 @@
 		70361EE22BDFCED7001F0859 /* ThemeBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70361EE12BDFCED7001F0859 /* ThemeBoard.swift */; };
 		7044D7532BCED7A700136FD6 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7044D7522BCED7A700136FD6 /* HomeView.swift */; };
 		705694422BF846FE0090A713 /* ConfettiSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 705694412BF846FE0090A713 /* ConfettiSwiftUI */; };
-		70598EF32C35864F009680A2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 70598EF22C35864F009680A2 /* GoogleService-Info.plist */; };
 		705D07512BCA626E00AD5F22 /* ScoreModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705D07502BCA626E00AD5F22 /* ScoreModel.swift */; };
 		705E345D2BE5210B00654A24 /* OptionsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705E345C2BE5210B00654A24 /* OptionsModel.swift */; };
 		70614BAA2BC123460053DDAE /* ColorExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70614BA92BC123460053DDAE /* ColorExt.swift */; };
@@ -66,7 +65,6 @@
 		7033FBED2BD8AD2F00492508 /* MovesPopupOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovesPopupOptions.swift; sourceTree = "<group>"; };
 		70361EE12BDFCED7001F0859 /* ThemeBoard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeBoard.swift; sourceTree = "<group>"; };
 		7044D7522BCED7A700136FD6 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
-		70598EF22C35864F009680A2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		705D07502BCA626E00AD5F22 /* ScoreModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreModel.swift; sourceTree = "<group>"; };
 		705E345C2BE5210B00654A24 /* OptionsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsModel.swift; sourceTree = "<group>"; };
 		70614BA92BC123460053DDAE /* ColorExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExt.swift; sourceTree = "<group>"; };
@@ -224,7 +222,6 @@
 				70E2B4CD2BE21D5B00C3F8A3 /* AboutView.swift */,
 				70C731392BC11AB9000FB2F9 /* Preview Content */,
 				70BED1D12BD3809100D5755F /* Info.plist */,
-				70598EF22C35864F009680A2 /* GoogleService-Info.plist */,
 				707E90932BD3906C00190753 /* Launch Screen.storyboard */,
 				70C731372BC11AB9000FB2F9 /* Assets.xcassets */,
 			);
@@ -292,7 +289,6 @@
 				701935082BC9858900ECDA51 /* XCRemoteSwiftPackageReference "PopupView" */,
 				705694402BF846FE0090A713 /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */,
 				7068D7E42C3439DE00FAB1F6 /* XCRemoteSwiftPackageReference "SwiftSDK" */,
-				70598EF42C358866009680A2 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = 70C7312F2BC11AB6000FB2F9 /* Products */;
 			projectDirPath = "";
@@ -309,7 +305,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				707E90942BD3906C00190753 /* Launch Screen.storyboard in Resources */,
-				70598EF32C35864F009680A2 /* GoogleService-Info.plist in Resources */,
 				70C7313B2BC11AB9000FB2F9 /* Preview Assets.xcassets in Resources */,
 				70C731382BC11AB9000FB2F9 /* Assets.xcassets in Resources */,
 			);
@@ -490,7 +485,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"boardbrain/Preview Content\"";
 				DEVELOPMENT_TEAM = G6KL98HCPY;
 				ENABLE_PREVIEWS = YES;
@@ -510,7 +505,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.4;
+				MARKETING_VERSION = 1.5;
 				PRODUCT_BUNDLE_IDENTIFIER = in.selvarajan.boardbrain;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -530,7 +525,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"boardbrain/Preview Content\"";
 				DEVELOPMENT_TEAM = G6KL98HCPY;
 				ENABLE_PREVIEWS = YES;
@@ -550,7 +545,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.4;
+				MARKETING_VERSION = 1.5;
 				PRODUCT_BUNDLE_IDENTIFIER = in.selvarajan.boardbrain;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -601,14 +596,6 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 1.1.0;
-			};
-		};
-		70598EF42C358866009680A2 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 10.28.1;
 			};
 		};
 		7068D7E42C3439DE00FAB1F6 /* XCRemoteSwiftPackageReference "SwiftSDK" */ = {

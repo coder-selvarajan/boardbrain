@@ -271,7 +271,7 @@ struct MovesTrainingHome: View {
             }
             
             TelemetryDeck.signal(
-                "Moves Training Page Load",
+                "Page Load",
                 parameters: [
                     "app": "BoardBrain",
                     "event": "page load",

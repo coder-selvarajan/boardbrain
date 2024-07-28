@@ -8,7 +8,6 @@
 import UIKit
 import SwiftUI
 import TelemetryDeck
-//import FirebaseAnalytics
 
 struct cAccessibilityElement {
     var label: String
@@ -18,16 +17,8 @@ struct cAccessibilityElement {
 }
 
 func sendClickEvent(element: cAccessibilityElement) {
-//    Analytics.logEvent("click_event", parameters: ["app": "BoardBrain",
-//                                                   "colorTheme": "dark mode",
-//                                                   "event": "click",
-//                                                   "identifier":element.identifier,
-//                                                   "label":element.label,
-//                                                   "control_type":element.trait,
-//                                                   "value":element.label])
-    
     TelemetryDeck.signal(
-        "\(element.trait)(\(element.label)) - Click Event",
+        "\(element.trait) - Click",
         parameters: [
             "app": "BoardBrain",
             "event": "click",
@@ -73,21 +64,21 @@ extension UIApplication {
                 if let target = matchFrame(touchViewFrame,
                                            withAccessibilityElements: cElements) {
                     sendClickEvent(element: target) //Call to TelemetryDeck
-                    printEvent(startTime: start, element: target, approachIndex: 1)
+//                    printEvent(startTime: start, element: target, approachIndex: 1)
                 } else {
                     // 2..
                     let elementsContainingTouchView = cElements.filter { $0.frame.contains(touchViewFrame) }
                     if elementsContainingTouchView.count > 0 {
                         for element in elementsContainingTouchView {
                             sendClickEvent(element: element) //Call to TelemetryDeck
-                            printEvent(startTime: start, element: element, approachIndex: 2)
+//                            printEvent(startTime: start, element: element, approachIndex: 2)
                         }
                     } else if let target = findElementByTouchLocation(for: touchLocation,
                                                                       withAccessibilityElements: cElements) {
                         // 3.. touch location falls within any of the accessibility elements?
                         if target.label != "" {
                             sendClickEvent(element: target) //Call to TelemetryDeck
-                            printEvent(startTime: start, element: target, approachIndex: 3)
+//                            printEvent(startTime: start, element: target, approachIndex: 3)
                         }
                     }
                 }
@@ -149,11 +140,12 @@ func extractAccessibilityTrait(_ object: AnyObject) -> String {
             } else if result.rawValue == 64 {
                 return "Header"
             } else if result.rawValue == 1024 {
-                return "StaticText"
+                return "Text"
             } else if result.rawValue == 2 {
                 return "Link"
             } else {
-                return "unknown - \(result.rawValue)"
+                return "UIElement"
+//                return "unknown - \(result.rawValue)"
             }
         }
     }
@@ -190,6 +182,23 @@ func findElementByTouchLocation(for location: CGPoint, withAccessibilityElements
     return nil
 }
 
+func getChildren(from object: AnyObject) -> [Any]? {
+    let mirror = Mirror(reflecting: object)
+    for child in mirror.children {
+        if child.label == "children" {
+            return child.value as? [Any]
+        }
+    }
+    return nil
+}
+
+func extractChildAccessibilityElements(_ object: AnyObject) -> [Any] {
+    if let children = getChildren(from: object) {
+        return children
+    }
+    
+    return []
+}
 
 // Extracting all the accessibility elements from the current Scene
 func getAllAccessibilityElements() -> [cAccessibilityElement]? {
@@ -211,6 +220,17 @@ func findAccessibilityElements(in view: UIView) -> [cAccessibilityElement] {
                                       identifier: extractAccessibilityLabel(aeObject),
                                       frame: extractAccessibilityFrame(aeObject),
                                       trait: extractAccessibilityTrait(aeObject)))
+            
+            // Extracting child accessibility elements..
+            let childAElements = extractChildAccessibilityElements(aeObject)
+            for childAElement in childAElements {
+                let childAEObject = childAElement as AnyObject
+                cElements.append(
+                    cAccessibilityElement(label: extractAccessibilityLabel(childAEObject),
+                                          identifier: extractAccessibilityLabel(childAEObject),
+                                          frame: extractAccessibilityFrame(childAEObject),
+                                          trait: extractAccessibilityTrait(childAEObject)))
+            }
         }
     }
 

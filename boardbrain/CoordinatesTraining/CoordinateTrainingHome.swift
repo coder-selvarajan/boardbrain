@@ -280,7 +280,7 @@ struct CoordinateTrainingHome: View {
                 }
                     
                 TelemetryDeck.signal(
-                    "Coordinates Training Page Load",
+                    "Page Load",
                     parameters: [
                         "app": "BoardBrain",
                         "event": "page load",

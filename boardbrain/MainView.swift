@@ -7,6 +7,7 @@
 
 import SwiftUI
 import StoreKit
+import TelemetryDeck
 
 struct MainView: View {
     @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding: Bool = false
@@ -23,6 +24,15 @@ struct MainView: View {
             }
             .onAppear(){
                 //            hasCompletedOnboarding = false
+                TelemetryDeck.signal(
+                    "Page Load",
+                    parameters: [
+                        "app": "BoardBrain",
+                        "event": "page load",
+                        "identifier":"main-view",
+                        "viewName":"Main View"
+                    ]
+                )
             }
             .onAppear {
                 launchCount += 1  // Incrementing the launch count
