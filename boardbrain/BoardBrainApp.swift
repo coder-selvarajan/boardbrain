@@ -7,15 +7,15 @@
 
 import SwiftUI
 import SwiftData
-import TelemetryDeck
 
 @main
 struct BoardBrainApp: App {
     init() {
-        let config = TelemetryDeck.Config(appID: "D7026E86-0893-4BF3-9123-5B0C72904EF4")
-        TelemetryDeck.initialize(config: config)
+        // SwiftUI Analytics instrumentation
+        instrumentWithSwiftUIAnalytics()
         
-        TelemetryDeck.signal(
+        // AppLaunch signals to Analytics tool
+        AnalyticsManager.shared.logEvent(
             "App Launched",
             parameters: [
                 "app": "BoardBrain",
@@ -31,13 +31,25 @@ struct BoardBrainApp: App {
                 .colorScheme(ColorScheme.dark)
                 .environmentObject(ThemeManager())
                 .environmentObject(ScoreViewModel())
-                .onAppear(){
-                    let uiAppClass = UIApplication.self
-                    let currentSendEvent = class_getInstanceMethod(uiAppClass, #selector(uiAppClass.sendEvent))
-                    let newSendEvent = class_getInstanceMethod(uiAppClass, #selector(uiAppClass.newSendEvent))
-                    method_exchangeImplementations(currentSendEvent!, newSendEvent!)
-                    print("Swizzlling called")
-                }
         }
     }
+}
+
+func instrumentWithSwiftUIAnalytics(){
+    DispatchQueue.main.async {
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+           let rootView = windowScene.windows.first?.rootViewController?.view {
+            rootView.accessibilityActivate()
+            print("Activating accessibility info")
+        } else {
+            print("No accessible windows found.")
+        }
+    }
+    
+    // SwiftUI Analytics
+    let uiAppClass = UIApplication.self
+    let currentSendEvent = class_getInstanceMethod(uiAppClass, #selector(uiAppClass.sendEvent))
+    let newSendEvent = class_getInstanceMethod(uiAppClass, #selector(uiAppClass.newSendEvent))
+    method_exchangeImplementations(currentSendEvent!, newSendEvent!)
+    print("Swizzlling called")
 }

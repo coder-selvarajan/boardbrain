@@ -7,7 +7,6 @@
 
 import SwiftUI
 import PopupView
-import TelemetryDeck
 
 struct CoordinateTrainingHome: View {
     @AppStorage("showGameIntro") private var showIntro = true
@@ -279,7 +278,7 @@ struct CoordinateTrainingHome: View {
                     showIntroModal = true
                 }
                     
-                TelemetryDeck.signal(
+                AnalyticsManager.shared.logEvent(
                     "Page Load",
                     parameters: [
                         "app": "BoardBrain",

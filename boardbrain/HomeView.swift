@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import TelemetryDeck
 
 struct HomeView: View {
     let buttonHeight: CGFloat = UIScreen.main.bounds.size.height * 0.085
@@ -145,8 +144,9 @@ struct HomeView: View {
             .background(Color.white.opacity(0.20))
             .navigationBarTitleDisplayMode(.inline)
             .onAppear() {
-                TelemetryDeck.signal(
-                    "Page Loaded",
+                //Analytics code
+                AnalyticsManager.shared.logEvent(
+                    "Page Load",
                     parameters: [
                         "app": "BoardBrain",
                         "event": "page load",

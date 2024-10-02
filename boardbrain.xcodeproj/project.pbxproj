@@ -49,6 +49,7 @@
 		70E5E57B2BEF899700FA6A9D /* CloseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E5E57A2BEF899700FA6A9D /* CloseButton.swift */; };
 		70E5E57D2BEF8C8800FA6A9D /* UtilityFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E5E57C2BEF8C8800FA6A9D /* UtilityFunctions.swift */; };
 		70FD21722BC6BA5E00F6D513 /* Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70FD21712BC6BA5E00F6D513 /* Styles.swift */; };
+		FF0B4E592CADBC0100AE77DB /* STAnalytics.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF0B4E582CADBC0100AE77DB /* STAnalytics.xcframework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -93,6 +94,7 @@
 		70E5E57A2BEF899700FA6A9D /* CloseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloseButton.swift; sourceTree = "<group>"; };
 		70E5E57C2BEF8C8800FA6A9D /* UtilityFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilityFunctions.swift; sourceTree = "<group>"; };
 		70FD21712BC6BA5E00F6D513 /* Styles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Styles.swift; sourceTree = "<group>"; };
+		FF0B4E582CADBC0100AE77DB /* STAnalytics.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = STAnalytics.xcframework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +103,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				705694422BF846FE0090A713 /* ConfettiSwiftUI in Frameworks */,
+				FF0B4E592CADBC0100AE77DB /* STAnalytics.xcframework in Frameworks */,
 				7019350A2BC9858900ECDA51 /* PopupView in Frameworks */,
 				7068D7E62C3439DE00FAB1F6 /* TelemetryDeck in Frameworks */,
 			);
@@ -131,6 +134,7 @@
 		7068D7E72C344BF900FAB1F6 /* Analytics */ = {
 			isa = PBXGroup;
 			children = (
+				FF0B4E582CADBC0100AE77DB /* STAnalytics.xcframework */,
 				7068D7E82C344C0F00FAB1F6 /* AnalyticsManager.swift */,
 			);
 			path = Analytics;

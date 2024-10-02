@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import TelemetryDeck
 
 struct OnboardingView: View {
     @Binding var hasCompletedOnboarding: Bool
@@ -116,7 +115,7 @@ struct OnboardingView: View {
             Spacer()
         }
         .onAppear() {
-            TelemetryDeck.signal(
+            AnalyticsManager.shared.logEvent(
                 "Page Load",
                 parameters: [
                     "app": "BoardBrain",

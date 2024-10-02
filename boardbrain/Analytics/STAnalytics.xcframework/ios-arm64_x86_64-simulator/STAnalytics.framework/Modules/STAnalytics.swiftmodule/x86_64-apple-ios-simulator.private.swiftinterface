@@ -1,0 +1,18 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 6.0 effective-5.10 (swiftlang-6.0.0.9.10 clang-1600.0.26.2)
+// swift-module-flags: -target x86_64-apple-ios15.6-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -Onone -enable-experimental-feature OpaqueTypeErasure -enable-bare-slash-regex -module-name STAnalytics
+import Foundation
+@_exported import STAnalytics
+import Swift
+import UIKit
+import _Concurrency
+import _StringProcessing
+import _SwiftConcurrencyShims
+public protocol STAnalyticsEventHandler {
+  func sendAnalyticsEvent(name: Swift.String, parameters: [Swift.String : Swift.String]?)
+}
+@objc public class SwiftUITracker : ObjectiveC.NSObject {
+  public init(analyticsEventHandler: (any STAnalytics.STAnalyticsEventHandler)? = nil)
+  @objc public func processEvent(touch: UIKit.UITouch, touchBeginCoordinates: CoreFoundation.CGPoint)
+  @objc deinit
+}

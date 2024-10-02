@@ -7,7 +7,6 @@
 
 import SwiftUI
 import StoreKit
-import TelemetryDeck
 
 struct AboutView: View {
     var body: some View {
@@ -87,7 +86,7 @@ struct AboutView: View {
             .padding()
         }
         .onAppear() {
-            TelemetryDeck.signal(
+            AnalyticsManager.shared.logEvent(
                 "Page Load",
                 parameters: [
                     "app": "BoardBrain",

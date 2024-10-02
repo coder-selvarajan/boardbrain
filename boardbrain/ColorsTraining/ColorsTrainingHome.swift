@@ -7,7 +7,6 @@
 
 import SwiftUI
 import PopupView
-import TelemetryDeck
 
 struct ColorsTrainingHome: View {
     @EnvironmentObject var scoreViewModel : ScoreViewModel
@@ -290,7 +289,7 @@ struct ColorsTrainingHome: View {
             Spacer()
         } //VStack
         .onAppear(){
-            TelemetryDeck.signal(
+            AnalyticsManager.shared.logEvent(
                 "Page Load",
                 parameters: [
                     "app": "BoardBrain",

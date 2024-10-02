@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import TelemetryDeck
 
 struct MovesTrainingHome: View {
     @EnvironmentObject var scoreViewModel : ScoreViewModel
@@ -270,7 +269,7 @@ struct MovesTrainingHome: View {
                 showIntroModal = true
             }
             
-            TelemetryDeck.signal(
+            AnalyticsManager.shared.logEvent(
                 "Page Load",
                 parameters: [
                     "app": "BoardBrain",

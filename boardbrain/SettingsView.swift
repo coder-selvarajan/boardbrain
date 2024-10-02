@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import TelemetryDeck
 
 enum BoardTheme: String, Identifiable, CaseIterable, Codable {
     var id: Self { self }
@@ -150,7 +149,7 @@ struct SettingsView: View {
             
         } // VStack
         .onAppear() {
-            TelemetryDeck.signal(
+            AnalyticsManager.shared.logEvent(
                 "Page Load",
                 parameters: [
                     "app": "BoardBrain",
